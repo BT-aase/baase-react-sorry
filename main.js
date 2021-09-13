@@ -16,10 +16,11 @@ if (
 
 function createMainWindow() {
 	mainWindow = new BrowserWindow({
-		width: 800,
-		height: 800,
+		width: 910,
+		height: 875,
 		show: false,
 		icon: './assets/icons/icon.png',
+		resizable: false,
 		webPreferences: {
 			nodeIntegration: true,
 		},
