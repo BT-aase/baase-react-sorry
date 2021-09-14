@@ -13,8 +13,27 @@ const InnerBoard = () => {
                 backgroundColor: 'white',
                 zIndex: 15,
                 position: 'absolute'
-            }} />
-            <div style={{position: 'absolute', marginTop: 409, zIndex: 10}}>
+            }}>
+                <div style={{
+                    width: 120,
+                    height: 120,
+                    marginLeft: 5,
+                    marginTop: 5,
+                    borderRadius: 70,
+                    border: '3px solid black',
+                    backgroundColor: 'black',
+                    zIndex: 15,
+                    position: 'absolute'
+                }}>
+                    <svg height="200" width="200">
+                        <polygon points="0,35 115,35 60,120" style={{ fill: 'white'}} />
+                        <polygon points="5,90 110,90 60,0" style={{ fill: 'white'}} />
+                        <polygon points="10,40 105,40 60,110" style={{ fill: 'green'}} />
+                        <polygon points="15,85 100,85 60,10" style={{ fill: 'green'}} />
+                    </svg>
+                </div>
+            </div>
+            <div style={{ position: 'absolute', marginTop: 409, zIndex: 10 }}>
                 <div style={{
                     width: 72,
                     height: 20,
