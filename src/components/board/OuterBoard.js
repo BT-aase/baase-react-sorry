@@ -17,7 +17,7 @@ const spaceGenerator = (direction, width) => {
 	}
 
 	if (direction === 'vertical') {
-		row.push(<div style={{ width: size, height: 47, border: '3px solid black', borderTop: 0, borderBottom: 0 }}>14</div>)
+		row.push(<div style={{ width: size, height: 47, border: '3px solid black', borderTop: 0, borderBottom: 0 }}>13</div>)
 	}
 
 	return row;
