@@ -1,6 +1,6 @@
 import React from "react";
 
-const Home = () => {
+const Home = (props) => {
     return (
         <div>
             <div style={{
@@ -26,8 +26,8 @@ const Home = () => {
                     <svg height="90" width="85" style={{ marginLeft: -5, marginTop: -5 }}>
                         <polygon points="4,25 85,25 45,92" style={{ fill: 'white' }} />
                         <polygon points="4,65 85,65 45,-2" style={{ fill: 'white' }} />
-                        <polygon points="10,29 80,29 45,85" style={{ fill: 'green' }} />
-                        <polygon points="10,61 80,61 45,5" style={{ fill: 'green' }} />
+                        <polygon points="10,29 80,29 45,85" style={{ fill: props.color }} />
+                        <polygon points="10,61 80,61 45,5" style={{ fill: props.color }} />
                         <polygon points="12,29 32,29 45,7 58,29 78,29 69,45 
             78,60 58,60 45,80 32,60 14,59 22,45"
                             style={{ fill: 'none', stroke: 'black', strokeWidth: 3 }} />
@@ -52,7 +52,7 @@ const Home = () => {
                     <div style={{
                         width: 39.5,
                         height: 37,
-                        backgroundColor: 'green',
+                        backgroundColor: props.color,
                         marginTop: 3,
                         marginLeft: 2.5,
                         border: '2px solid black',
@@ -67,7 +67,7 @@ const Home = () => {
                     <div style={{
                         width: 39.5,
                         height: 37,
-                        backgroundColor: 'green',
+                        backgroundColor: props.color,
                         marginTop: 3,
                         marginLeft: 2.5,
                         border: '2px solid black',
@@ -82,7 +82,7 @@ const Home = () => {
                     <div style={{
                         width: 39.5,
                         height: 37,
-                        backgroundColor: 'green',
+                        backgroundColor: props.color,
                         marginTop: 3,
                         marginLeft: 2.5,
                         border: '2px solid black',
@@ -97,7 +97,7 @@ const Home = () => {
                     <div style={{
                         width: 39.5,
                         height: 37,
-                        backgroundColor: 'green',
+                        backgroundColor: props.color,
                         marginTop: 3,
                         marginLeft: 2.5,
                         border: '2px solid black',
@@ -112,7 +112,7 @@ const Home = () => {
                     <div style={{
                         width: 39.5,
                         height: 37,
-                        backgroundColor: 'green',
+                        backgroundColor: props.color,
                         marginTop: 3,
                         marginLeft: 2.5,
                         border: '2px solid black',
