@@ -29,7 +29,7 @@ const OuterBoard = () => {
 			display: 'flex', flexWrap: 'wrap', border: '5px solid red', justifyContent: 'space-between', alignItems: 'flex-start',
 			width: '100%', height: '100%', position: 'absolute', zIndex: -1
 		}}>
-			<div style={{ display: 'flex', flexDirection: 'row', width: 654, backgroundColor: 'white' }}>
+			<div style={{ display: 'flex', flexDirection: 'row', width: 770, backgroundColor: 'white' }}>
 				{spaceGenerator('horizontal')}
 			</div>
 			<div style={{ display: 'flex', flexDirection: 'column', width: 47, backgroundColor: 'white' }}>
@@ -39,7 +39,7 @@ const OuterBoard = () => {
 				{spaceGenerator('vertical', 50)}
 
 			</div>
-			<div style={{ display: 'flex', flexDirection: 'row', width: 654, backgroundColor: 'white' }}>
+			<div style={{ display: 'flex', flexDirection: 'row', width: 770, backgroundColor: 'white' }}>
 				{spaceGenerator('horizontal')}
 			</div>
 		</div>
