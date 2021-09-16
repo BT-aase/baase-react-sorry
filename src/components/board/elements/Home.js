@@ -6,7 +6,40 @@ const Home = (props) => {
             <div style={{
                 width: 100,
                 height: 100,
-                marginLeft: 490,
+                marginLeft: 393,
+                marginTop: 610,
+                borderRadius: 70,
+                border: '3px solid black',
+                backgroundColor: 'white',
+                zIndex: 15,
+                position: 'absolute'
+            }}>
+                <div style={{
+                    width: 85,
+                    height: 85,
+                    marginLeft: 5,
+                    marginTop: 5,
+                    borderRadius: 70,
+                    border: '3px solid black',
+                    backgroundColor: props.color
+                }}>
+                    <p style={{ marginTop: 28, marginLeft: 17, fontWeight: 'bold' }}>START</p>
+                </div>
+            </div>
+            <div style={{
+                position: 'absolute', marginTop: 690,
+                marginLeft: 420, zIndex: 10
+            }}>
+                <div style={{
+                    width: 46,
+                    height: 20,
+                    backgroundColor: 'black',
+                }} />
+            </div>
+            <div style={{
+                width: 100,
+                height: 100,
+                marginLeft: 478,
                 marginTop: 375,
                 borderRadius: 70,
                 border: '3px solid black',
@@ -29,20 +62,20 @@ const Home = (props) => {
                         <polygon points="10,29 80,29 45,85" style={{ fill: props.color }} />
                         <polygon points="10,61 80,61 45,5" style={{ fill: props.color }} />
                         <polygon points="12,29 32,29 45,7 58,29 78,29 69,45 
-            78,60 58,60 45,80 32,60 14,59 22,45"
+                                         78,60 58,60 45,82 32,60 14,59 22,45"
                             style={{ fill: 'none', stroke: 'black', strokeWidth: 3 }} />
                         <text x="25" y="50" fill="black" style={{ fontSize: 14, fontWeight: "bold" }}>HOME</text>
                     </svg>
                 </div>
             </div>
-            <div style={{ position: 'absolute', marginTop: 455, marginLeft: 515, zIndex: 10 }}>
+            <div style={{ position: 'absolute', marginTop: 455, marginLeft: 506, zIndex: 10 }}>
                 <div style={{
-                    width: 49.5,
+                    width: 46,
                     height: 20,
                     backgroundColor: 'black',
                 }} />
                 <div style={{
-                    width: 49.5,
+                    width: 46,
                     height: 47,
 
                     backgroundColor: 'white',
@@ -50,7 +83,7 @@ const Home = (props) => {
                     borderBottom: 0
                 }}>
                     <div style={{
-                        width: 39.5,
+                        width: 35,
                         height: 37,
                         backgroundColor: props.color,
                         marginTop: 3,
@@ -63,9 +96,9 @@ const Home = (props) => {
                         }}>N E</p>
                     </div>
                 </div>
-                <div style={{ width: 49.5, height: 47, backgroundColor: 'white', border: '3px solid black', borderBottom: 0 }} >
+                <div style={{ width: 46, height: 47, backgroundColor: 'white', border: '3px solid black', borderBottom: 0 }} >
                     <div style={{
-                        width: 39.5,
+                        width: 35,
                         height: 37,
                         backgroundColor: props.color,
                         marginTop: 3,
@@ -78,9 +111,9 @@ const Home = (props) => {
                         }}>Z O</p>
                     </div>
                 </div>
-                <div style={{ width: 49.5, height: 47, backgroundColor: 'white', border: '3px solid black', borderBottom: 0 }} >
+                <div style={{ width: 46, height: 47, backgroundColor: 'white', border: '3px solid black', borderBottom: 0 }} >
                     <div style={{
-                        width: 39.5,
+                        width: 35,
                         height: 37,
                         backgroundColor: props.color,
                         marginTop: 3,
@@ -93,24 +126,9 @@ const Home = (props) => {
                         }}>E</p>
                     </div>
                 </div>
-                <div style={{ width: 49.5, height: 47, backgroundColor: 'white', border: '3px solid black', borderBottom: 0 }} >
+                <div style={{ width: 46, height: 47, backgroundColor: 'white', border: '3px solid black', borderBottom: 0 }} >
                     <div style={{
-                        width: 39.5,
-                        height: 37,
-                        backgroundColor: props.color,
-                        marginTop: 3,
-                        marginLeft: 2.5,
-                        border: '2px solid black',
-                    }}>
-                        <p style={{
-                            transform: 'rotate(270deg)',
-                            fontWeight: 'bold'
-                        }}>A F</p>
-                    </div>
-                </div>
-                <div style={{ width: 49.5, height: 47, backgroundColor: 'white', border: '3px solid black', borderBottom: 0 }} >
-                    <div style={{
-                        width: 39.5,
+                        width: 35,
                         height: 37,
                         backgroundColor: props.color,
                         marginTop: 3,
@@ -120,7 +138,23 @@ const Home = (props) => {
                         <p style={{
                             transform: 'rotate(270deg)',
                             fontWeight: 'bold',
-                            marginTop: -20
+                            marginTop: 2
+                        }}>A F</p>
+                    </div>
+                </div>
+                <div style={{ width: 46, height: 46, backgroundColor: 'white', border: '3px solid black', borderBottom: 0 }} >
+                    <div style={{
+                        width: 35,
+                        height: 37,
+                        backgroundColor: props.color,
+                        marginTop: 3,
+                        marginLeft: 3,
+                        border: '2px solid black',
+                    }}>
+                        <p style={{
+                            transform: 'rotate(270deg)',
+                            fontWeight: 'bold',
+                            marginTop: -16
                         }}>S</p>
                     </div>
                 </div>
