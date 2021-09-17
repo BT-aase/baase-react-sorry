@@ -3,7 +3,7 @@ import React from "react";
 const Slides = (props) => {
     return (
         <div>
-            <div>
+  <div>
                 <div>
                     <div style={{
                         position: 'absolute',
@@ -17,7 +17,7 @@ const Slides = (props) => {
                     }} />
                     <div style={{
                         position: 'absolute',
-                        top: 727,
+                        top: 728,
                         left: 455,
                         width: 150,
                         height: 15,
@@ -25,10 +25,10 @@ const Slides = (props) => {
                     }} />
                     <div style={{
                         position: 'absolute',
-                        top: 717,
-                        left: 433,
-                        width: 35,
-                        height: 35,
+                        top: 718,
+                        left: 434,
+                        width: 33,
+                        height: 33,
                         backgroundColor: 'black',
                         borderRadius: 30
                     }} />
@@ -46,7 +46,7 @@ const Slides = (props) => {
                     }} />
                     <div style={{
                         position: 'absolute',
-                        top: 730,
+                        top: 731,
                         left: 455,
                         width: 148,
                         height: 8,
@@ -54,10 +54,10 @@ const Slides = (props) => {
                     }} />
                     <div style={{
                         position: 'absolute',
-                        top: 719,
-                        left: 435.5,
-                        width: 30,
-                        height: 30,
+                        top: 719.5,
+                        left: 436,
+                        width: 29,
+                        height: 29,
                         backgroundColor: 'red',
                         borderRadius: 25,
                         border: '1px solid black'
@@ -69,7 +69,7 @@ const Slides = (props) => {
                     <div style={{
                         position: 'absolute',
                         top: 718,
-                        left: 255,
+                        left: 260,
                         width: 0,
                         height: 0,
                         borderTop: '17px solid transparent',
@@ -79,17 +79,17 @@ const Slides = (props) => {
                     <div style={{
                         position: 'absolute',
                         top: 727,
-                        left: 125,
+                        left: 130,
                         width: 150,
                         height: 15,
                         backgroundColor: 'black'
                     }} />
                     <div style={{
                         position: 'absolute',
-                        top: 717,
-                        left: 104,
-                        width: 35,
-                        height: 35,
+                        top: 718,
+                        left: 109,
+                        width: 33,
+                        height: 33,
                         backgroundColor: 'black',
                         borderRadius: 30
                     }} />
@@ -98,7 +98,7 @@ const Slides = (props) => {
                     <div style={{
                         position: 'absolute',
                         top: 725,
-                        left: 259,
+                        left: 264,
                         width: 0,
                         height: 0,
                         borderTop: '10px solid transparent',
@@ -108,17 +108,17 @@ const Slides = (props) => {
                     <div style={{
                         position: 'absolute',
                         top: 730,
-                        left: 125,
+                        left: 130,
                         width: 148,
                         height: 8,
                         backgroundColor: 'red'
                     }} />
                     <div style={{
                         position: 'absolute',
-                        top: 719,
-                        left: 106.5,
-                        width: 30,
-                        height: 30,
+                        top: 719.5,
+                        left: 111,
+                        width: 29,
+                        height: 29,
                         backgroundColor: 'red',
                         borderRadius: 25,
                         border: '1px solid black'

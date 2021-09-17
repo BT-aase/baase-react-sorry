@@ -5,7 +5,9 @@ const InnerBoard = () => {
     return (
         <div>
             <div>
-                <div style={{ position: 'fixed', left: 2, top: -59 }}>
+                <div style={{
+                    position: 'fixed', left: 2, top: -59
+                }}>
                     <Home color='red' side='horizontal' />
                 </div>
                 <div style={{
@@ -14,8 +16,10 @@ const InnerBoard = () => {
                 }}>
                     <Home color='#1464F4' />
                 </div>
-                <div style={{ position: 'fixed', transform: 'rotate(180deg)', 
-                              bottom: -60.5, right: 4}}>
+                <div style={{
+                    position: 'fixed', transform: 'rotate(180deg)',
+                    bottom: -60.5, right: 4
+                }}>
                     <Home color='yellow' side='horizontal' />
                 </div>
                 <div style={{
