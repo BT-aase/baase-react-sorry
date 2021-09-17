@@ -1,5 +1,13 @@
 import React from "react";
 
+const zoneAdj = (side) => {
+    return side === 'horizontal' ? 512 : 506;
+}
+
+const homeAdj = (side) => {
+    return side === 'horizontal' ? 484 : 478;
+}
+
 const Home = (props) => {
     return (
         <div>
@@ -39,7 +47,7 @@ const Home = (props) => {
             <div style={{
                 width: 100,
                 height: 100,
-                marginLeft: 478,
+                marginLeft: homeAdj(props.side),
                 marginTop: 375,
                 borderRadius: 70,
                 border: '3px solid black',
@@ -68,7 +76,7 @@ const Home = (props) => {
                     </svg>
                 </div>
             </div>
-            <div style={{ position: 'absolute', marginTop: 455, marginLeft: 506, zIndex: 10 }}>
+            <div style={{ position: 'absolute', marginTop: 455, marginLeft: zoneAdj(props.side), zIndex: 10 }}>
                 <div style={{
                     width: 46,
                     height: 20,

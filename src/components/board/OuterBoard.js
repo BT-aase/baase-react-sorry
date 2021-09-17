@@ -2,7 +2,7 @@ import React from "react";
 
 const spaceGenerator = (direction, width) => {
 	let row = [];
-	let size = typeof (width) === 'undefined' ? 43 : width;
+	let size = typeof (width) === 'undefined' ? 47 : width;
 
 	if (direction === 'horizontal') {
 		row.push(<div style={{ width: size, height: 43, border: '3px solid black' }}>0</div>)
@@ -29,17 +29,17 @@ const OuterBoard = () => {
 			display: 'flex', flexWrap: 'wrap', border: '5px solid red', justifyContent: 'space-between', alignItems: 'flex-start',
 			width: '100%', height: '100%', position: 'absolute', zIndex: -1
 		}}>
-			<div style={{ display: 'flex', flexDirection: 'row', width: 600, backgroundColor: 'white' }}>
+			<div style={{ display: 'flex', flexDirection: 'row', width: 650, backgroundColor: 'white' }}>
 				{spaceGenerator('horizontal')}
 			</div>
 			<div style={{ display: 'flex', flexDirection: 'column', width: 43, backgroundColor: 'white' }}>
 				{spaceGenerator('vertical')}
 			</div>
-			<div style={{ display: 'flex', flexDirection: 'column', width: 45, backgroundColor: 'white' }}>
-				{spaceGenerator('vertical', 45)}
+			<div style={{ display: 'flex', flexDirection: 'column', width: 49, backgroundColor: 'white' }}>
+				{spaceGenerator('vertical', 49)}
 
 			</div>
-			<div style={{ display: 'flex', flexDirection: 'row', width: 600, backgroundColor: 'white' }}>
+			<div style={{ display: 'flex', flexDirection: 'row', width: 650, backgroundColor: 'white' }}>
 				{spaceGenerator('horizontal')}
 			</div>
 		</div>
