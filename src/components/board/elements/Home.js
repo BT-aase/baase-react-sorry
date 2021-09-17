@@ -1,12 +1,7 @@
 import React from "react";
 
-const zoneAdj = (side) => {
-    return side === 'horizontal' ? 512 : 506;
-}
-
-const homeAdj = (side) => {
-    return side === 'horizontal' ? 484 : 478;
-}
+const zoneAdj = (side) => side === 'horizontal' ? 512 : 506;
+const homeAdj = (side) => side === 'horizontal' ? 484 : 478;
 
 const Home = (props) => {
     return (

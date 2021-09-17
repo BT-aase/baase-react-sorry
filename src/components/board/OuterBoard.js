@@ -7,19 +7,19 @@ const spaceGenerator = (direction, width) => {
 	let size = typeof (width) === 'undefined' ? 47 : width;
 
 	if (direction === 'horizontal') {
-		row.push(<div style={{ width: size, height: 43, border: '3px solid black' }}/>)
+		row.push(<div style={{ width: size, height: 43, border: '3px solid black' }} />)
 	}
 
 	for (let i = 1; i < 14; i++) {
 		if (direction === 'horizontal') {
-			row.push(<div style={{ width: size, height: 43, border: '3px solid black', borderLeft: 0 }}/>)
+			row.push(<div style={{ width: size, height: 43, border: '3px solid black', borderLeft: 0 }} />)
 		} else {
-			row.push(<div style={{ width: size, height: 43, border: '3px solid black', borderTop: 0 }}/>)
+			row.push(<div style={{ width: size, height: 43, border: '3px solid black', borderTop: 0 }} />)
 		}
 	}
 
 	if (direction === 'vertical') {
-		row.push(<div style={{ width: size, height: 43, border: '3px solid black', borderTop: 0, borderBottom: 0 }}/>)
+		row.push(<div style={{ width: size, height: 43, border: '3px solid black', borderTop: 0, borderBottom: 0 }} />)
 	}
 
 	return row;
@@ -35,12 +35,20 @@ const OuterBoard = () => {
 				{spaceGenerator('horizontal')}
 			</div>
 			<div style={{ position: 'fixed', top: -63, left: -4 }} >
-				<Slides />
+				<Slides color='red'/>
 			</div>
 			<div style={{ display: 'flex', flexDirection: 'column', width: 47, backgroundColor: 'white' }}>
 				{spaceGenerator('vertical')}
 			</div>
-			<div style={{ display: 'flex', flexDirection: 'column', width: 49, backgroundColor: 'white' }}>
+			<div style={{
+				position: 'fixed', position: 'fixed', transform: 'rotate(90deg)',
+				right: -101, top: 43
+			}} >
+				<Slides color='#1464F4' side='vertical' />
+			</div>
+			<div style={{
+				display: 'flex', flexDirection: 'column', width: 49, backgroundColor: 'white'
+			}}>
 				{spaceGenerator('vertical', 49)}
 
 			</div>

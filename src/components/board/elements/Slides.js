@@ -1,14 +1,27 @@
 import React from "react";
 
+const bottomBlackTriangle = (side) => side === 'vertical' ? 580 : 585;
+const bottomBlackLine = (side) => side === 'vertical' ? 145 : 150;
+const bottomBlackCircle = (side) => side === 'vertical' ? 439 : 434;
+const bottomRedTriangle = (side) => side === 'vertical' ? 584 : 589;
+const bottomRedCircle = (side) => side === 'vertical' ? 441 : 436;
+
+const topBlackTriangle = (side) => side === 'vertical' ? 190 : 260;
+const topLine = (side) => side === 'vertical' ? 80 : 130;
+const topLineLen = (side) => side === 'vertical' ? 120 : 145;
+const topBlackCircle = (side) => side === 'vertical' ? 52 : 109;
+const topRedTriangle = (side) => side === 'vertical' ? 194 : 264;
+const topRedCircle = (side) => side === 'vertical' ? 54 : 111;
+
 const Slides = (props) => {
     return (
         <div>
-  <div>
+            <div>
                 <div>
                     <div style={{
                         position: 'absolute',
                         top: 718,
-                        left: 585,
+                        left: bottomBlackTriangle(props.side),
                         width: 0,
                         height: 0,
                         borderTop: '17px solid transparent',
@@ -19,14 +32,14 @@ const Slides = (props) => {
                         position: 'absolute',
                         top: 728,
                         left: 455,
-                        width: 150,
+                        width: bottomBlackLine(props.side),
                         height: 15,
                         backgroundColor: 'black'
                     }} />
                     <div style={{
                         position: 'absolute',
                         top: 718,
-                        left: 434,
+                        left: bottomBlackCircle(props.side),
                         width: 33,
                         height: 33,
                         backgroundColor: 'black',
@@ -37,28 +50,28 @@ const Slides = (props) => {
                     <div style={{
                         position: 'absolute',
                         top: 725,
-                        left: 589,
+                        left: bottomRedTriangle(props.side),
                         width: 0,
                         height: 0,
                         borderTop: '10px solid transparent',
                         borderBottom: '10px solid transparent',
-                        borderRight: '15px solid red'
+                        borderRight: `15px solid ${props.color}`
                     }} />
                     <div style={{
                         position: 'absolute',
                         top: 731,
                         left: 455,
-                        width: 148,
+                        width: 143,
                         height: 8,
-                        backgroundColor: 'red'
+                        backgroundColor: props.color
                     }} />
                     <div style={{
                         position: 'absolute',
                         top: 719.5,
-                        left: 436,
+                        left: bottomRedCircle(props.side),
                         width: 29,
                         height: 29,
-                        backgroundColor: 'red',
+                        backgroundColor: props.color,
                         borderRadius: 25,
                         border: '1px solid black'
                     }} />
@@ -69,7 +82,7 @@ const Slides = (props) => {
                     <div style={{
                         position: 'absolute',
                         top: 718,
-                        left: 260,
+                        left: topBlackTriangle(props.side),
                         width: 0,
                         height: 0,
                         borderTop: '17px solid transparent',
@@ -79,15 +92,15 @@ const Slides = (props) => {
                     <div style={{
                         position: 'absolute',
                         top: 727,
-                        left: 130,
-                        width: 150,
+                        left: topLine(props.side),
+                        width: topLineLen(props.side),
                         height: 15,
                         backgroundColor: 'black'
                     }} />
                     <div style={{
                         position: 'absolute',
                         top: 718,
-                        left: 109,
+                        left: topBlackCircle(props.side),
                         width: 33,
                         height: 33,
                         backgroundColor: 'black',
@@ -97,29 +110,29 @@ const Slides = (props) => {
                 <div>
                     <div style={{
                         position: 'absolute',
-                        top: 725,
-                        left: 264,
+                        top: 724,
+                        left: topRedTriangle(props.side),
                         width: 0,
                         height: 0,
                         borderTop: '10px solid transparent',
-                        borderBottom: '10px solid transparent',
-                        borderRight: '15px solid red'
+                        borderBottom: '12px solid transparent',
+                        borderRight: `15px solid ${props.color}`
                     }} />
                     <div style={{
                         position: 'absolute',
                         top: 730,
-                        left: 130,
-                        width: 148,
+                        left: topLine(props.side),
+                        width: topLineLen(props.side),
                         height: 8,
-                        backgroundColor: 'red'
+                        backgroundColor: props.color
                     }} />
                     <div style={{
                         position: 'absolute',
                         top: 719.5,
-                        left: 111,
+                        left: topRedCircle(props.side),
                         width: 29,
                         height: 29,
-                        backgroundColor: 'red',
+                        backgroundColor: props.color,
                         borderRadius: 25,
                         border: '1px solid black'
                     }} />
