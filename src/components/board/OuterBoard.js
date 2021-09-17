@@ -34,15 +34,15 @@ const OuterBoard = () => {
 			<div style={{ display: 'flex', flexDirection: 'row', width: 650, backgroundColor: 'white' }}>
 				{spaceGenerator('horizontal')}
 			</div>
-			<div style={{ position: 'fixed', top: -63, left: -4 }} >
-				<Slides color='red'/>
+			<div style={{ position: 'fixed', top: -63, left: -5 }} >
+				<Slides color='red' />
 			</div>
 			<div style={{ display: 'flex', flexDirection: 'column', width: 47, backgroundColor: 'white' }}>
 				{spaceGenerator('vertical')}
 			</div>
 			<div style={{
 				position: 'fixed', position: 'fixed', transform: 'rotate(90deg)',
-				right: -101, top: 43
+				right: -102, top: 43
 			}} >
 				<Slides color='#1464F4' side='vertical' />
 			</div>
@@ -52,8 +52,20 @@ const OuterBoard = () => {
 				{spaceGenerator('vertical', 49)}
 
 			</div>
+			<div style={{
+				position: 'fixed', position: 'fixed', transform: 'rotate(270deg)',
+				left: -104, top: 653
+			}} >
+				<Slides color='green' side='vertical' />
+			</div>
 			<div style={{ display: 'flex', flexDirection: 'row', width: 650, backgroundColor: 'white' }}>
 				{spaceGenerator('horizontal')}
+			</div>
+			<div style={{
+				position: 'fixed', transform: 'rotate(180deg)',
+				bottom: -64, right: -1
+			}} >
+				<Slides color='yellow' />
 			</div>
 		</div>
 	);
