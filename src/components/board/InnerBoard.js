@@ -17,7 +17,7 @@ const InnerBoard = () => {
                 <div style={{
                     position: 'fixed', right: 253, bottom: 57
                 }}>
-                    <HomeArrows />
+                    <HomeArrows color='red' />
                 </div>
                 <div style={{
                     position: 'fixed', transform: 'rotate(90deg)',
