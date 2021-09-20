@@ -1,5 +1,6 @@
 import React from "react";
 import Home from "./elements/Home";
+import HomeArrows from "./elements/HomeArrows";
 
 const InnerBoard = () => {
     return (
@@ -9,9 +10,14 @@ const InnerBoard = () => {
         }}>
             <div>
                 <div style={{
-                    position: 'fixed', left: 2, top: -59
+                    position: 'fixed', left: 2, top: -57
                 }}>
                     <Home color='red' side='horizontal' />
+                </div>
+                <div style={{
+                    position: 'fixed', right: 253, bottom: 57
+                }}>
+                    <HomeArrows />
                 </div>
                 <div style={{
                     position: 'fixed', transform: 'rotate(90deg)',
@@ -21,7 +27,7 @@ const InnerBoard = () => {
                 </div>
                 <div style={{
                     position: 'fixed', transform: 'rotate(180deg)',
-                    bottom: -60.5, right: 4
+                    bottom: -57, right: 4
                 }}>
                     <Home color='yellow' side='horizontal' />
                 </div>
@@ -37,21 +43,21 @@ const InnerBoard = () => {
                     position: 'fixed', top: 170, left: 220,
                     width: 220, height: 140, transform: 'rotate(180deg)',
                     border: '3px solid white', textAlign: 'center',
-                    fontFamily: 'Bahnschrift SemiBold'
+                    fontFamily: 'Roboto', fontWeight: 500
                 }}>
-                    <p style={{ marginTop: 20, fontSize: 22 }}>DISCARD</p>
+                    <p style={{ marginTop: 20, fontSize: 20 }}>DISCARD</p>
                     <p style={{ marginTop: -10, fontSize: 14 }}>FACE UP</p>
-                    <p style={{ marginTop: -10, fontSize: 22 }}>HERE</p>
+                    <p style={{ marginTop: -10, fontSize: 20 }}>HERE</p>
                 </div>
                 <div style={{
                     position: 'fixed', top: 385, left: 220,
                     width: 220, height: 140,
                     border: '3px solid white', textAlign: 'center',
-                    fontFamily: 'Bahnschrift SemiBold'
+                    fontFamily: 'Roboto', fontWeight: 500
                 }}>
-                    <p style={{ marginTop: 20, fontSize: 22 }}>PLACE PACK</p>
+                    <p style={{ marginTop: 20, fontSize: 20 }}>PLACE PACK</p>
                     <p style={{ marginTop: -10, fontSize: 14 }}>FACE DOWN</p>
-                    <p style={{ marginTop: -10, fontSize: 22 }}>HERE</p>
+                    <p style={{ marginTop: -10, fontSize: 20 }}>HERE</p>
                 </div>
             </div>
         </div>

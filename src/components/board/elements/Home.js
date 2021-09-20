@@ -26,7 +26,7 @@ const Home = (props) => {
                     border: '3px solid black',
                     backgroundColor: props.color
                 }}>
-                    <p style={{ marginTop: 28, marginLeft: 17, fontWeight: 'bold' }}>START</p>
+                    <p style={{ marginTop: 23, marginLeft: 17, fontWeight: 'bold' }}>START</p>
                 </div>
             </div>
             <div style={{
