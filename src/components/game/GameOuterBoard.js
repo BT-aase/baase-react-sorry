@@ -1,4 +1,5 @@
 import React from "react";
+import GamePiece from "./elements/GamePiece";
 
 const spaceGenerator = (direction, width) => {
     let row = [];
@@ -8,16 +9,7 @@ const spaceGenerator = (direction, width) => {
         row.push(
             <div style={{ width: size, height: 43 }}>
                 <div style={{ marginTop: 7, marginLeft: 7 }}>
-                    <div style={{
-                        width: 30, height: 30, border: '1px solid black',
-                        borderRadius: 20, backgroundColor: '#1464F4'
-                    }}>
-                        <div style={{
-                            width: 15, height: 15, border: '1px solid black',
-                            borderRadius: 20, backgroundColor: '#1464F4',
-                            marginTop: 6.5, marginLeft: 6.5
-                        }}></div>
-                    </div>
+                    <GamePiece />
                 </div>
             </div>
         )
@@ -28,16 +20,7 @@ const spaceGenerator = (direction, width) => {
             row.push(
                 <div style={{ width: size, height: 43 }}>
                     <div style={{ marginTop: 7, marginLeft: 7 }}>
-                        <div style={{
-                            width: 30, height: 30, border: '1px solid black',
-                            borderRadius: 20, backgroundColor: '#1464F4'
-                        }}>
-                            <div style={{
-                                width: 15, height: 15, border: '1px solid black',
-                                borderRadius: 20, backgroundColor: '#1464F4',
-                                marginTop: 6.5, marginLeft: 6.5
-                            }}></div>
-                        </div>
+                        <GamePiece />
                     </div>
                 </div>
             )
@@ -45,17 +28,7 @@ const spaceGenerator = (direction, width) => {
             row.push(
                 <div style={{ width: size, height: 43 }}>
                     <div style={{ marginTop: 7, marginLeft: size !== 47 ? 10 : 7 }}>
-                        <div style={{
-                            width: 30, height: 30, border: '1px solid black',
-                            borderRadius: 20, backgroundColor: '#1464F4',
-
-                        }}>
-                            <div style={{
-                                width: 15, height: 15, border: '1px solid black',
-                                borderRadius: 20, backgroundColor: '#1464F4',
-                                marginTop: 6.5, marginLeft: 6.5
-                            }}></div>
-                        </div>
+                        <GamePiece />
                     </div>
                 </div>
             )
@@ -66,17 +39,7 @@ const spaceGenerator = (direction, width) => {
         row.push(
             <div style={{ width: size, height: 43 }}>
                 <div style={{ marginTop: 7, marginLeft: size !== 47 ? 10 : 7 }}>
-                    <div style={{
-                        width: 30, height: 30, border: '1px solid black',
-                        borderRadius: 20, backgroundColor: '#1464F4',
-
-                    }}>
-                        <div style={{
-                            width: 15, height: 15, border: '1px solid black',
-                            borderRadius: 20, backgroundColor: '#1464F4',
-                            marginTop: 6.5, marginLeft: 6.5
-                        }}></div>
-                    </div>
+                    <GamePiece />
                 </div>
             </div>
         )

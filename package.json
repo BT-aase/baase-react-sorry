@@ -1,6 +1,6 @@
 {
-  "name": "electron-weather-app",
-  "productName": "React Electron App",
+  "name": "react-electron-sorry-app",
+  "productName": "Sorry",
   "version": "1.0.0",
   "description": "Simple boilerplate for building Electron apps with React",
   "license": "MIT",
