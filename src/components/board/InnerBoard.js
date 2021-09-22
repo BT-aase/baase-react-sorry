@@ -1,12 +1,8 @@
 import React from "react";
 import Home from "./elements/Home";
 import HomeArrows from "./elements/HomeArrows";
-import Card from '../game/Card';
 
 const InnerBoard = () => {
-
-    let currentCard = 5;
-    let deckCount = 10;
 
     return (
         <div style={{
@@ -62,40 +58,26 @@ const InnerBoard = () => {
                 </div>
             </div>
             <div>
-                {currentCard !== 0 ?
-                    <div style={{
-                        position: 'fixed', top: 170, left: 220,
-                    }}>
-                        <Card number={currentCard} />
-                    </div> :
-                    <div style={{
-                        position: 'fixed', top: 170, left: 220,
-                        width: 220, height: 140, transform: 'rotate(180deg)',
-                        border: '3px solid white', textAlign: 'center',
-                        fontFamily: 'Roboto', fontWeight: 500
-                    }}>
-                        <p style={{ marginTop: 20, fontSize: 20 }}>DISCARD</p>
-                        <p style={{ marginTop: -10, fontSize: 14 }}>FACE UP</p>
-                        <p style={{ marginTop: -10, fontSize: 20 }}>HERE</p>
-                    </div>
-                }
-                {deckCount !== 0 ?
-                    <div style={{
-                        position: 'fixed', top: 385, left: 220,
-                    }}>
-                        <Card />
-                    </div> :
-                    <div style={{
-                        position: 'fixed', top: 385, left: 220,
-                        width: 220, height: 140,
-                        border: '3px solid white', textAlign: 'center',
-                        fontFamily: 'Roboto', fontWeight: 500
-                    }}>
-                        <p style={{ marginTop: 20, fontSize: 20 }}>PLACE PACK</p>
-                        <p style={{ marginTop: -10, fontSize: 14 }}>FACE DOWN</p>
-                        <p style={{ marginTop: -10, fontSize: 20 }}>HERE</p>
-                    </div>
-                }
+                <div style={{
+                    position: 'fixed', top: 170, left: 220,
+                    width: 220, height: 140, transform: 'rotate(180deg)',
+                    border: '3px solid white', textAlign: 'center',
+                    fontFamily: 'Roboto', fontWeight: 500
+                }}>
+                    <p style={{ marginTop: 20, fontSize: 20 }}>DISCARD</p>
+                    <p style={{ marginTop: -10, fontSize: 14 }}>FACE UP</p>
+                    <p style={{ marginTop: -10, fontSize: 20 }}>HERE</p>
+                </div>
+                <div style={{
+                    position: 'fixed', top: 385, left: 220,
+                    width: 220, height: 140,
+                    border: '3px solid white', textAlign: 'center',
+                    fontFamily: 'Roboto', fontWeight: 500
+                }}>
+                    <p style={{ marginTop: 20, fontSize: 20 }}>PLACE PACK</p>
+                    <p style={{ marginTop: -10, fontSize: 14 }}>FACE DOWN</p>
+                    <p style={{ marginTop: -10, fontSize: 20 }}>HERE</p>
+                </div>
             </div>
         </div>
     );

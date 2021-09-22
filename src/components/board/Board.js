@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import GameOuterBoard from "../game/GameOuterBoard";
 import InnerBoard from "./InnerBoard";
-
 import OuterBoard from "./OuterBoard";
+import GameInnerBoard from "../game/GameInnerBoard";
+import GameOuterBoard from "../game/GameOuterBoard";
 
 const Board = () => {
 
@@ -35,6 +35,7 @@ const Board = () => {
             <OuterBoard />
             <InnerBoard />
             <GameOuterBoard/>
+            <GameInnerBoard/>
         </div>
     );
 };
