@@ -2,9 +2,10 @@ import React from "react";
 import Home from "./elements/Home";
 import HomeArrows from "./elements/HomeArrows";
 import Card from '../game/Card';
+
 const InnerBoard = () => {
 
-    let currentCard = 13;
+    let currentCard = 5;
     let deckCount = 10;
 
     return (

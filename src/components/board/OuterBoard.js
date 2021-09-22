@@ -34,7 +34,7 @@ const OuterBoard = () => {
 			<div style={{ display: 'flex', flexDirection: 'row', width: 650, backgroundColor: 'white' }}>
 				{spaceGenerator('horizontal')}
 			</div>
-			<div style={{ position: 'fixed', top: -63, left: -5 }} >
+			<div style={{ position: 'fixed', top: -60, left: -5 }} >
 				<Slides color='red' />
 			</div>
 			<div style={{ display: 'flex', flexDirection: 'column', width: 47, backgroundColor: 'white' }}>
@@ -63,7 +63,7 @@ const OuterBoard = () => {
 			</div>
 			<div style={{
 				position: 'fixed', transform: 'rotate(180deg)',
-				bottom: -64, right: -1
+				bottom: -61, right: -2
 			}} >
 				<Slides color='yellow' />
 			</div>

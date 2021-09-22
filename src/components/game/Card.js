@@ -94,8 +94,6 @@ const Card = (props) => {
                 break;
         }
 
-        console.log(sides)
-
 
         typeof (number) !== 'undefined' ?
             display = (
