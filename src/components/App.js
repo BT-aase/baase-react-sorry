@@ -1,9 +1,19 @@
 import React from "react";
+import { createStore, combineReducers } from "redux";
+import { Provider } from "react-redux";
 
-import Board from "./board/Board";
+import gameReducer from '../redux/reducers/game';
+import Board from "./Board";
 
-const App = () => {
-	return (<Board />);
-};
+const rootReducer = combineReducers({
+	game: gameReducer,
+});
+const store = createStore(rootReducer);
 
-export default App;
+export default function App() {
+	return (
+	  <Provider store={store}>
+		<Board />
+	  </Provider>
+	);
+  }
