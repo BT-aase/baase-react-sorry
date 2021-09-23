@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from 'react-redux';
-import { setPlayerDetails } from "../redux/actions/game";
+import { setPlayerDetails, createDeck } from "../redux/actions/game";
 
 import InnerBoard from "./board/InnerBoard";
 import OuterBoard from "./board/OuterBoard";
@@ -10,6 +10,7 @@ import GameOuterBoard from "./game/GameOuterBoard";
 const Board = () => {
 
     const dispatch = useDispatch();
+    dispatch(createDeck())
 
     const [angle, setAngle] = useState(0);
 
@@ -27,7 +28,6 @@ const Board = () => {
         // setAngle(newAngle);
         dispatch(setPlayerDetails(colors[0]))
         colors.shift();
-        console.log(colors)
     } 
 
     return (

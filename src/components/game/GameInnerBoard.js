@@ -1,5 +1,6 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { drawCard } from "../../redux/actions/game";
 
 import GameHome from './elements/GameHome';
 import Card from './elements/Card';
@@ -7,8 +8,10 @@ import colors from "../colors";
 
 const GameInnerBoard = () => {
 
-    let currentCard = 5;
-    let deckCount = 10;
+    const dispatch = useDispatch();
+
+    let currentCard = useSelector((state) => state.game.faceCard);
+    let deckCount = useSelector((state) => state.game.cardDeck.length);
 
     const startPieces = (playerColor) => {
         const playerColors = useSelector((state) => state.game.playerColors);
@@ -65,7 +68,7 @@ const GameInnerBoard = () => {
                     <div style={{
                         position: 'fixed', top: 385, left: 220, backgroundColor: "#cce3be"
                     }}>
-                        <Card />
+                        <Card onClick={() => dispatch(drawCard())}/>
                     </div> :
                     <></>
                 }

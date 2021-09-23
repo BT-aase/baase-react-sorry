@@ -142,7 +142,12 @@ const Card = (props) => {
                 </div>
             ) :
             display = (
-                <div style={{ width: 220, height: 140, backgroundColor: colors.cardBack, borderRadius: 10, textAlign: 'center', }}>
+                <div style={{
+                    width: 220, height: 140, backgroundColor: colors.cardBack,
+                    borderRadius: 10, textAlign: 'center',
+                }}
+                    onClick={props.onClick}
+                >
                     <p style={{ paddingTop: 35, color: 'white', fontSize: 50, fontFamily: 'Overlock', fontWeight: 900 }}>SORRY!</p>
                 </div>
             );
