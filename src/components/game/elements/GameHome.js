@@ -5,6 +5,9 @@ const zoneAdj = (side) => side === 'horizontal' ? 512 : 506;
 const homeAdj = (side) => side === 'horizontal' ? 484 : 478;
 
 const Home = (props) => {
+    
+    const piecesStart = [...Array(props.startPieces)].map((e, i) => <GamePiece color={props.color} key={i} />)
+
     return (
         <div>
             <div style={{
@@ -21,10 +24,7 @@ const Home = (props) => {
                     display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between',
                     width: 65, height: 70, marginLeft: 15, marginTop: 10
                 }}>
-                    <GamePiece />
-                    <GamePiece />
-                    <GamePiece />
-                    <GamePiece />
+                    {piecesStart}
                 </div>
             </div>
             <div style={{ position: 'absolute', marginTop: 690, marginLeft: 420 }}>

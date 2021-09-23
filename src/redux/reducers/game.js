@@ -4,23 +4,22 @@ import { SET_PLAYER_DETAILS } from "../actions/game";
 const initialState = {
     gameSide: 'red',
     playerColors: [],
-    playerHomePieces: []
+    playerStartPieces: []
 };
 
 const gameReducer = (state = initialState, action) => {
-    console.log(action, state);
     switch (action.type) {
         case SET_PLAYER_DETAILS: {
             let updatedPlayerColors = [...state.playerColors];
-            let updatedHomePieces = [...state.playerHomePieces];
+            let updatedStartPieces = [...state.playerStartPieces];
             let playerNum = state.playerColors.length + 1;
             let color = action.color;
             updatedPlayerColors.push({playerNum,color})
-            updatedHomePieces.push({playerNum, pieces: 4})
+            updatedStartPieces.push({playerNum, pieces: 4})
             return {
                 ...state,
                 playerColors: updatedPlayerColors,
-                playerHomePieces: updatedHomePieces
+                playerStartPieces: updatedStartPieces
             }
         }
         default:

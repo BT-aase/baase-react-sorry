@@ -1,5 +1,7 @@
 import React from "react";
 
+import colors from '../../colors';
+
 const Card = (props) => {
 
     const cardDisplay = (number) => {
@@ -140,7 +142,7 @@ const Card = (props) => {
                 </div>
             ) :
             display = (
-                <div style={{ width: 220, height: 140, backgroundColor: '#007FFF', borderRadius: 10, textAlign: 'center', }}>
+                <div style={{ width: 220, height: 140, backgroundColor: colors.cardBack, borderRadius: 10, textAlign: 'center', }}>
                     <p style={{ paddingTop: 35, color: 'white', fontSize: 50, fontFamily: 'Overlock', fontWeight: 900 }}>SORRY!</p>
                 </div>
             );

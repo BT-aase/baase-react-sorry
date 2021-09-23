@@ -1,6 +1,8 @@
 import React from "react";
+
 import Home from "./elements/Home";
 import HomeArrows from "./elements/HomeArrows";
+import colors from "../colors";
 
 const InnerBoard = () => {
 
@@ -13,48 +15,48 @@ const InnerBoard = () => {
                 <div style={{
                     position: 'fixed', left: 2, top: -57
                 }}>
-                    <Home color='red' side='horizontal' />
+                    <Home color={colors.red} side='horizontal' />
                 </div>
                 <div style={{
                     position: 'fixed', right: 253, bottom: 57
                 }}>
-                    <HomeArrows color='red' />
+                    <HomeArrows color={colors.red}  />
                 </div>
                 <div style={{
                     position: 'fixed', transform: 'rotate(90deg)',
                     right: -101, top: 55
                 }}>
-                    <Home color='#1464F4' />
+                    <Home color={colors.blue} />
                 </div>
                 <div style={{
                     position: 'fixed', transform: 'rotate(90deg)',
                     left: 55, bottom: 240
                 }}>
-                    <HomeArrows color='#1464F4' side='vertical' />
+                    <HomeArrows color={colors.blue} side='vertical' />
                 </div>
                 <div style={{
                     position: 'fixed', transform: 'rotate(180deg)',
                     bottom: -57, right: 4
                 }}>
-                    <Home color='yellow' side='horizontal' />
+                    <Home color={colors.yellow} side='horizontal' />
                 </div>
                 <div style={{
                     position: 'fixed', transform: 'rotate(180deg)',
                     left: 253, top: 57
                 }}>
-                    <HomeArrows color='yellow' />
+                    <HomeArrows color={colors.yellow} />
                 </div>
                 <div style={{
                     position: 'fixed', transform: 'rotate(270deg)',
                     left: -103, top: 640
                 }}>
-                    <Home color='green' />
+                    <Home color={colors.green} />
                 </div>
                 <div style={{
                     position: 'fixed', transform: 'rotate(270deg)',
                     right: 60, top: 235
                 }}>
-                    <HomeArrows color='green' side='vertical' />
+                    <HomeArrows color={colors.green} side='vertical' />
                 </div>
             </div>
             <div>

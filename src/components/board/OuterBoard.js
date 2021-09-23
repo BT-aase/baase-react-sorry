@@ -1,4 +1,5 @@
 import React from "react";
+import colors from "../colors";
 
 import Slides from './elements/Slides';
 
@@ -28,14 +29,14 @@ const spaceGenerator = (direction, width) => {
 const OuterBoard = () => {
 	return (
 		<div style={{
-			display: 'flex', flexWrap: 'wrap', border: '5px solid red', justifyContent: 'space-between', alignItems: 'flex-start',
+			display: 'flex', flexWrap: 'wrap', border: `5px solid ${colors.red}`, justifyContent: 'space-between', alignItems: 'flex-start',
 			width: '100%', height: '100%', position: 'absolute', zIndex: -1
 		}}>
 			<div style={{ display: 'flex', flexDirection: 'row', width: 650, backgroundColor: 'white' }}>
 				{spaceGenerator('horizontal')}
 			</div>
 			<div style={{ position: 'fixed', top: -60, left: -5 }} >
-				<Slides color='red' />
+				<Slides color={colors.red} />
 			</div>
 			<div style={{ display: 'flex', flexDirection: 'column', width: 47, backgroundColor: 'white' }}>
 				{spaceGenerator('vertical')}
@@ -44,7 +45,7 @@ const OuterBoard = () => {
 				position: 'fixed', position: 'fixed', transform: 'rotate(90deg)',
 				right: -102, top: 43
 			}} >
-				<Slides color='#1464F4' side='vertical' />
+				<Slides color={colors.blue} side='vertical' />
 			</div>
 			<div style={{
 				display: 'flex', flexDirection: 'column', width: 49, backgroundColor: 'white'
@@ -56,7 +57,7 @@ const OuterBoard = () => {
 				position: 'fixed', position: 'fixed', transform: 'rotate(270deg)',
 				left: -104, top: 653
 			}} >
-				<Slides color='green' side='vertical' />
+				<Slides color={colors.green} side='vertical' />
 			</div>
 			<div style={{ display: 'flex', flexDirection: 'row', width: 650, backgroundColor: 'white' }}>
 				{spaceGenerator('horizontal')}
@@ -65,7 +66,7 @@ const OuterBoard = () => {
 				position: 'fixed', transform: 'rotate(180deg)',
 				bottom: -61, right: -2
 			}} >
-				<Slides color='yellow' />
+				<Slides color={colors.yellow} />
 			</div>
 		</div>
 	);

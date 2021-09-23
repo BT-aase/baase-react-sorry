@@ -34,7 +34,8 @@ const Board = () => {
         <div style={{
             height: 700,
             width: 660,
-            left: 100,
+            left: 170,
+            top: 30,
             position: 'fixed',
             transform: `rotate(${angle}deg)`
         }}
