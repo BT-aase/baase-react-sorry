@@ -1,45 +1,82 @@
 import React from "react";
+import { useSelector } from "react-redux";
+
 import GamePiece from "./elements/GamePiece";
 
-const spaceGenerator = (direction, width) => {
+const displayPiece = (id) => {
+    let boardPieces = useSelector((state) => state.game.piecesInPlay);
+    let pieceinPlay = boardPieces.find(({ space }) => space === id);
+
+    if (typeof pieceinPlay !== 'undefined'){
+        return <GamePiece color={pieceinPlay.color}/>
+    }
+
+    
+};
+
+const spaceGenerator = (direction, width, outlier, orientation) => {
     let row = [];
     let size = typeof (width) === 'undefined' ? 47 : width;
+    let singlePoint;
+
+    if (outlier === 'start' && orientation === 'normal') {
+        singlePoint = 1;
+    }
+    else if (outlier === 'start' && orientation === 'flipped') {
+        singlePoint = 42
+    }
+    else if (outlier === 'end' && orientation === 'normal') {
+        singlePoint = 28;
+    }
+    else {
+        singlePoint = 43;
+    }
 
     if (direction === 'horizontal') {
         row.push(
-            <div style={{ width: size, height: 43 }}>
+            <div
+                id={`box-${singlePoint}`}
+                style={{ width: size, height: 43 }}>
                 <div style={{ marginTop: 7, marginLeft: 7 }}>
-                    <GamePiece />
+                    {displayPiece(singlePoint)}
                 </div>
             </div>
         )
     }
 
     for (let i = 1; i < 14; i++) {
+        let id = orientation === 'flipped' ? 42 - i : i + 1;
         if (direction === 'horizontal') {
             row.push(
-                <div style={{ width: size, height: 43 }}>
+                <div
+                    id={`box-${id}`}
+                    style={{ width: size, height: 43 }}>
                     <div style={{ marginTop: 7, marginLeft: 7 }}>
-                        <GamePiece />
+                        {displayPiece(id)}
                     </div>
                 </div>
             )
         } else {
+            let id = orientation === 'flipped' ? 57 - i : i + 14
             row.push(
-                <div style={{ width: size, height: 43 }}>
+                <div id={`box-${id}`}
+                    style={{ width: size, height: 43 }}>
                     <div style={{ marginTop: 7, marginLeft: size !== 47 ? 10 : 7 }}>
-                        <GamePiece />
+                        {displayPiece(id)}
                     </div>
                 </div>
             )
         }
     }
 
+
     if (direction === 'vertical') {
         row.push(
-            <div style={{ width: size, height: 43 }}>
+            <div
+                id={`box-${singlePoint}`}
+                style={{ width: size, height: 43 }}>
                 <div style={{ marginTop: 7, marginLeft: size !== 47 ? 10 : 7 }}>
-                    <GamePiece />
+                    {displayPiece(singlePoint)}
                 </div>
             </div>
         )
@@ -55,17 +92,17 @@ const GameOuterBoard = () => {
             width: '100%', height: '100%', position: 'absolute', border: '5px solid transparent'
         }}>
             <div style={{ display: 'flex', flexDirection: 'row', width: 650 }}>
-                {spaceGenerator('horizontal')}
+                {spaceGenerator('horizontal', undefined, 'start', 'normal')}
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', width: 47 }}>
-                {spaceGenerator('vertical')}
+                {spaceGenerator('vertical', undefined, 'end', 'flipped')}
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', width: 49 }}>
-                {spaceGenerator('vertical', 49)}
+                {spaceGenerator('vertical', 49, 'end', 'normal')}
 
             </div>
             <div style={{ display: 'flex', flexDirection: 'row', width: 650 }}>
-                {spaceGenerator('horizontal')}
+                {spaceGenerator('horizontal', undefined, 'start', 'flipped')}
             </div>
         </div>
     );

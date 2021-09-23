@@ -5,7 +5,8 @@ const initialState = {
     playerColors: [],
     playerStartPieces: [],
     faceCard: 0,
-    cardDeck: []
+    cardDeck: [],
+    piecesInPlay: [{space: 20, color: 'yellow'}]
 };
 
 const gameReducer = (state = initialState, action) => {

@@ -5,41 +5,45 @@ const zoneAdj = (side) => side === 'horizontal' ? 512 : 506;
 const homeAdj = (side) => side === 'horizontal' ? 484 : 478;
 
 const Home = (props) => {
-    
     const piecesStart = [...Array(props.startPieces)].map((e, i) => <GamePiece color={props.color} key={i} />)
 
     return (
         <div>
-            <div style={{
-                width: 100,
-                height: 100,
-                marginLeft: 393,
-                marginTop: 610,
-                borderRadius: 70,
-                border: '3px solid black',
-                backgroundColor: 'transparent',
-                position: 'absolute'
-            }}>
-                <div style={{
-                    display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between',
-                    width: 65, height: 70, marginLeft: 15, marginTop: 10
+            <div
+                id={`${props.color}Start`}
+                style={{
+                    width: 100,
+                    height: 100,
+                    marginLeft: 393,
+                    marginTop: 610,
+                    borderRadius: 70,
+                    border: '3px solid black',
+                    backgroundColor: 'transparent',
+                    position: 'absolute'
                 }}>
+                <div
+                    style={{
+                        display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between',
+                        width: 65, height: 70, marginLeft: 15, marginTop: 10
+                    }}>
                     {piecesStart}
                 </div>
             </div>
             <div style={{ position: 'absolute', marginTop: 690, marginLeft: 420 }}>
                 <div style={{ width: 46, height: 20, backgroundColor: 'transparent' }} />
             </div>
-            <div style={{
-                width: 100,
-                height: 100,
-                marginLeft: homeAdj(props.side),
-                marginTop: 375,
-                borderRadius: 70,
-                border: '3px solid black',
-                backgroundColor: 'transparent',
-                position: 'absolute'
-            }}>
+            <div
+                id={`${props.color}Home`}
+                style={{
+                    width: 100,
+                    height: 100,
+                    marginLeft: homeAdj(props.side),
+                    marginTop: 375,
+                    borderRadius: 70,
+                    border: '3px solid black',
+                    backgroundColor: 'transparent',
+                    position: 'absolute'
+                }}>
                 <div style={{
                     display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between',
                     width: 65, height: 70, marginLeft: 15, marginTop: 15

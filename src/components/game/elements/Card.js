@@ -79,7 +79,7 @@ const Card = (props) => {
                 centerTop = 170;
                 break;
             case 12:
-                text = 'Must move one man forward 8 squares.'
+                text = 'Must move one man forward 12 squares.'
                 width = 95;
                 sides = 215;
                 ends = 195;

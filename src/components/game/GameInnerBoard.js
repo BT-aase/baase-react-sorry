@@ -4,7 +4,6 @@ import { drawCard } from "../../redux/actions/game";
 
 import GameHome from './elements/GameHome';
 import Card from './elements/Card';
-import colors from "../colors";
 
 const GameInnerBoard = () => {
 
@@ -34,13 +33,13 @@ const GameInnerBoard = () => {
                 <div style={{
                     position: 'fixed', left: 2, top: -57
                 }}>
-                    <GameHome color={colors.red} side='horizontal' startPieces={startPieces('red')} />
+                    <GameHome color='red' side='horizontal' startPieces={startPieces('red')} />
                 </div>
                 <div style={{
                     position: 'fixed', transform: 'rotate(90deg)',
                     right: -101, top: 55
                 }}>
-                    <GameHome color='#1464F4' startPieces={startPieces('blue')}/>
+                    <GameHome color='blue' startPieces={startPieces('blue')}/>
                 </div>
                 <div style={{
                     position: 'fixed', transform: 'rotate(180deg)',
