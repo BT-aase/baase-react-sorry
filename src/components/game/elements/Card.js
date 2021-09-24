@@ -1,6 +1,5 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { displayMoves } from "../../../redux/actions/game";
 
 import colors from '../../colors';
 
@@ -151,17 +150,13 @@ const Card = (props) => {
                     width: 220, height: 140, backgroundColor: colors.cardBack,
                     borderRadius: 10, textAlign: 'center',
                 }}
-                    onClick={props.onClick}
+                    onClick ={() => { props.onClick(); props.displayMoves();}}
                 >
                     <p style={{ paddingTop: 35, color: 'white', fontSize: 50, fontFamily: 'Overlock', fontWeight: 900 }}>SORRY!</p>
                 </div>
             );
 
         return display;
-    }
-
-    if (typeof (props.number) !== 'undefined') {
-        dispatch(displayMoves());
     }
 
     return (cardDisplay(props.number));

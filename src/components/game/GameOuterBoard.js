@@ -7,8 +7,8 @@ const displayPiece = (id) => {
     let boardPieces = useSelector((state) => state.game.piecesInPlay);
     let pieceinPlay = boardPieces.find(({ space }) => space === id);
 
-    if (typeof pieceinPlay !== 'undefined'){
-        return <GamePiece color={pieceinPlay.color}/>
+    if (typeof pieceinPlay !== 'undefined') {
+        return <GamePiece color={pieceinPlay.color} />
     }
 };
 
@@ -16,6 +16,8 @@ const spaceGenerator = (direction, width, outlier, orientation) => {
     let row = [];
     let size = typeof (width) === 'undefined' ? 47 : width;
     let singlePoint;
+
+    let moveSpaces = useSelector((state) => state.game.possibleMoves);
 
     if (outlier === 'start' && orientation === 'normal') {
         singlePoint = 1;
@@ -34,7 +36,7 @@ const spaceGenerator = (direction, width, outlier, orientation) => {
         row.push(
             <div
                 id={`box-${singlePoint}`}
-                style={{ width: size, height: 43 }}>
+                style={{ width: size, height: 43, backgroundColor: moveSpaces.includes(singlePoint) ? 'red' : 'transparent' }}>
                 <div style={{ marginTop: 7, marginLeft: 7 }}>
                     {displayPiece(singlePoint)}
                 </div>
@@ -48,7 +50,7 @@ const spaceGenerator = (direction, width, outlier, orientation) => {
             row.push(
                 <div
                     id={`box-${id}`}
-                    style={{ width: size, height: 43 }}>
+                    style={{ width: size, height: 43, backgroundColor: moveSpaces.includes(id) ? 'red' : 'transparent' }}>
                     <div style={{ marginTop: 7, marginLeft: 7 }}>
                         {displayPiece(id)}
                     </div>
@@ -58,7 +60,7 @@ const spaceGenerator = (direction, width, outlier, orientation) => {
             let id = orientation === 'flipped' ? 57 - i : i + 14
             row.push(
                 <div id={`box-${id}`}
-                    style={{ width: size, height: 43 }}>
+                    style={{ width: size, height: 43, backgroundColor: moveSpaces.includes(id) ? 'red' : 'transparent' }}>
                     <div style={{ marginTop: 7, marginLeft: size !== 47 ? 10 : 7 }}>
                         {displayPiece(id)}
                     </div>
@@ -72,7 +74,7 @@ const spaceGenerator = (direction, width, outlier, orientation) => {
         row.push(
             <div
                 id={`box-${singlePoint}`}
-                style={{ width: size, height: 43 }}>
+                style={{ width: size, height: 43, backgroundColor: moveSpaces.includes(singlePoint) ? 'red' : 'transparent' }}>
                 <div style={{ marginTop: 7, marginLeft: size !== 47 ? 10 : 7 }}>
                     {displayPiece(singlePoint)}
                 </div>

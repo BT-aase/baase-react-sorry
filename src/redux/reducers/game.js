@@ -1,4 +1,4 @@
-import { SET_PLAYER_DETAILS, CREATE_DECK, DRAW_CARD, START_ACTIONS, DISPLAY_MOVES } from "../actions/game";
+import { SET_PLAYER_DETAILS, CREATE_DECK, DRAW_CARD, START_ACTIONS, DISPLAY_MOVES, displayMoves } from "../actions/game";
 
 const initialState = {
     gameSide: 'red',
@@ -6,7 +6,8 @@ const initialState = {
     playerStartPieces: [],
     faceCard: 0,
     cardDeck: [],
-    piecesInPlay: []
+    piecesInPlay: [{ space: 33, color: 'red' }, { space: 42, color: 'red' }, { space: 15, color: 'red' }],
+    possibleMoves: []
 };
 
 const gameReducer = (state = initialState, action) => {
@@ -91,12 +92,82 @@ const gameReducer = (state = initialState, action) => {
             }
         }
         case DISPLAY_MOVES: {
-            let currCard = state.faceCard;
-            let currPieces = [...state.piecesInPlay].filter(piece => piece.color === state.gameSide)
-            console.log(currPieces);
+            let currCard = 4;
+            let startExits = [
+                { space: 33, color: 'red' }, { space: 46, color: 'blue' },
+                { space: 5, color: 'yellow' }, { space: 18, color: 'green' }
+            ]
+            let startable;
 
-            let moveCards = [1, 2, 3, 4, 5, 7, 8, 10, 11, 12];
-            let swapCards = [11, 13];
+            let displayPieces = [];
+
+            let moveCards = [1, 2, 3, 4, 5, 7, 8, 10, 12];
+
+            if (moveCards.includes(currCard)) {
+                let currPieces = [...state.piecesInPlay].filter(piece => piece.color === state.gameSide);
+
+                const pieceMover = (position, card) => {
+                    switch (card) {
+                        case 1:
+                            displayPieces.push(position + 1);
+                            break;
+                        case 2:
+                            displayPieces.push(position + 2);
+                            break;
+                        case 3:
+                            displayPieces.push(position + 3);
+                            break;
+                        case 4:
+                            console.log(position)
+                            displayPieces.push(position - 4);
+                            break;
+                        case 5:
+                            displayPieces.push(position + 5);
+                            break;
+                        case 8:
+                            displayPieces.push(position + 8);
+                            break;
+                        case 10:
+                            displayPieces.push(position + 10);
+                            displayPieces.push(position - 1);
+                            break;
+                        case 12:
+                            displayPieces.push(position + 12);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                for (let i = 0; i < currPieces.length; i++) {
+                    if (currCard === 1 || currCard === 2) {
+                        startable = true;
+                        let colorExit = startExits.find(({ color }) => color === state.gameSide);
+                        if (currPieces[i].space === colorExit.space) {
+                            startable = false;
+                        }
+                    };
+
+                    pieceMover(currPieces[i].space, currCard)
+
+                    if (startable) {
+                        displayPieces.push(`${state.gameSide}Home`)
+                    }
+                };
+
+            } else if (currCard === 11) {
+                let currPieces = [...state.piecesInPlay].filter(piece => piece.color === state.gameSide);
+                let oppPieces = [...state.piecesInPlay].filter(piece => piece.color !== state.gameSide);
+            } else {
+                let oppPieces = [...state.piecesInPlay].filter(piece => piece.color !== state.gameSide);
+            }
+
+            console.log(displayPieces)
+
+            return {
+                ...state,
+                possibleMoves: displayPieces
+            }
 
         }
         default:

@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { drawCard, startActions } from "../../redux/actions/game";
+import { drawCard, startActions, displayMoves } from "../../redux/actions/game";
 
 import GameHome from './elements/GameHome';
 import Card from './elements/Card';
@@ -71,7 +71,10 @@ const GameInnerBoard = () => {
                     <div style={{
                         position: 'fixed', top: 385, left: 220, backgroundColor: "#cce3be"
                     }}>
-                        <Card onClick={() => dispatch(drawCard())} />
+                        <Card
+                            onClick={() => dispatch(drawCard())}
+                            displayMoves={() => dispatch(displayMoves())}
+                        />
                     </div> :
                     <></>
                 }
