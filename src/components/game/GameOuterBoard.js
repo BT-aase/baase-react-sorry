@@ -10,8 +10,6 @@ const displayPiece = (id) => {
     if (typeof pieceinPlay !== 'undefined'){
         return <GamePiece color={pieceinPlay.color}/>
     }
-
-    
 };
 
 const spaceGenerator = (direction, width, outlier, orientation) => {

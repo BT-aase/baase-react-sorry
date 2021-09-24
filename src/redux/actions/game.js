@@ -1,6 +1,8 @@
 export const SET_PLAYER_DETAILS = 'SET_PLAYER_DETAILS';
 export const CREATE_DECK = 'CREATE_DECK';
 export const DRAW_CARD = 'DRAW_CARD';
+export const START_ACTIONS = 'START_ACTIONS';
+export const DISPLAY_MOVES = 'DISPLAY_MOVES';
 
 export const setPlayerDetails = (color) => {
     return {
@@ -18,5 +20,19 @@ export const createDeck = () => {
 export const drawCard = () => {
   return {
     type: DRAW_CARD
+  }
+}
+
+export const startActions = (color, action) => {
+  return {
+    type: START_ACTIONS,
+    color,
+    action
+  }
+}
+
+export const displayMoves = () => {
+  return {
+    type: DISPLAY_MOVES
   }
 }

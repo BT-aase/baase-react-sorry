@@ -11,6 +11,7 @@ const Home = (props) => {
         <div>
             <div
                 id={`${props.color}Start`}
+                onClick={props.onStart}
                 style={{
                     width: 100,
                     height: 100,

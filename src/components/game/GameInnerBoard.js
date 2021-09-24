@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { drawCard } from "../../redux/actions/game";
+import { drawCard, startActions } from "../../redux/actions/game";
 
 import GameHome from './elements/GameHome';
 import Card from './elements/Card';
@@ -33,25 +33,29 @@ const GameInnerBoard = () => {
                 <div style={{
                     position: 'fixed', left: 2, top: -57
                 }}>
-                    <GameHome color='red' side='horizontal' startPieces={startPieces('red')} />
+                    <GameHome color='red' side='horizontal' startPieces={startPieces('red')}
+                        onStart={() => dispatch(startActions('red', 'out'))} />
                 </div>
                 <div style={{
                     position: 'fixed', transform: 'rotate(90deg)',
                     right: -101, top: 55
                 }}>
-                    <GameHome color='blue' startPieces={startPieces('blue')}/>
+                    <GameHome color='blue' startPieces={startPieces('blue')}
+                        onStart={() => dispatch(startActions('blue', 'out'))} />
                 </div>
                 <div style={{
                     position: 'fixed', transform: 'rotate(180deg)',
                     bottom: -57, right: 4
                 }}>
-                    <GameHome color='yellow' side='horizontal' startPieces={startPieces('yellow')}/>
+                    <GameHome color='yellow' side='horizontal' startPieces={startPieces('yellow')}
+                        onStart={() => dispatch(startActions('yellow', 'out'))} />
                 </div>
                 <div style={{
                     position: 'fixed', transform: 'rotate(270deg)',
                     left: -103, top: 640
                 }}>
-                    <GameHome color='green' startPieces={startPieces('green')}/>
+                    <GameHome color='green' startPieces={startPieces('green')}
+                        onStart={() => dispatch(startActions('green', 'out'))} />
                 </div>
             </div>
             <div>
@@ -67,7 +71,7 @@ const GameInnerBoard = () => {
                     <div style={{
                         position: 'fixed', top: 385, left: 220, backgroundColor: "#cce3be"
                     }}>
-                        <Card onClick={() => dispatch(drawCard())}/>
+                        <Card onClick={() => dispatch(drawCard())} />
                     </div> :
                     <></>
                 }
