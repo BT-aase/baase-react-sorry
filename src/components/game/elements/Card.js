@@ -53,7 +53,7 @@ const Card = (props) => {
                 centerLeft = 320;
                 break;
             case 7:
-                text = 'Must move one man forward 7 squares or split the move between any two men.'
+                text = 'Must move one man forward 7 squares'
                 width = 95;
                 sides = 205;
                 ends = 200;

@@ -1,11 +1,15 @@
 import React from "react";
+import { useSelector } from "react-redux";
+
 import GamePiece from "./GamePiece";
 
 const zoneAdj = (side) => side === 'horizontal' ? 512 : 506;
 const homeAdj = (side) => side === 'horizontal' ? 484 : 478;
 
 const Home = (props) => {
-    const piecesStart = [...Array(props.startPieces)].map((e, i) => <GamePiece color={props.color} key={i} />)
+    const piecesStart = [...Array(props.startPieces)].map((e, i) => <GamePiece color={props.color} key={i} />);
+    let boardSide = useSelector((state) => state.game.gameSide);
+    let moveSpaces = useSelector((state) => state.game.possibleMoves);
 
     return (
         <div>
@@ -19,7 +23,7 @@ const Home = (props) => {
                     marginTop: 610,
                     borderRadius: 70,
                     border: '3px solid black',
-                    backgroundColor: 'transparent',
+                    backgroundColor: moveSpaces.includes(`${boardSide}Home`) && boardSide === props.color ? 'red' : 'transparent',
                     position: 'absolute'
                 }}>
                 <div

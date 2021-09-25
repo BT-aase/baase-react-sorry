@@ -6,7 +6,7 @@ const initialState = {
     playerStartPieces: [],
     faceCard: 0,
     cardDeck: [],
-    piecesInPlay: [{ space: 33, color: 'red' }, { space: 42, color: 'red' }, { space: 15, color: 'red' }],
+    piecesInPlay: [{ space: 37, color: 'red' }, { space: 22, color: 'blue' }],
     possibleMoves: []
 };
 
@@ -58,7 +58,7 @@ const gameReducer = (state = initialState, action) => {
             const startPieces = currentStart.find(({ playerNum }) => playerNum === player.playerNum);
             let currentPieces = startPieces.pieces;
 
-            const index = currentStart.findIndex(pieces => pieces = startPieces);
+            const index = currentStart.findIndex(pieces => pieces === startPieces);
             currentStart.splice(index, 1);
 
             if (action.action = 'out') {
@@ -92,12 +92,11 @@ const gameReducer = (state = initialState, action) => {
             }
         }
         case DISPLAY_MOVES: {
-            let currCard = 4;
+            let currCard = state.faceCard;
             let startExits = [
                 { space: 33, color: 'red' }, { space: 46, color: 'blue' },
                 { space: 5, color: 'yellow' }, { space: 18, color: 'green' }
             ]
-            let startable;
 
             let displayPieces = [];
 
@@ -124,6 +123,10 @@ const gameReducer = (state = initialState, action) => {
                         case 5:
                             displayPieces.push(position + 5);
                             break;
+                        case 7:
+                            displayPieces.push(position + 7);
+                            break;
+                            break;
                         case 8:
                             displayPieces.push(position + 8);
                             break;
@@ -139,30 +142,41 @@ const gameReducer = (state = initialState, action) => {
                     }
                 }
 
+                let occupied = [];
+
                 for (let i = 0; i < currPieces.length; i++) {
                     if (currCard === 1 || currCard === 2) {
-                        startable = true;
+                        let startable;
                         let colorExit = startExits.find(({ color }) => color === state.gameSide);
-                        if (currPieces[i].space === colorExit.space) {
-                            startable = false;
+
+                        occupied.push(currPieces[i].space);
+
+                        if (!occupied.includes(colorExit.space)) {
+                            displayPieces.push(`${state.gameSide}Home`)
                         }
                     };
-
                     pieceMover(currPieces[i].space, currCard)
-
-                    if (startable) {
-                        displayPieces.push(`${state.gameSide}Home`)
-                    }
                 };
 
             } else if (currCard === 11) {
                 let currPieces = [...state.piecesInPlay].filter(piece => piece.color === state.gameSide);
                 let oppPieces = [...state.piecesInPlay].filter(piece => piece.color !== state.gameSide);
+
+                for (let i = 0; i < currPieces.length; i++) {
+                    displayPieces.push(currPieces[i].space + 11)
+                }
+
+                for (let i = 0; i < oppPieces.length; i++) {
+                    displayPieces.push(oppPieces[i].space)
+                }
+
             } else {
                 let oppPieces = [...state.piecesInPlay].filter(piece => piece.color !== state.gameSide);
-            }
 
-            console.log(displayPieces)
+                for (let i = 0; i < oppPieces.length; i++) {
+                    displayPieces.push(oppPieces[i].space)
+                }
+            }
 
             return {
                 ...state,

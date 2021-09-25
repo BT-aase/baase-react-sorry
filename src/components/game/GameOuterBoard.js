@@ -36,7 +36,11 @@ const spaceGenerator = (direction, width, outlier, orientation) => {
         row.push(
             <div
                 id={`box-${singlePoint}`}
-                style={{ width: size, height: 43, backgroundColor: moveSpaces.includes(singlePoint) ? 'red' : 'transparent' }}>
+                style={{
+                    width: size,
+                    height: 43,
+                    backgroundColor: moveSpaces.includes(singlePoint) ? 'red' : 'transparent',
+                }}>
                 <div style={{ marginTop: 7, marginLeft: 7 }}>
                     {displayPiece(singlePoint)}
                 </div>
@@ -50,7 +54,10 @@ const spaceGenerator = (direction, width, outlier, orientation) => {
             row.push(
                 <div
                     id={`box-${id}`}
-                    style={{ width: size, height: 43, backgroundColor: moveSpaces.includes(id) ? 'red' : 'transparent' }}>
+                    style={{
+                        width: size, height: 43,
+                        backgroundColor: moveSpaces.includes(id) ? 'red' : 'transparent',
+                    }}>
                     <div style={{ marginTop: 7, marginLeft: 7 }}>
                         {displayPiece(id)}
                     </div>
@@ -60,7 +67,10 @@ const spaceGenerator = (direction, width, outlier, orientation) => {
             let id = orientation === 'flipped' ? 57 - i : i + 14
             row.push(
                 <div id={`box-${id}`}
-                    style={{ width: size, height: 43, backgroundColor: moveSpaces.includes(id) ? 'red' : 'transparent' }}>
+                    style={{
+                        width: size, height: 43,
+                        backgroundColor: moveSpaces.includes(id) ? 'red' : 'transparent',
+                    }}>
                     <div style={{ marginTop: 7, marginLeft: size !== 47 ? 10 : 7 }}>
                         {displayPiece(id)}
                     </div>
@@ -74,7 +84,10 @@ const spaceGenerator = (direction, width, outlier, orientation) => {
         row.push(
             <div
                 id={`box-${singlePoint}`}
-                style={{ width: size, height: 43, backgroundColor: moveSpaces.includes(singlePoint) ? 'red' : 'transparent' }}>
+                style={{
+                    width: size, height: 43,
+                    backgroundColor: moveSpaces.includes(singlePoint) ? 'red' : 'transparent',
+                }}>
                 <div style={{ marginTop: 7, marginLeft: size !== 47 ? 10 : 7 }}>
                     {displayPiece(singlePoint)}
                 </div>
