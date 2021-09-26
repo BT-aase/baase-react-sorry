@@ -32,13 +32,53 @@ const GameOuterBoard = () => {
     }
 
     const pieceMove = (move, moves) => {
-        let movingPiece = moves.find(piece => piece.move === move);
-        if (movingPiece.move - movingPiece.position > 0) {
-            for (let a = movingPiece.position; a < movingPiece.move; a++) {
-                dispatch(movePiece(a, a + 1));
-            }
-        } else {
 
+        let movingPiece = moves.find(piece => piece.move === move);
+        
+        let wrapBoard = (move) => {
+            if (move > 56) {
+                return move - 56;
+            } else if (move < 1) {
+                return move + 56
+            } else {
+                return move;
+            }
+        }
+
+        if (typeof movingPiece.action === 'undefined') {
+            let a = movingPiece.position;
+
+            const moveAction = () => {
+                setTimeout(function () {
+                    dispatch(movePiece(wrapBoard(a), wrapBoard(a + 1)))
+                    a++;
+                    if (a < movingPiece.move || a === 56) {
+                        moveAction();
+                    } else if (a >= 57) {
+                        a = a - 56;
+                        moveAction();
+                    }
+                }, 1000)
+            }
+
+            moveAction();
+        } else {
+            let b = movingPiece.position;
+
+            const moveAction = () => {
+                setTimeout(function () {
+                    dispatch(movePiece(wrapBoard(b), wrapBoard(b - 1)))
+                    b--;
+                    if (b > movingPiece.move || b === 1) {
+                        moveAction();
+                    } else if (b <= 0) {
+                        b = b + 56;
+                        moveAction();
+                    }
+                }, 1000)
+            }
+
+            moveAction();
         }
     }
 

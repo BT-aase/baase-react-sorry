@@ -92,7 +92,7 @@ const gameReducer = (state = initialState, action) => {
             }
         }
         case DISPLAY_MOVES: {
-            let currCard = 8;
+            let currCard = 4;
             let displayPieces = [];
             let moveCards = [1, 2, 3, 4, 5, 7, 8, 10, 12];
             let occupied = [];
@@ -107,55 +107,65 @@ const gameReducer = (state = initialState, action) => {
                 let currPieces = [...state.piecesInPlay].filter(piece => piece.color === state.gameSide);
                 getOccupied(currPieces);
 
+                let wrapBoard = (move) =>  {
+                    if (move > 56) {
+                        return move - 56;
+                    } else if (move < 1) {
+                        return move + 56
+                    } else {
+                        return move;
+                    }
+                } 
+
                 const pieceMover = (position, card, occupied) => {
                     switch (card) {
                         case 1:
                             if (!occupied.includes(position + 1)) {
-                                displayPieces.push({ move: position + 1, position });
+                                displayPieces.push({ move: wrapBoard(position + 1), position });
                             }
                             break;
                         case 2:
                             if (!occupied.includes(position + 2)) {
-                                displayPieces.push({ move: position + 2, position });
+                                displayPieces.push({ move: wrapBoard(position + 2), position });
                             }
                             break;
                         case 3:
                             if (!occupied.includes(position + 3)) {
-                                displayPieces.push({ move: position + 3, position });
+                                displayPieces.push({ move: wrapBoard(position + 3), position });
                             }
                             break;
                         case 4:
                             if (!occupied.includes(position - 4)) {
-                                displayPieces.push({ move: position - 4, position });
+                                displayPieces.push({ move: wrapBoard(position - 4), position, action: 'backwards' });
                             }
                             break;
                         case 5:
                             if (!occupied.includes(position + 5)) {
-                                displayPieces.push({ move: position + 5, position });
+                                displayPieces.push({ move: wrapBoard(position + 5), position });
                             }
                             break;
                         case 7:
                             if (!occupied.includes(position + 7)) {
-                                displayPieces.push({ move: position + 7, position });
+                                displayPieces.push({ move: wrapBoard(position + 7), position });
                             }
                             break;
                         case 8:
                             if (!occupied.includes(position + 8)) {
-                                displayPieces.push({ move: position + 8, position });
+                                displayPieces.push({ move: wrapBoard(position + 8), position });
                             }
                             break;
                         case 10:
                             if (!occupied.includes(position + 10)) {
-                                displayPieces.push({ move: position + 10, position });
+                                displayPieces.push({ move: wrapBoard(position + 10), position });
                             }
 
                             if (!occupied.includes(position - 1)) {
-                                displayPieces.push({ move: position - 1, position });
+                                displayPieces.push({ move: wrapBoard(position - 1), position, action: 'backwards' });
                             }
                             break;
                         case 12:
                             if (!occupied.includes(position + 12)) {
-                                displayPieces.push({ move: position + 12, position });
+                                displayPieces.push({ move: wrapBoard(position + 12), position });
                             }
                             break;
                         default:
@@ -211,10 +221,16 @@ const gameReducer = (state = initialState, action) => {
 
         }
         case MOVE_PIECE: {
-            console.log(action)
-            console.log([...state.piecesInPlay])
-            let currPieces = [...state.piecesInPlay].filter(piece => piece.space === action.oldSpace);
-            console.log(currPieces)
+            let pieces = [...state.piecesInPlay];
+            let movingPiece = pieces.find(piece => piece.space === action.oldSpace && piece.color === state.gameSide);
+            let pieceIndex = pieces.findIndex(piece => piece.space === action.oldSpace  && piece.color === state.gameSide);
+            pieces.splice(pieceIndex, 1);
+            pieces.push({ space: action.newSpace, color: movingPiece.color });
+
+            return {
+                ...state,
+                piecesInPlay: pieces
+            }
         }
         default:
             return state
