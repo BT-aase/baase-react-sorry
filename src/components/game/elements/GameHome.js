@@ -15,7 +15,7 @@ const GameHome = (props) => {
         <div>
             <div
                 id={`${props.color}Start`}
-                onClick={props.moves.includes(`${boardSide}Home`) && boardSide ? props.onStart : {}}
+                onClick={props.moves.includes(`${boardSide}Home`) && boardSide ? props.onStart : () => {}}
                 style={{
                     width: 100,
                     height: 100,

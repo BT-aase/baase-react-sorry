@@ -31,8 +31,6 @@ const GameInnerBoard = () => {
             occupiedSpaces.push(moveSpaces[count].move)
         }
 
-        console.log(occupiedSpaces)
-
         return occupiedSpaces;
     }
 

@@ -1,4 +1,4 @@
-import { SET_PLAYER_DETAILS, CREATE_DECK, DRAW_CARD, START_ACTIONS, DISPLAY_MOVES } from "../actions/game";
+import { SET_PLAYER_DETAILS, CREATE_DECK, DRAW_CARD, START_ACTIONS, DISPLAY_MOVES, MOVE_PIECE } from "../actions/game";
 
 const initialState = {
     gameSide: 'red',
@@ -92,7 +92,7 @@ const gameReducer = (state = initialState, action) => {
             }
         }
         case DISPLAY_MOVES: {
-            let currCard = 1;
+            let currCard = 8;
             let displayPieces = [];
             let moveCards = [1, 2, 3, 4, 5, 7, 8, 10, 12];
             let occupied = [];
@@ -184,7 +184,6 @@ const gameReducer = (state = initialState, action) => {
                 let oppPieces = [...state.piecesInPlay].filter(piece => piece.color !== state.gameSide);
 
                 getOccupied(currPieces);
-                console.log(occupied)
 
                 for (let i = 0; i < currPieces.length; i++) {
                     if (!occupied.includes(currPieces[i].space + 11)) {
@@ -205,13 +204,17 @@ const gameReducer = (state = initialState, action) => {
                 }
             }
 
-            console.log(displayPieces)
-
             return {
                 ...state,
                 possibleMoves: displayPieces
             }
 
+        }
+        case MOVE_PIECE: {
+            console.log(action)
+            console.log([...state.piecesInPlay])
+            let currPieces = [...state.piecesInPlay].filter(piece => piece.space === action.oldSpace);
+            console.log(currPieces)
         }
         default:
             return state
