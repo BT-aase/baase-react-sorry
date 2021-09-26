@@ -8,7 +8,6 @@ import Card from './elements/Card';
 const GameInnerBoard = () => {
 
     const dispatch = useDispatch();
-
     let currentCard = useSelector((state) => state.game.faceCard);
     let deckCount = useSelector((state) => state.game.cardDeck.length);
 
@@ -24,6 +23,19 @@ const GameInnerBoard = () => {
         }
     }
 
+    const showMoves = () => {
+        let occupiedSpaces = [];
+
+        let moveSpaces = useSelector((state) => state.game.possibleMoves);
+        for (let count = 0; count < moveSpaces.length; count++) {
+            occupiedSpaces.push(moveSpaces[count].move)
+        }
+
+        console.log(occupiedSpaces)
+
+        return occupiedSpaces;
+    }
+
     return (
         <div style={{
             position: 'fixed', bottom: 48, left: 52,
@@ -33,29 +45,47 @@ const GameInnerBoard = () => {
                 <div style={{
                     position: 'fixed', left: 2, top: -57
                 }}>
-                    <GameHome color='red' side='horizontal' startPieces={startPieces('red')}
-                        onStart={() => dispatch(startActions('red', 'out'))} />
+                    <GameHome
+                        color='red'
+                        side='horizontal'
+                        startPieces={startPieces('red')}
+                        moves={showMoves()}
+                        onStart={() => dispatch(startActions('red', 'out'))}
+                    />
                 </div>
                 <div style={{
                     position: 'fixed', transform: 'rotate(90deg)',
                     right: -101, top: 55
                 }}>
-                    <GameHome color='blue' startPieces={startPieces('blue')}
-                        onStart={() => dispatch(startActions('blue', 'out'))} />
+                    <GameHome
+                        color='blue'
+                        startPieces={startPieces('blue')}
+                        moves={showMoves()}
+                        onStart={() => dispatch(startActions('blue', 'out'))}
+                    />
                 </div>
                 <div style={{
                     position: 'fixed', transform: 'rotate(180deg)',
                     bottom: -57, right: 4
                 }}>
-                    <GameHome color='yellow' side='horizontal' startPieces={startPieces('yellow')}
-                        onStart={() => dispatch(startActions('yellow', 'out'))} />
+                    <GameHome
+                        color='yellow'
+                        side='horizontal'
+                        startPieces={startPieces('yellow')}
+                        moves={showMoves()}
+                        onStart={() => dispatch(startActions('yellow', 'out'))}
+                    />
                 </div>
                 <div style={{
                     position: 'fixed', transform: 'rotate(270deg)',
                     left: -103, top: 640
                 }}>
-                    <GameHome color='green' startPieces={startPieces('green')}
-                        onStart={() => dispatch(startActions('green', 'out'))} />
+                    <GameHome
+                        color='green'
+                        startPieces={startPieces('green')}
+                        moves={showMoves()}
+                        onStart={() => dispatch(startActions('green', 'out'))}
+                    />
                 </div>
             </div>
             <div>

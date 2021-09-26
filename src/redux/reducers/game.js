@@ -1,4 +1,4 @@
-import { SET_PLAYER_DETAILS, CREATE_DECK, DRAW_CARD, START_ACTIONS, DISPLAY_MOVES, displayMoves } from "../actions/game";
+import { SET_PLAYER_DETAILS, CREATE_DECK, DRAW_CARD, START_ACTIONS, DISPLAY_MOVES } from "../actions/game";
 
 const initialState = {
     gameSide: 'red',
@@ -6,7 +6,7 @@ const initialState = {
     playerStartPieces: [],
     faceCard: 0,
     cardDeck: [],
-    piecesInPlay: [{ space: 12, color: 'red' }, { space: 1, color: 'red' }, { space: 22, color: 'blue' }],
+    piecesInPlay: [{ space: 12, color: 'red' }, { space: 2, color: 'red' }, { space: 22, color: 'blue' }],
     possibleMoves: []
 };
 
@@ -92,7 +92,7 @@ const gameReducer = (state = initialState, action) => {
             }
         }
         case DISPLAY_MOVES: {
-            let currCard = 11;
+            let currCard = 1;
             let displayPieces = [];
             let moveCards = [1, 2, 3, 4, 5, 7, 8, 10, 12];
             let occupied = [];
@@ -105,58 +105,57 @@ const gameReducer = (state = initialState, action) => {
 
             if (moveCards.includes(currCard)) {
                 let currPieces = [...state.piecesInPlay].filter(piece => piece.color === state.gameSide);
-
                 getOccupied(currPieces);
 
                 const pieceMover = (position, card, occupied) => {
                     switch (card) {
                         case 1:
                             if (!occupied.includes(position + 1)) {
-                                displayPieces.push(position + 1);
+                                displayPieces.push({ move: position + 1, position });
                             }
                             break;
                         case 2:
                             if (!occupied.includes(position + 2)) {
-                                displayPieces.push(position + 2);
+                                displayPieces.push({ move: position + 2, position });
                             }
                             break;
                         case 3:
                             if (!occupied.includes(position + 3)) {
-                                displayPieces.push(position + 3);
+                                displayPieces.push({ move: position + 3, position });
                             }
                             break;
                         case 4:
                             if (!occupied.includes(position - 4)) {
-                                displayPieces.push(position - 4);
+                                displayPieces.push({ move: position - 4, position });
                             }
                             break;
                         case 5:
                             if (!occupied.includes(position + 5)) {
-                                displayPieces.push(position + 5);
+                                displayPieces.push({ move: position + 5, position });
                             }
                             break;
                         case 7:
                             if (!occupied.includes(position + 7)) {
-                                displayPieces.push(position + 7);
+                                displayPieces.push({ move: position + 7, position });
                             }
                             break;
                         case 8:
                             if (!occupied.includes(position + 8)) {
-                                displayPieces.push(position + 8);
+                                displayPieces.push({ move: position + 8, position });
                             }
                             break;
                         case 10:
                             if (!occupied.includes(position + 10)) {
-                                displayPieces.push(position + 10);
+                                displayPieces.push({ move: position + 10, position });
                             }
 
                             if (!occupied.includes(position - 1)) {
-                                displayPieces.push(position - 1);
+                                displayPieces.push({ move: position - 1, position });
                             }
                             break;
                         case 12:
                             if (!occupied.includes(position + 12)) {
-                                displayPieces.push(position + 12);
+                                displayPieces.push({ move: position + 12, position });
                             }
                             break;
                         default:
@@ -169,15 +168,15 @@ const gameReducer = (state = initialState, action) => {
                     { space: 5, color: 'yellow' }, { space: 18, color: 'green' }
                 ]
 
-                for (let i = 0; i < currPieces.length; i++) {
-                    if (currCard === 1 || currCard === 2) {
-                        let colorExit = startExits.find(({ color }) => color === state.gameSide);
-                        if (!occupied.includes(colorExit.space)) {
-                            displayPieces.push(`${state.gameSide}Home`)
-                        }
-                    };
+                if (currCard === 1 || currCard === 2) {
+                    let colorExit = startExits.find(({ color }) => color === state.gameSide);
+                    if (!occupied.includes(colorExit.space)) {
+                        displayPieces.push({ move: `${state.gameSide}Home`, position: `${state.gameSide}Home` })
+                    }
+                };
 
-                    pieceMover(currPieces[i].space, currCard, occupied)
+                for (let i = 0; i < currPieces.length; i++) {
+                    pieceMover(currPieces[i].space, currCard, occupied);
                 };
 
             } else if (currCard === 11) {
@@ -205,6 +204,8 @@ const gameReducer = (state = initialState, action) => {
                     displayPieces.push(oppPieces[i].space)
                 }
             }
+
+            console.log(displayPieces)
 
             return {
                 ...state,

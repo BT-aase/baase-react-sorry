@@ -6,7 +6,7 @@ import GamePiece from "./GamePiece";
 const zoneAdj = (side) => side === 'horizontal' ? 512 : 506;
 const homeAdj = (side) => side === 'horizontal' ? 484 : 478;
 
-const Home = (props) => {
+const GameHome = (props) => {
     const piecesStart = [...Array(props.startPieces)].map((e, i) => <GamePiece color={props.color} key={i} />);
     let boardSide = useSelector((state) => state.game.gameSide);
     let moveSpaces = useSelector((state) => state.game.possibleMoves);
@@ -15,7 +15,7 @@ const Home = (props) => {
         <div>
             <div
                 id={`${props.color}Start`}
-                onClick={props.onStart}
+                onClick={props.moves.includes(`${boardSide}Home`) && boardSide ? props.onStart : {}}
                 style={{
                     width: 100,
                     height: 100,
@@ -23,7 +23,7 @@ const Home = (props) => {
                     marginTop: 610,
                     borderRadius: 70,
                     border: '3px solid black',
-                    backgroundColor: moveSpaces.includes(`${boardSide}Home`) && boardSide === props.color ? 'red' : 'transparent',
+                    backgroundColor: props.moves.includes(`${boardSide}Home`) && boardSide === props.color ? 'red' : 'transparent',
                     position: 'absolute'
                 }}>
                 <div
@@ -91,4 +91,4 @@ const Home = (props) => {
     );
 };
 
-export default Home;
+export default GameHome;
