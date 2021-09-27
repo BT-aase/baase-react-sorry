@@ -9,7 +9,7 @@ const initialState = {
     playerStartPieces: [{ playerNum: 1, pieces: 3 }, { playerNum: 2, pieces: 3 }],
     faceCard: 0,
     cardDeck: [],
-    piecesInPlay: [{ space: 12, color: 'red' }, { space: 22, color: 'blue' }],
+    piecesInPlay: [{ space: 12, color: 'red' }, { space: 17, color: 'blue' }],
     possibleMoves: [],
     swapSelected: {}
 };
@@ -110,7 +110,7 @@ const gameReducer = (state = initialState, action) => {
             }
         }
         case DISPLAY_MOVES: {
-            let currCard = 11;
+            let currCard = 3;
             let displayPieces = [];
             let moveCards = [1, 2, 3, 4, 5, 7, 8, 10, 12];
             let occupied = [];
@@ -213,8 +213,6 @@ const gameReducer = (state = initialState, action) => {
 
                 getOccupied(currPieces);
 
-                console.log(currPieces)
-
                 for (let i = 0; i < currPieces.length; i++) {
                     if (!occupied.includes(currPieces[i].space + 11)) {
                         displayPieces.push({ move: wrapBoard(currPieces[i].space + 11), position: currPieces[i].space })
@@ -232,8 +230,6 @@ const gameReducer = (state = initialState, action) => {
                     displayPieces.push({ move: 'sorry', position: oppPieces[i].space })
                 }
             }
-
-            console.log(displayPieces)
 
             return {
                 ...state,
@@ -254,10 +250,8 @@ const gameReducer = (state = initialState, action) => {
             }
         }
         case SWAP_PIECE: {
-            console.log(state)
             let pieces = [...state.piecesInPlay];
             let pieceIndex = pieces.findIndex(piece => piece.space === action.space);
-            console.log(pieces, pieces[pieceIndex])
             pieces.splice(pieceIndex, 1);
             pieces.push({ space: action.space, color: action.color });
 

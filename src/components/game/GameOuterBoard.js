@@ -24,8 +24,6 @@ const GameOuterBoard = () => {
     const displayMoves = (moves) => {
         let occupiedSpaces = [];
 
-        console.log(moves);
-
         for (let count = 0; count < moves.length; count++) {
             if (typeof moves[count].move === 'string') {
                 occupiedSpaces.push(moves[count].position)
@@ -35,6 +33,61 @@ const GameOuterBoard = () => {
         }
 
         return occupiedSpaces;
+    }
+
+    const checkForKnockout = (move) => {
+        let moveResult = boardPieces.find(piece => piece.space == move);
+        if (moveResult) {
+            setTimeout(function () {
+                dispatch(swapPiece(move, currColor))
+                dispatch(startActions(moveResult.color, 'in'));
+            }, 500);
+        }
+    }
+
+    const checkForSlide = (move) => {
+        let slides = [];
+        let currColorSlides = [];
+
+        let red = [30, 37];
+        let yellow = [2, 9];
+        let blue = [43, 52];
+        let green = [15, 24];
+
+        switch (currColor) {
+            case 'red':
+                currColorSlides = red;
+                break;
+            case 'yellow':
+                currColorSlides = yellow;
+                break;
+            case 'blue':
+                currColorSlides = blue;
+                break;
+            case 'green':
+                currColorSlides = green;
+                break;
+            default:
+                break;
+        }
+
+        slides = slides.concat(red, yellow, blue, green);
+
+        if (slides.includes(move) && !currColorSlides.includes(move)) {
+
+            let inSlidePieces = [];
+
+            for (let m = move; m < m + 3; m++){
+                let slidePiece = boardPieces.find(piece => piece.spot === m);
+                if (slidePiece){
+                    inSlidePieces.push(slidePiece);
+                }
+            }
+
+            console.log(inSlidePieces)
+
+            setTimeout(function(){dispatch(movePiece(move, move + 3))}, 500);
+        }
     }
 
     const pieceMove = (move, moves) => {
@@ -85,6 +138,9 @@ const GameOuterBoard = () => {
                         } else if (a >= 57) {
                             a = a - 56;
                             moveAction();
+                        } else if (a === movingPiece.move) {
+                            checkForKnockout(movingPiece.move)
+                            checkForSlide(movingPiece.move)
                         }
                     }, 1000)
                 }
