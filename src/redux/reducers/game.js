@@ -1,6 +1,6 @@
 import {
     SET_PLAYER_DETAILS, CREATE_DECK, DRAW_CARD, START_ACTIONS,
-    DISPLAY_MOVES, MOVE_PIECE, SWAP_PIECE
+    DISPLAY_MOVES, MOVE_PIECE, SWAP_PIECE, SHOW_SWAPPABLE
 } from "../actions/game";
 
 const initialState = {
@@ -10,7 +10,8 @@ const initialState = {
     faceCard: 0,
     cardDeck: [],
     piecesInPlay: [{ space: 12, color: 'red' }, { space: 22, color: 'blue' }],
-    possibleMoves: []
+    possibleMoves: [],
+    swapSelected: {}
 };
 
 const gameReducer = (state = initialState, action) => {
@@ -109,7 +110,7 @@ const gameReducer = (state = initialState, action) => {
             }
         }
         case DISPLAY_MOVES: {
-            let currCard = 13;
+            let currCard = 11;
             let displayPieces = [];
             let moveCards = [1, 2, 3, 4, 5, 7, 8, 10, 12];
             let occupied = [];
@@ -120,19 +121,19 @@ const gameReducer = (state = initialState, action) => {
                 }
             };
 
+            let wrapBoard = (move) => {
+                if (move > 56) {
+                    return move - 56;
+                } else if (move < 1) {
+                    return move + 56
+                } else {
+                    return move;
+                }
+            }
+
             if (moveCards.includes(currCard)) {
                 let currPieces = [...state.piecesInPlay].filter(piece => piece.color === state.gameSide);
                 getOccupied(currPieces);
-
-                let wrapBoard = (move) => {
-                    if (move > 56) {
-                        return move - 56;
-                    } else if (move < 1) {
-                        return move + 56
-                    } else {
-                        return move;
-                    }
-                }
 
                 const pieceMover = (position, card, occupied) => {
                     switch (card) {
@@ -212,15 +213,16 @@ const gameReducer = (state = initialState, action) => {
 
                 getOccupied(currPieces);
 
+                console.log(currPieces)
+
                 for (let i = 0; i < currPieces.length; i++) {
                     if (!occupied.includes(currPieces[i].space + 11)) {
-                        displayPieces.push(currPieces[i].space + 11)
+                        displayPieces.push({ move: wrapBoard(currPieces[i].space + 11), position: currPieces[i].space })
                     }
                 }
 
-
                 for (let i = 0; i < oppPieces.length; i++) {
-                    displayPieces.push(oppPieces[i].space)
+                    displayPieces.push({ move: 'swap', position: oppPieces[i].space })
                 }
 
             } else {
@@ -230,6 +232,8 @@ const gameReducer = (state = initialState, action) => {
                     displayPieces.push({ move: 'sorry', position: oppPieces[i].space })
                 }
             }
+
+            console.log(displayPieces)
 
             return {
                 ...state,
@@ -260,6 +264,18 @@ const gameReducer = (state = initialState, action) => {
             return {
                 ...state,
                 piecesInPlay: pieces
+            }
+        }
+        case SHOW_SWAPPABLE: {
+            let swappablePieces = [];
+            for (let s = 0; s < action.pieces.length; s++) {
+                swappablePieces.push({ move: 'swap', position: action.pieces[s].space })
+            }
+
+            return {
+                ...state,
+                swapSelected: action.selected,
+                possibleMoves: swappablePieces
             }
         }
         default:

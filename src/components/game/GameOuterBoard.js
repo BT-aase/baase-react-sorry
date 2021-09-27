@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { movePiece, swapPiece, startActions } from "../../redux/actions/game";
+import { movePiece, swapPiece, startActions, showSwappable } from "../../redux/actions/game";
 
 import GamePiece from "./elements/GamePiece";
 
@@ -9,8 +9,9 @@ const GameOuterBoard = () => {
     const dispatch = useDispatch();
 
     let currColor = useSelector((state) => state.game.gameSide);
-    let movesPossible =  useSelector((state) => state.game.possibleMoves);
+    let movesPossible = useSelector((state) => state.game.possibleMoves);
     let boardPieces = useSelector((state) => state.game.piecesInPlay);
+    let swapSelected = useSelector((state) => state.game.swapSelected);
 
     const displayPiece = (id) => {
         let pieceinPlay = boardPieces.find(({ space }) => space === id);
@@ -22,6 +23,8 @@ const GameOuterBoard = () => {
 
     const displayMoves = (moves) => {
         let occupiedSpaces = [];
+
+        console.log(moves);
 
         for (let count = 0; count < moves.length; count++) {
             if (typeof moves[count].move === 'string') {
@@ -43,12 +46,20 @@ const GameOuterBoard = () => {
         }
 
         if (typeof movingPiece.move === 'string') {
-            if (movingPiece.move === 'sorry'){
-                console.log(boardPieces, movingPiece)
+            if (movingPiece.move === 'sorry') {
                 let swapColor = boardPieces.find(piece => piece.space === movingPiece.position);
                 dispatch(swapPiece(movingPiece.position, currColor))
                 dispatch(startActions(swapColor.color, 'in'));
                 dispatch(startActions(currColor, 'sorry'));
+            } else if (movingPiece.move === 'swap') {
+                if (Object.entries(swapSelected).length == 0) {
+                    let swapPiece = boardPieces.find(piece => piece.space === movingPiece.position);
+                    let swapPieces = boardPieces.filter(piece => piece.color === currColor);
+                    dispatch(showSwappable(swapPiece, swapPieces))
+                } else {
+                    dispatch(swapPiece(movingPiece.position, swapSelected.color));
+                    dispatch(swapPiece(swapSelected.space, currColor));
+                }
             }
 
         } else {

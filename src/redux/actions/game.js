@@ -5,6 +5,7 @@ export const START_ACTIONS = 'START_ACTIONS';
 export const DISPLAY_MOVES = 'DISPLAY_MOVES';
 export const MOVE_PIECE = 'MOVE_PIECE';
 export const SWAP_PIECE = 'SWAP_PIECE';
+export const SHOW_SWAPPABLE = 'SHOW_SWAPPABLE';
 
 export const setPlayerDetails = (color) => {
     return {
@@ -53,4 +54,12 @@ export const swapPiece = (space, color) => {
     space,
     color
   }
+}
+
+export const showSwappable = (selected, pieces) => {
+ return {
+    type: SHOW_SWAPPABLE,
+    selected,
+    pieces
+ } 
 }
