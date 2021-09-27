@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { movePiece } from "../../redux/actions/game";
+import { movePiece, swapPiece, startActions } from "../../redux/actions/game";
 
 import GamePiece from "./elements/GamePiece";
 
@@ -8,12 +8,11 @@ const GameOuterBoard = () => {
 
     const dispatch = useDispatch();
 
-    const moveSpaces = () => {
-        return useSelector((state) => state.game.possibleMoves);
-    }
+    let currColor = useSelector((state) => state.game.gameSide);
+    let movesPossible =  useSelector((state) => state.game.possibleMoves);
+    let boardPieces = useSelector((state) => state.game.piecesInPlay);
 
     const displayPiece = (id) => {
-        let boardPieces = useSelector((state) => state.game.piecesInPlay);
         let pieceinPlay = boardPieces.find(({ space }) => space === id);
 
         if (typeof pieceinPlay !== 'undefined') {
@@ -25,60 +24,79 @@ const GameOuterBoard = () => {
         let occupiedSpaces = [];
 
         for (let count = 0; count < moves.length; count++) {
-            occupiedSpaces.push(moves[count].move)
+            if (typeof moves[count].move === 'string') {
+                occupiedSpaces.push(moves[count].position)
+            } else {
+                occupiedSpaces.push(moves[count].move)
+            }
         }
 
         return occupiedSpaces;
     }
 
     const pieceMove = (move, moves) => {
+        let movingPiece;
+        movingPiece = moves.find(piece => piece.move === move);
 
-        let movingPiece = moves.find(piece => piece.move === move);
-        
-        let wrapBoard = (move) => {
-            if (move > 56) {
-                return move - 56;
-            } else if (move < 1) {
-                return move + 56
-            } else {
-                return move;
-            }
+        if (typeof movingPiece === 'undefined') {
+            movingPiece = moves.find(piece => piece.position === move);
         }
 
-        if (typeof movingPiece.action === 'undefined') {
-            let a = movingPiece.position;
-
-            const moveAction = () => {
-                setTimeout(function () {
-                    dispatch(movePiece(wrapBoard(a), wrapBoard(a + 1)))
-                    a++;
-                    if (a < movingPiece.move || a === 56) {
-                        moveAction();
-                    } else if (a >= 57) {
-                        a = a - 56;
-                        moveAction();
-                    }
-                }, 1000)
+        if (typeof movingPiece.move === 'string') {
+            if (movingPiece.move === 'sorry'){
+                console.log(boardPieces, movingPiece)
+                let swapColor = boardPieces.find(piece => piece.space === movingPiece.position);
+                dispatch(swapPiece(movingPiece.position, currColor))
+                dispatch(startActions(swapColor.color, 'in'));
+                dispatch(startActions(currColor, 'sorry'));
             }
 
-            moveAction();
         } else {
-            let b = movingPiece.position;
-
-            const moveAction = () => {
-                setTimeout(function () {
-                    dispatch(movePiece(wrapBoard(b), wrapBoard(b - 1)))
-                    b--;
-                    if (b > movingPiece.move || b === 1) {
-                        moveAction();
-                    } else if (b <= 0) {
-                        b = b + 56;
-                        moveAction();
-                    }
-                }, 1000)
+            let wrapBoard = (move) => {
+                if (move > 56) {
+                    return move - 56;
+                } else if (move < 1) {
+                    return move + 56
+                } else {
+                    return move;
+                }
             }
 
-            moveAction();
+            if (typeof movingPiece.action === 'undefined') {
+                let a = movingPiece.position;
+
+                const moveAction = () => {
+                    setTimeout(function () {
+                        dispatch(movePiece(wrapBoard(a), wrapBoard(a + 1)))
+                        a++;
+                        if (a < movingPiece.move || a === 56) {
+                            moveAction();
+                        } else if (a >= 57) {
+                            a = a - 56;
+                            moveAction();
+                        }
+                    }, 1000)
+                }
+
+                moveAction();
+            } else {
+                let b = movingPiece.position;
+
+                const moveAction = () => {
+                    setTimeout(function () {
+                        dispatch(movePiece(wrapBoard(b), wrapBoard(b - 1)))
+                        b--;
+                        if (b > movingPiece.move || b === 1) {
+                            moveAction();
+                        } else if (b <= 0) {
+                            b = b + 56;
+                            moveAction();
+                        }
+                    }, 1000)
+                }
+
+                moveAction();
+            }
         }
     }
 
@@ -86,7 +104,7 @@ const GameOuterBoard = () => {
         let row = [];
         let size = typeof (width) === 'undefined' ? 47 : width;
         let singlePoint;
-        const moves = moveSpaces();
+        const moves = movesPossible;
 
         if (outlier === 'start' && orientation === 'normal') {
             singlePoint = 1;

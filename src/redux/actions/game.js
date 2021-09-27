@@ -4,6 +4,7 @@ export const DRAW_CARD = 'DRAW_CARD';
 export const START_ACTIONS = 'START_ACTIONS';
 export const DISPLAY_MOVES = 'DISPLAY_MOVES';
 export const MOVE_PIECE = 'MOVE_PIECE';
+export const SWAP_PIECE = 'SWAP_PIECE';
 
 export const setPlayerDetails = (color) => {
     return {
@@ -43,5 +44,13 @@ export const movePiece = (oldSpace, newSpace) => {
     type: MOVE_PIECE,
     oldSpace,
     newSpace
+  }
+}
+
+export const swapPiece = (space, color) => {
+  return {
+    type: SWAP_PIECE,
+    space,
+    color
   }
 }

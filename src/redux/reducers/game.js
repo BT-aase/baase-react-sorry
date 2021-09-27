@@ -1,12 +1,15 @@
-import { SET_PLAYER_DETAILS, CREATE_DECK, DRAW_CARD, START_ACTIONS, DISPLAY_MOVES, MOVE_PIECE } from "../actions/game";
+import {
+    SET_PLAYER_DETAILS, CREATE_DECK, DRAW_CARD, START_ACTIONS,
+    DISPLAY_MOVES, MOVE_PIECE, SWAP_PIECE
+} from "../actions/game";
 
 const initialState = {
     gameSide: 'red',
-    playerColors: [],
-    playerStartPieces: [],
+    playerColors: [{ playerNum: 1, color: "red" }, { playerNum: 2, color: "blue" }],
+    playerStartPieces: [{ playerNum: 1, pieces: 3 }, { playerNum: 2, pieces: 3 }],
     faceCard: 0,
     cardDeck: [],
-    piecesInPlay: [{ space: 12, color: 'red' }, { space: 2, color: 'red' }, { space: 22, color: 'blue' }],
+    piecesInPlay: [{ space: 12, color: 'red' }, { space: 22, color: 'blue' }],
     possibleMoves: []
 };
 
@@ -61,7 +64,7 @@ const gameReducer = (state = initialState, action) => {
             const index = currentStart.findIndex(pieces => pieces === startPieces);
             currentStart.splice(index, 1);
 
-            if (action.action = 'out') {
+            if (action.action === 'out') {
                 let playPieces = [...state.piecesInPlay];
                 let newPiece;
                 switch (action.color) {
@@ -89,10 +92,24 @@ const gameReducer = (state = initialState, action) => {
                     playerStartPieces: currentStart,
                     piecesInPlay: playPieces
                 }
+            } else if (action.action === 'in') {
+                currentStart.push({ playerNum: player.playerNum, pieces: currentPieces + 1 });
+
+                return {
+                    ...state,
+                    playerStartPieces: currentStart
+                }
+            } else if (action.action = 'sorry') {
+                currentStart.push({ playerNum: player.playerNum, pieces: currentPieces - 1 });
+
+                return {
+                    ...state,
+                    playerStartPieces: currentStart
+                }
             }
         }
         case DISPLAY_MOVES: {
-            let currCard = 4;
+            let currCard = 13;
             let displayPieces = [];
             let moveCards = [1, 2, 3, 4, 5, 7, 8, 10, 12];
             let occupied = [];
@@ -107,7 +124,7 @@ const gameReducer = (state = initialState, action) => {
                 let currPieces = [...state.piecesInPlay].filter(piece => piece.color === state.gameSide);
                 getOccupied(currPieces);
 
-                let wrapBoard = (move) =>  {
+                let wrapBoard = (move) => {
                     if (move > 56) {
                         return move - 56;
                     } else if (move < 1) {
@@ -115,7 +132,7 @@ const gameReducer = (state = initialState, action) => {
                     } else {
                         return move;
                     }
-                } 
+                }
 
                 const pieceMover = (position, card, occupied) => {
                     switch (card) {
@@ -210,7 +227,7 @@ const gameReducer = (state = initialState, action) => {
                 let oppPieces = [...state.piecesInPlay].filter(piece => piece.color !== state.gameSide);
 
                 for (let i = 0; i < oppPieces.length; i++) {
-                    displayPieces.push(oppPieces[i].space)
+                    displayPieces.push({ move: 'sorry', position: oppPieces[i].space })
                 }
             }
 
@@ -223,9 +240,22 @@ const gameReducer = (state = initialState, action) => {
         case MOVE_PIECE: {
             let pieces = [...state.piecesInPlay];
             let movingPiece = pieces.find(piece => piece.space === action.oldSpace && piece.color === state.gameSide);
-            let pieceIndex = pieces.findIndex(piece => piece.space === action.oldSpace  && piece.color === state.gameSide);
+            let pieceIndex = pieces.findIndex(piece => piece.space === action.oldSpace && piece.color === state.gameSide);
             pieces.splice(pieceIndex, 1);
             pieces.push({ space: action.newSpace, color: movingPiece.color });
+
+            return {
+                ...state,
+                piecesInPlay: pieces
+            }
+        }
+        case SWAP_PIECE: {
+            console.log(state)
+            let pieces = [...state.piecesInPlay];
+            let pieceIndex = pieces.findIndex(piece => piece.space === action.space);
+            console.log(pieces, pieces[pieceIndex])
+            pieces.splice(pieceIndex, 1);
+            pieces.push({ space: action.space, color: action.color });
 
             return {
                 ...state,

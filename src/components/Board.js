@@ -14,8 +14,6 @@ const Board = () => {
 
     const [angle, setAngle] = useState(0);
 
-    let colors = ['red', 'blue'];
-
     const rotateBoard = () => {
         // let newAngle;
 
@@ -26,8 +24,6 @@ const Board = () => {
         // }
 
         // setAngle(newAngle);
-        dispatch(setPlayerDetails(colors[0]))
-        colors.shift();
     } 
 
     return (
