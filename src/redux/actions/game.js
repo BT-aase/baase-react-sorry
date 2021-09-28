@@ -6,6 +6,8 @@ export const DISPLAY_MOVES = 'DISPLAY_MOVES';
 export const MOVE_PIECE = 'MOVE_PIECE';
 export const SWAP_PIECE = 'SWAP_PIECE';
 export const SHOW_SWAPPABLE = 'SHOW_SWAPPABLE';
+export const SLIDE_REMOVE = 'SLIDE_REMOVE';
+export const END_TURN = 'END_TURN';
 
 export const setPlayerDetails = (color) => {
     return {
@@ -62,4 +64,17 @@ export const showSwappable = (selected, pieces) => {
     selected,
     pieces
  } 
+}
+
+export const slideRemove = (space) => {
+  return {
+    type: SLIDE_REMOVE,
+    space
+  }
+}
+
+export const endTurn = () => {
+  return {
+    type: END_TURN
+  }
 }

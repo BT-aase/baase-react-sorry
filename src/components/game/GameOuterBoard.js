@@ -1,6 +1,9 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { movePiece, swapPiece, startActions, showSwappable } from "../../redux/actions/game";
+import {
+    movePiece, swapPiece, startActions,
+    showSwappable, slideRemove, endTurn
+} from "../../redux/actions/game";
 
 import GamePiece from "./elements/GamePiece";
 
@@ -76,19 +79,30 @@ const GameOuterBoard = () => {
         if (slides.includes(move) && !currColorSlides.includes(move)) {
 
             let inSlidePieces = [];
+            let slideStart = move;
 
-            for (let m = move; m < m + 3; m++){
-                let slidePiece = boardPieces.find(piece => piece.spot === m);
-                if (slidePiece){
+            for (let m = slideStart; m < slideStart + 3; m++) {
+                let slidePiece = boardPieces.find(piece => piece.space === m);
+                if (slidePiece) {
                     inSlidePieces.push(slidePiece);
                 }
             }
 
-            console.log(inSlidePieces)
+            setTimeout(function () { dispatch(movePiece(move, move + 3)) }, 500);
 
-            setTimeout(function(){dispatch(movePiece(move, move + 3))}, 500);
+            for (let n = 0; n < inSlidePieces.length; n++) {
+                setTimeout(function () {
+                    dispatch(slideRemove(inSlidePieces[n].space));
+                    dispatch(startActions(inSlidePieces[n].color, 'in'))
+                }, 1000);
+            }
         }
     }
+
+    const endMove = () => {
+        console.log('end')
+        dispatch(endTurn())
+    };
 
     const pieceMove = (move, moves) => {
         let movingPiece;
@@ -104,14 +118,16 @@ const GameOuterBoard = () => {
                 dispatch(swapPiece(movingPiece.position, currColor))
                 dispatch(startActions(swapColor.color, 'in'));
                 dispatch(startActions(currColor, 'sorry'));
+                endMove();
             } else if (movingPiece.move === 'swap') {
                 if (Object.entries(swapSelected).length == 0) {
                     let swapPiece = boardPieces.find(piece => piece.space === movingPiece.position);
                     let swapPieces = boardPieces.filter(piece => piece.color === currColor);
-                    dispatch(showSwappable(swapPiece, swapPieces))
+                    dispatch(showSwappable(swapPiece, swapPieces));
                 } else {
                     dispatch(swapPiece(movingPiece.position, swapSelected.color));
                     dispatch(swapPiece(swapSelected.space, currColor));
+                    endMove();
                 }
             }
 
@@ -139,8 +155,9 @@ const GameOuterBoard = () => {
                             a = a - 56;
                             moveAction();
                         } else if (a === movingPiece.move) {
-                            checkForKnockout(movingPiece.move)
-                            checkForSlide(movingPiece.move)
+                            checkForKnockout(movingPiece.move);
+                            checkForSlide(movingPiece.move);
+                            endMove();
                         }
                     }, 1000)
                 }
@@ -158,6 +175,10 @@ const GameOuterBoard = () => {
                         } else if (b <= 0) {
                             b = b + 56;
                             moveAction();
+                        } else if (b === movingPiece.move) {
+                            checkForKnockout(movingPiece.move);
+                            checkForSlide(movingPiece.move);
+                            endMove();
                         }
                     }, 1000)
                 }

@@ -1,6 +1,7 @@
 import {
     SET_PLAYER_DETAILS, CREATE_DECK, DRAW_CARD, START_ACTIONS,
-    DISPLAY_MOVES, MOVE_PIECE, SWAP_PIECE, SHOW_SWAPPABLE
+    DISPLAY_MOVES, MOVE_PIECE, SWAP_PIECE, SHOW_SWAPPABLE, 
+    SLIDE_REMOVE, END_TURN
 } from "../actions/game";
 
 const initialState = {
@@ -110,7 +111,7 @@ const gameReducer = (state = initialState, action) => {
             }
         }
         case DISPLAY_MOVES: {
-            let currCard = 3;
+            let currCard = 11;
             let displayPieces = [];
             let moveCards = [1, 2, 3, 4, 5, 7, 8, 10, 12];
             let occupied = [];
@@ -270,6 +271,40 @@ const gameReducer = (state = initialState, action) => {
                 ...state,
                 swapSelected: action.selected,
                 possibleMoves: swappablePieces
+            }
+        }
+        case SLIDE_REMOVE: {
+            let pieces = [...state.piecesInPlay];
+            let pieceIndex = pieces.findIndex(piece => piece.space === action.space);
+            pieces.splice(pieceIndex, 1);
+
+            return {
+                ...state,
+                piecesInPlay: pieces
+            }
+        }
+        case END_TURN: {
+            let playerColors = [...state.playerColors];
+            let currColor = state.gameSide;
+            let newColor;
+
+            let currPlayer = playerColors.findIndex(player => player.color = currColor);
+            console.log(currPlayer)
+
+            if (currPlayer + 1 < playerColors.length) {
+                newColor = playerColors[currPlayer + 1].color;
+            } else {
+                newColor = playerColors[0].color;
+            }
+
+            console.log(newColor)
+
+
+            return {
+                ...state,
+                possibleMoves: [],
+                swapSelected: {},
+                gameSide: newColor
             }
         }
         default:
