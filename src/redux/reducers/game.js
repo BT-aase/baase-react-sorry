@@ -21,7 +21,7 @@ const gameReducer = (state = initialState, action) => {
         case SET_PLAYER_DETAILS: {
             let updatedPlayerColors = [...state.playerColors];
             let updatedStartPieces = [...state.playerStartPieces];
-            let playerNum = state.playerColors.length + 1;
+            let playerNum = action.playerNum;
             let color = action.color;
             updatedPlayerColors.push({ playerNum, color })
             updatedStartPieces.push({ playerNum, pieces: 4 })

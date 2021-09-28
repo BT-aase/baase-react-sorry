@@ -9,10 +9,10 @@ export const SHOW_SWAPPABLE = 'SHOW_SWAPPABLE';
 export const SLIDE_REMOVE = 'SLIDE_REMOVE';
 export const END_TURN = 'END_TURN';
 
-export const setPlayerDetails = (color) => {
+export const setPlayerDetails = (colors) => {
     return {
       type: SET_PLAYER_DETAILS,
-      color
+      colors
     };
   };
 
