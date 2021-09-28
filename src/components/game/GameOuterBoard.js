@@ -6,6 +6,7 @@ import {
 } from "../../redux/actions/game";
 
 import GamePiece from "./elements/GamePiece";
+import colors from "../colors";
 
 const GameOuterBoard = () => {
 
@@ -100,7 +101,6 @@ const GameOuterBoard = () => {
     }
 
     const endMove = () => {
-        console.log('end')
         dispatch(endTurn())
     };
 
@@ -217,7 +217,7 @@ const GameOuterBoard = () => {
                     style={{
                         width: size,
                         height: 43,
-                        backgroundColor: displayMoves(moves).includes(singlePoint) ? 'red' : 'transparent',
+                        backgroundColor: displayMoves(moves).includes(singlePoint) ? colors[currColor] : 'transparent',
                         border: displayMoves(moves).includes(singlePoint) ? '2px solid black' : 'transparent'
                     }}>
                     <div style={{ marginTop: 7, marginLeft: 7 }}>
@@ -238,7 +238,7 @@ const GameOuterBoard = () => {
                         onClick={action}
                         style={{
                             width: size, height: 43,
-                            backgroundColor: displayMoves(moves).includes(id) ? 'red' : 'transparent',
+                            backgroundColor: displayMoves(moves).includes(id) ? colors[currColor] : 'transparent',
                             border: displayMoves(moves).includes(id) ? '2px solid black' : 'transparent'
                         }}>
                         <div style={{ marginTop: 7, marginLeft: 7 }}>
@@ -256,7 +256,7 @@ const GameOuterBoard = () => {
                         onClick={action}
                         style={{
                             width: size, height: 43,
-                            backgroundColor: displayMoves(moves).includes(id) ? 'red' : 'transparent',
+                            backgroundColor: displayMoves(moves).includes(id) ? colors[currColor] : 'transparent',
                             border: displayMoves(moves).includes(id) ? '2px solid black' : 'transparent'
                         }}>
                         <div style={{ marginTop: 7, marginLeft: size !== 47 ? 10 : 7 }}>
@@ -277,7 +277,7 @@ const GameOuterBoard = () => {
                     onClick={action}
                     style={{
                         width: size, height: 43,
-                        backgroundColor: displayMoves(moves).includes(singlePoint) ? 'red' : 'transparent',
+                        backgroundColor: displayMoves(moves).includes(singlePoint) ? colors[currColor] : 'transparent',
                         border: displayMoves(moves).includes(singlePoint) ? '2px solid black' : 'transparent'
                     }}>
                     <div style={{ marginTop: 7, marginLeft: size !== 47 ? 10 : 7 }}>

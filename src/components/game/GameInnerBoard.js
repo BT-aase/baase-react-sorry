@@ -48,7 +48,7 @@ const GameInnerBoard = () => {
                         side='horizontal'
                         startPieces={startPieces('red')}
                         moves={showMoves()}
-                        onStart={() => dispatch(startActions('red', 'out'))}
+                        onStart={() => {dispatch(startActions('red', 'out'), console.log('text'))}}
                     />
                 </div>
                 <div style={{

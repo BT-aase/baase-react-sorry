@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useDispatch } from 'react-redux';
-import { setPlayerDetails, createDeck } from "../redux/actions/game";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { createDeck } from "../redux/actions/game";
 
 import InnerBoard from "./board/InnerBoard";
 import OuterBoard from "./board/OuterBoard";
@@ -9,22 +9,43 @@ import GameOuterBoard from "./game/GameOuterBoard";
 
 const Board = () => {
 
+    let currColor = useSelector((state) => state.game.gameSide);
+    let deck = useSelector((state) => state.game.cardDeck);
+
     const dispatch = useDispatch();
-    dispatch(createDeck())
+
+    if (deck.length === 0) {
+        dispatch(createDeck());
+    };
 
     const [angle, setAngle] = useState(0);
 
-    const rotateBoard = () => {
-        // let newAngle;
+    const rotateBoard = (color) => {
+        let newAngle;
 
-        // if (angle < 270) {
-        //     newAngle = angle + 90;
-        // } else {
-        //     newAngle= 0;
-        // }
+        switch (color) {
+            case 'red':
+                newAngle = 0;
+                break;
+            case 'blue':
+                newAngle = 270;
+                break;
+            case 'yellow':
+                newAngle = 180;
+                break;
+            case 'green':
+                newAngle = 90;
+                break;
+            default:
+                break;
+        }
 
-        // setAngle(newAngle);
-    } 
+        setAngle(newAngle)
+    }
+
+    useEffect(() => {
+        rotateBoard(currColor)
+    }, [currColor]);
 
     return (
         <div style={{
@@ -35,14 +56,11 @@ const Board = () => {
             position: 'fixed',
             transform: `rotate(${angle}deg)`
         }}
-            onClick={
-                () => rotateBoard(angle)
-            }
         >
             <OuterBoard />
             <InnerBoard />
-            <GameOuterBoard/>
-            <GameInnerBoard/>
+            <GameOuterBoard />
+            <GameInnerBoard />
         </div>
     );
 };

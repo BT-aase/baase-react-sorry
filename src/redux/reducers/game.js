@@ -1,6 +1,6 @@
 import {
     SET_PLAYER_DETAILS, CREATE_DECK, DRAW_CARD, START_ACTIONS,
-    DISPLAY_MOVES, MOVE_PIECE, SWAP_PIECE, SHOW_SWAPPABLE, 
+    DISPLAY_MOVES, MOVE_PIECE, SWAP_PIECE, SHOW_SWAPPABLE,
     SLIDE_REMOVE, END_TURN
 } from "../actions/game";
 
@@ -95,7 +95,9 @@ const gameReducer = (state = initialState, action) => {
                     piecesInPlay: playPieces
                 }
             } else if (action.action === 'in') {
-                currentStart.push({ playerNum: player.playerNum, pieces: currentPieces + 1 });
+                if (currentPieces + 1 < 4) {
+                    currentStart.push({ playerNum: player.playerNum, pieces: currentPieces + 1 });
+                }
 
                 return {
                     ...state,
@@ -111,7 +113,7 @@ const gameReducer = (state = initialState, action) => {
             }
         }
         case DISPLAY_MOVES: {
-            let currCard = 11;
+            let currCard = 1;
             let displayPieces = [];
             let moveCards = [1, 2, 3, 4, 5, 7, 8, 10, 12];
             let occupied = [];
@@ -210,6 +212,7 @@ const gameReducer = (state = initialState, action) => {
 
             } else if (currCard === 11) {
                 let currPieces = [...state.piecesInPlay].filter(piece => piece.color === state.gameSide);
+                console.log(state.gameSide, [...state.piecesInPlay])
                 let oppPieces = [...state.piecesInPlay].filter(piece => piece.color !== state.gameSide);
 
                 getOccupied(currPieces);
@@ -288,23 +291,20 @@ const gameReducer = (state = initialState, action) => {
             let currColor = state.gameSide;
             let newColor;
 
-            let currPlayer = playerColors.findIndex(player => player.color = currColor);
-            console.log(currPlayer)
+            let currPlayer = playerColors.find(player => player.color === currColor);
+            let nextPlayer = playerColors.find(player => player.playerNum === currPlayer.playerNum + 1);
 
-            if (currPlayer + 1 < playerColors.length) {
-                newColor = playerColors[currPlayer + 1].color;
+            if (nextPlayer) {
+                newColor = nextPlayer.color;
             } else {
                 newColor = playerColors[0].color;
             }
 
-            console.log(newColor)
-
-
             return {
                 ...state,
+                gameSide: newColor,
                 possibleMoves: [],
-                swapSelected: {},
-                gameSide: newColor
+                swapSelected: {}
             }
         }
         default:
