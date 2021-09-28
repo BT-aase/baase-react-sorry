@@ -5,6 +5,7 @@ import {
 } from "../actions/game";
 
 const initialState = {
+    gameStarted: false,
     gameSide: 'red',
     playerColors: [{ playerNum: 1, color: "red" }, { playerNum: 2, color: "blue" }],
     playerStartPieces: [{ playerNum: 1, pieces: 3 }, { playerNum: 2, pieces: 3 }],
