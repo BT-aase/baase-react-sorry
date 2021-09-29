@@ -1,4 +1,4 @@
-export const SET_PLAYER_DETAILS = 'SET_PLAYER_DETAILS';
+export const START_GAME = 'START_GAME';
 export const CREATE_DECK = 'CREATE_DECK';
 export const DRAW_CARD = 'DRAW_CARD';
 export const START_ACTIONS = 'START_ACTIONS';
@@ -9,10 +9,11 @@ export const SHOW_SWAPPABLE = 'SHOW_SWAPPABLE';
 export const SLIDE_REMOVE = 'SLIDE_REMOVE';
 export const END_TURN = 'END_TURN';
 
-export const setPlayerDetails = (colors) => {
+export const startGame = (colors, startingColor) => {
     return {
-      type: SET_PLAYER_DETAILS,
-      colors
+      type: START_GAME,
+      colors,
+      startingColor
     };
   };
 

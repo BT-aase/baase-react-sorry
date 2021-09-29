@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { drawCard, startActions, displayMoves } from "../../redux/actions/game";
+import { drawCard, startActions, displayMoves, endTurn } from "../../redux/actions/game";
 
 import GameHome from './elements/GameHome';
 import Card from './elements/Card';
@@ -15,8 +15,11 @@ const GameInnerBoard = () => {
         const playerColors = useSelector((state) => state.game.playerColors);
         const playerStartPieces = useSelector((state) => state.game.playerStartPieces);
         const player = playerColors.find(({ color }) => color === playerColor);
+        console.log(player)
         if (typeof player !== 'undefined') {
-            const startPieces = playerStartPieces.find(({ playerNum }) => playerNum === player.playerNum);
+            console.log(playerStartPieces)
+            const startPieces = playerStartPieces.find(selectPlayer => selectPlayer.playerNum === player.playerNum);
+            console.log(startPieces)
             return startPieces.pieces;
         } else {
             return 0;
@@ -34,6 +37,10 @@ const GameInnerBoard = () => {
         return occupiedSpaces;
     }
 
+    const endMove = () => {
+        dispatch(endTurn())
+    };
+
     return (
         <div style={{
             position: 'fixed', bottom: 48, left: 52,
@@ -48,7 +55,7 @@ const GameInnerBoard = () => {
                         side='horizontal'
                         startPieces={startPieces('red')}
                         moves={showMoves()}
-                        onStart={() => {dispatch(startActions('red', 'out'), console.log('text'))}}
+                        onStart={() => {dispatch(startActions('red', 'out'), dispatch(endTurn()))}}
                     />
                 </div>
                 <div style={{
@@ -59,7 +66,7 @@ const GameInnerBoard = () => {
                         color='blue'
                         startPieces={startPieces('blue')}
                         moves={showMoves()}
-                        onStart={() => dispatch(startActions('blue', 'out'))}
+                        onStart={() => dispatch(startActions('blue', 'out'), dispatch(endTurn()))}
                     />
                 </div>
                 <div style={{
@@ -71,7 +78,7 @@ const GameInnerBoard = () => {
                         side='horizontal'
                         startPieces={startPieces('yellow')}
                         moves={showMoves()}
-                        onStart={() => dispatch(startActions('yellow', 'out'))}
+                        onStart={() => dispatch(startActions('yellow', 'out'), dispatch(endTurn()))}
                     />
                 </div>
                 <div style={{
@@ -82,7 +89,7 @@ const GameInnerBoard = () => {
                         color='green'
                         startPieces={startPieces('green')}
                         moves={showMoves()}
-                        onStart={() => dispatch(startActions('green', 'out'))}
+                        onStart={() => dispatch(startActions('green', 'out'), dispatch(endTurn()))}
                     />
                 </div>
             </div>

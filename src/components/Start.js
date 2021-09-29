@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { setPlayerDetails } from "../redux/actions/game";
+import { useDispatch } from 'react-redux';
+import { startGame, createDeck } from "../redux/actions/game";
 
 import colors from "./colors";
 
@@ -70,8 +70,10 @@ const Start = () => {
         )
     }
 
-    const startGame = () => {
-        dispatch(setPlayerDetails())
+    const gameStart = () => {
+        let startingColor = playerColors.find(player => player.playerNum === startingPlayer);
+        dispatch(startGame(playerColors, startingColor.color));
+        dispatch(createDeck());
     }
 
     return (
@@ -101,7 +103,7 @@ const Start = () => {
                 }
                 {numOfPlayers !== 0 && playerColors.length === numOfPlayers &&
                     <div style={{ marginTop: 50, marginLeft: 50 }}>
-                        <p style={{ color: 'white', fontSize: 24}}>Choose a player to go first</p>
+                        <p style={{ color: 'white', fontSize: 24 }}>Choose a player to go first</p>
                         <div style={{ display: 'flex', width: 295, justifyContent: 'space-between' }}>
                             {startingCircles}
                         </div>
@@ -109,7 +111,12 @@ const Start = () => {
                 }
                 {startingPlayer !== 0 &&
                     <div style={{ marginTop: 50, marginLeft: 70 }}>
-                        <div style={{ height: 50, width: 250, backgroundColor: '#23e000', borderRadius: 25, textAlign: 'center' }}>
+                        <div style={{
+                            height: 50, width: 250, backgroundColor: '#23e000',
+                            borderRadius: 25, textAlign: 'center'
+                        }}
+                        onClick={() => gameStart()}
+                        >
                             <p style={{ color: 'white', fontSize: 24, paddingTop: 5 }}>Start Game</p>
                         </div>
                     </div>

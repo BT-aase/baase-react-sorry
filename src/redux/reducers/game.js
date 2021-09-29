@@ -1,34 +1,35 @@
 import {
-    SET_PLAYER_DETAILS, CREATE_DECK, DRAW_CARD, START_ACTIONS,
+    START_GAME, CREATE_DECK, DRAW_CARD, START_ACTIONS,
     DISPLAY_MOVES, MOVE_PIECE, SWAP_PIECE, SHOW_SWAPPABLE,
     SLIDE_REMOVE, END_TURN
 } from "../actions/game";
 
 const initialState = {
     gameStarted: false,
-    gameSide: 'red',
-    playerColors: [{ playerNum: 1, color: "red" }, { playerNum: 2, color: "blue" }],
-    playerStartPieces: [{ playerNum: 1, pieces: 3 }, { playerNum: 2, pieces: 3 }],
+    gameSide: '',
+    playerColors: [],
+    playerStartPieces: [],
     faceCard: 0,
     cardDeck: [],
-    piecesInPlay: [{ space: 12, color: 'red' }, { space: 17, color: 'blue' }],
+    piecesInPlay: [],
     possibleMoves: [],
     swapSelected: {}
 };
 
 const gameReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SET_PLAYER_DETAILS: {
-            let updatedPlayerColors = [...state.playerColors];
-            let updatedStartPieces = [...state.playerStartPieces];
-            let playerNum = action.playerNum;
-            let color = action.color;
-            updatedPlayerColors.push({ playerNum, color })
-            updatedStartPieces.push({ playerNum, pieces: 4 })
+        case START_GAME: {
+            let startPieces = [...state.playerStartPieces];
+            for (let a = 1; a < action.colors.length + 1; a++) {
+                startPieces.push({ playerNum: a, pieces: 4 })
+            }
+
             return {
                 ...state,
-                playerColors: updatedPlayerColors,
-                playerStartPieces: updatedStartPieces
+                playerColors: action.colors,
+                playerStartPieces: startPieces,
+                gameSide: action.startingColor,
+                gameStarted: true
             }
         }
         case CREATE_DECK: {
@@ -114,7 +115,7 @@ const gameReducer = (state = initialState, action) => {
             }
         }
         case DISPLAY_MOVES: {
-            let currCard = 1;
+            let currCard = state.faceCard;
             let displayPieces = [];
             let moveCards = [1, 2, 3, 4, 5, 7, 8, 10, 12];
             let occupied = [];
@@ -213,7 +214,6 @@ const gameReducer = (state = initialState, action) => {
 
             } else if (currCard === 11) {
                 let currPieces = [...state.piecesInPlay].filter(piece => piece.color === state.gameSide);
-                console.log(state.gameSide, [...state.piecesInPlay])
                 let oppPieces = [...state.piecesInPlay].filter(piece => piece.color !== state.gameSide);
 
                 getOccupied(currPieces);
@@ -224,8 +224,10 @@ const gameReducer = (state = initialState, action) => {
                     }
                 }
 
-                for (let i = 0; i < oppPieces.length; i++) {
-                    displayPieces.push({ move: 'swap', position: oppPieces[i].space })
+                if (currPieces.length > 0) {
+                    for (let i = 0; i < oppPieces.length; i++) {
+                        displayPieces.push({ move: 'swap', position: oppPieces[i].space })
+                    }
                 }
 
             } else {
@@ -248,6 +250,8 @@ const gameReducer = (state = initialState, action) => {
             let pieceIndex = pieces.findIndex(piece => piece.space === action.oldSpace && piece.color === state.gameSide);
             pieces.splice(pieceIndex, 1);
             pieces.push({ space: action.newSpace, color: movingPiece.color });
+
+            console.log(movingPiece)
 
             return {
                 ...state,
