@@ -101,7 +101,7 @@ const GameOuterBoard = () => {
     }
 
     const endMove = () => {
-        dispatch(endTurn())
+        setTimeout(function () { dispatch(endTurn()) }, 1000);
     };
 
     const pieceMove = (move, moves) => {
@@ -144,12 +144,12 @@ const GameOuterBoard = () => {
 
             if (typeof movingPiece.action === 'undefined') {
                 let a = movingPiece.position;
-
+                console.log(a, movingPiece.move, a < movingPiece.move, a < wrapBoard(movingPiece.move))
                 const moveAction = () => {
                     setTimeout(function () {
                         dispatch(movePiece(wrapBoard(a), wrapBoard(a + 1)))
                         a++;
-                        if (a < movingPiece.move || a === 56) {
+                        if (a < wrapBoard(movingPiece.move) || a === 56 && movingPiece.move !== 56) {
                             moveAction();
                         } else if (a >= 57) {
                             a = a - 56;
@@ -170,7 +170,7 @@ const GameOuterBoard = () => {
                     setTimeout(function () {
                         dispatch(movePiece(wrapBoard(b), wrapBoard(b - 1)))
                         b--;
-                        if (b > movingPiece.move || b === 1) {
+                        if (b > movingPiece.move || b === 1 && movingPiece.move !== 1) {
                             moveAction();
                         } else if (b <= 0) {
                             b = b + 56;
@@ -213,6 +213,7 @@ const GameOuterBoard = () => {
             row.push(
                 <div
                     id={`box-${singlePoint}`}
+                    key={singlePoint}
                     onClick={action}
                     style={{
                         width: size,
@@ -234,6 +235,7 @@ const GameOuterBoard = () => {
             if (direction === 'horizontal') {
                 row.push(
                     <div
+                        key={id}
                         id={`box-${id}`}
                         onClick={action}
                         style={{
@@ -252,6 +254,7 @@ const GameOuterBoard = () => {
 
                 row.push(
                     <div
+                        key={id}
                         id={`box-${id}`}
                         onClick={action}
                         style={{
@@ -274,6 +277,7 @@ const GameOuterBoard = () => {
             row.push(
                 <div
                     id={`box-${singlePoint}`}
+                    key={singlePoint}
                     onClick={action}
                     style={{
                         width: size, height: 43,

@@ -7,20 +7,35 @@ const spaceGenerator = (direction, width) => {
 	let row = [];
 	let size = typeof (width) === 'undefined' ? 47 : width;
 
+	let horizKey = 1;
+	let vertiKey = 1;
+
 	if (direction === 'horizontal') {
-		row.push(<div style={{ width: size, height: 43, border: '3px solid black' }} />)
+		row.push(
+			<div
+				key={`horizOutlier-${horizKey}`}
+				style={{ width: size, height: 43, border: '3px solid black' }}
+			/>
+		)
+		horizKey = horizKey + 1;
 	}
 
 	for (let i = 1; i < 14; i++) {
 		if (direction === 'horizontal') {
-			row.push(<div style={{ width: size, height: 43, border: '3px solid black', borderLeft: 0 }} />)
+			row.push(<div key={i} style={{ width: size, height: 43, border: '3px solid black', borderLeft: 0 }} />)
 		} else {
-			row.push(<div style={{ width: size, height: 43, border: '3px solid black', borderTop: 0 }} />)
+			row.push(<div key={i} style={{ width: size, height: 43, border: '3px solid black', borderTop: 0 }} />)
 		}
 	}
 
 	if (direction === 'vertical') {
-		row.push(<div style={{ width: size, height: 43, border: '3px solid black', borderTop: 0, borderBottom: 0 }} />)
+		row.push(
+			<div
+				key={`vertiOutlier-${vertiKey}`}
+				style={{ width: size, height: 43, border: '3px solid black', borderTop: 0, borderBottom: 0 }}
+			/>
+		)
+		vertiKey = vertiKey + 1;
 	}
 
 	return row;

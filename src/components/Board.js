@@ -50,8 +50,6 @@ const Board = () => {
         setVisible(true);
     }, [faceCard]);
 
-    console.log(visible);
-
     return (
         <div>
             <div style={{

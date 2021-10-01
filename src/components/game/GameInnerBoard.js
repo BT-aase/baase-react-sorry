@@ -15,9 +15,7 @@ const GameInnerBoard = () => {
         const playerColors = useSelector((state) => state.game.playerColors);
         const playerStartPieces = useSelector((state) => state.game.playerStartPieces);
         const player = playerColors.find(({ color }) => color === playerColor);
-        console.log(player)
         if (typeof player !== 'undefined') {
-            console.log(playerStartPieces)
             const startPieces = playerStartPieces.find(selectPlayer => selectPlayer.playerNum === player.playerNum);
             console.log(startPieces)
             return startPieces.pieces;
@@ -28,7 +26,6 @@ const GameInnerBoard = () => {
 
     const showMoves = () => {
         let occupiedSpaces = [];
-
         let moveSpaces = useSelector((state) => state.game.possibleMoves);
         for (let count = 0; count < moveSpaces.length; count++) {
             occupiedSpaces.push(moveSpaces[count].move)
@@ -38,7 +35,7 @@ const GameInnerBoard = () => {
     }
 
     const endMove = () => {
-        dispatch(endTurn())
+        setTimeout(function() {dispatch(endTurn())}, 1000);
     };
 
     return (
@@ -55,7 +52,7 @@ const GameInnerBoard = () => {
                         side='horizontal'
                         startPieces={startPieces('red')}
                         moves={showMoves()}
-                        onStart={() => {dispatch(startActions('red', 'out'), dispatch(endTurn()))}}
+                        onStart={() => {dispatch(startActions('red', 'out'), endMove())}}
                     />
                 </div>
                 <div style={{
@@ -66,7 +63,7 @@ const GameInnerBoard = () => {
                         color='blue'
                         startPieces={startPieces('blue')}
                         moves={showMoves()}
-                        onStart={() => dispatch(startActions('blue', 'out'), dispatch(endTurn()))}
+                        onStart={() => dispatch(startActions('blue', 'out'), endMove())}
                     />
                 </div>
                 <div style={{
@@ -78,7 +75,7 @@ const GameInnerBoard = () => {
                         side='horizontal'
                         startPieces={startPieces('yellow')}
                         moves={showMoves()}
-                        onStart={() => dispatch(startActions('yellow', 'out'), dispatch(endTurn()))}
+                        onStart={() => dispatch(startActions('yellow', 'out'), endMove())}
                     />
                 </div>
                 <div style={{
@@ -89,7 +86,7 @@ const GameInnerBoard = () => {
                         color='green'
                         startPieces={startPieces('green')}
                         moves={showMoves()}
-                        onStart={() => dispatch(startActions('green', 'out'), dispatch(endTurn()))}
+                        onStart={() => dispatch(startActions('green', 'out'), endMove())}
                     />
                 </div>
             </div>

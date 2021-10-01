@@ -97,10 +97,9 @@ const gameReducer = (state = initialState, action) => {
                     piecesInPlay: playPieces
                 }
             } else if (action.action === 'in') {
-                if (currentPieces + 1 < 4) {
+                if (currentPieces + 1 <= 4) {
                     currentStart.push({ playerNum: player.playerNum, pieces: currentPieces + 1 });
                 }
-
                 return {
                     ...state,
                     playerStartPieces: currentStart
@@ -143,51 +142,51 @@ const gameReducer = (state = initialState, action) => {
                 const pieceMover = (position, card, occupied) => {
                     switch (card) {
                         case 1:
-                            if (!occupied.includes(position + 1)) {
+                            if (!occupied.includes(wrapBoard(position + 1))) {
                                 displayPieces.push({ move: wrapBoard(position + 1), position });
                             }
                             break;
                         case 2:
-                            if (!occupied.includes(position + 2)) {
+                            if (!occupied.includes(wrapBoard(position + 2))) {
                                 displayPieces.push({ move: wrapBoard(position + 2), position });
                             }
                             break;
                         case 3:
-                            if (!occupied.includes(position + 3)) {
+                            if (!occupied.includes(wrapBoard(position + 3))) {
                                 displayPieces.push({ move: wrapBoard(position + 3), position });
                             }
                             break;
                         case 4:
-                            if (!occupied.includes(position - 4)) {
+                            if (!occupied.includes(wrapBoard(position - 4))) {
                                 displayPieces.push({ move: wrapBoard(position - 4), position, action: 'backwards' });
                             }
                             break;
                         case 5:
-                            if (!occupied.includes(position + 5)) {
+                            if (!occupied.includes(wrapBoard(position + 5))) {
                                 displayPieces.push({ move: wrapBoard(position + 5), position });
                             }
                             break;
                         case 7:
-                            if (!occupied.includes(position + 7)) {
+                            if (!occupied.includes(wrapBoard(position + 7))) {
                                 displayPieces.push({ move: wrapBoard(position + 7), position });
                             }
                             break;
                         case 8:
-                            if (!occupied.includes(position + 8)) {
+                            if (!occupied.includes(wrapBoard(position + 8))) {
                                 displayPieces.push({ move: wrapBoard(position + 8), position });
                             }
                             break;
                         case 10:
-                            if (!occupied.includes(position + 10)) {
+                            if (!occupied.includes(wrapBoard(position + 10))) {
                                 displayPieces.push({ move: wrapBoard(position + 10), position });
                             }
 
-                            if (!occupied.includes(position - 1)) {
+                            if (!occupied.includes(wrapBoard(position - 1))) {
                                 displayPieces.push({ move: wrapBoard(position - 1), position, action: 'backwards' });
                             }
                             break;
                         case 12:
-                            if (!occupied.includes(position + 12)) {
+                            if (!occupied.includes(wrapBoard(position + 12))) {
                                 displayPieces.push({ move: wrapBoard(position + 12), position });
                             }
                             break;
@@ -219,7 +218,7 @@ const gameReducer = (state = initialState, action) => {
                 getOccupied(currPieces);
 
                 for (let i = 0; i < currPieces.length; i++) {
-                    if (!occupied.includes(currPieces[i].space + 11)) {
+                    if (!occupied.includes(wrapBoard(currPieces[i].space + 11))) {
                         displayPieces.push({ move: wrapBoard(currPieces[i].space + 11), position: currPieces[i].space })
                     }
                 }
@@ -250,8 +249,6 @@ const gameReducer = (state = initialState, action) => {
             let pieceIndex = pieces.findIndex(piece => piece.space === action.oldSpace && piece.color === state.gameSide);
             pieces.splice(pieceIndex, 1);
             pieces.push({ space: action.newSpace, color: movingPiece.color });
-
-            console.log(movingPiece)
 
             return {
                 ...state,
