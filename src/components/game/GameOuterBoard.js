@@ -144,12 +144,21 @@ const GameOuterBoard = () => {
 
             if (typeof movingPiece.action === 'undefined') {
                 let a = movingPiece.position;
-                console.log(a, movingPiece.move, a < movingPiece.move, a < wrapBoard(movingPiece.move))
+
+                let forwardWrap = (position, move) => {
+                    let pieceWrap = position > 43 && move >= 1 && move < 12;
+                    let wrapMove;
+                    wrapMove = pieceWrap ? move + 56 : move;
+                    return wrapMove;
+                }
+
+                forwardWrap(a, movingPiece.move)
+
                 const moveAction = () => {
                     setTimeout(function () {
                         dispatch(movePiece(wrapBoard(a), wrapBoard(a + 1)))
                         a++;
-                        if (a < wrapBoard(movingPiece.move) || a === 56 && movingPiece.move !== 56) {
+                        if (a < movingPiece.move || a === 56 && movingPiece.move !== 56) {
                             moveAction();
                         } else if (a >= 57) {
                             a = a - 56;

@@ -17,7 +17,6 @@ const GameInnerBoard = () => {
         const player = playerColors.find(({ color }) => color === playerColor);
         if (typeof player !== 'undefined') {
             const startPieces = playerStartPieces.find(selectPlayer => selectPlayer.playerNum === player.playerNum);
-            console.log(startPieces)
             return startPieces.pieces;
         } else {
             return 0;

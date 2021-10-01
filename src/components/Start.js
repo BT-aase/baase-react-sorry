@@ -61,18 +61,21 @@ const Start = () => {
     }
 
     for (let d = 1; d < numOfPlayers + 1; d++) {
-        startingCircles.push(
-            <div
-                key={d}
-                style={{
-                    height: 60, width: 60, borderRadius: 65,
-                    backgroundColor: startingPlayer !== 0 && startingPlayer !== d ? 'gray' : 'white',
-                    color: startingPlayer !== 0 && startingPlayer !== d ? 'white' : '#000058'
-                }}
-                onClick={startingPlayer === 0 ? () => setStartingPlayer(d) : () => { }}>
-                <p style={{ marginLeft: 25, paddingTop: 10, fontSize: 24 }}>{d}</p>
-            </div>
-        )
+        if (playerColors.length === numOfPlayers) {
+            startingCircles.push(
+                <div
+                    key={d}
+                    style={{
+                        height: 60, width: 60, borderRadius: 65,
+                        backgroundColor: startingPlayer !== 0 && startingPlayer !== d ? 'gray' : colors[playerColors[d - 1].color],
+                        color: startingPlayer !== 0 && startingPlayer !== d ? 'white' : '#000058',
+                        border: '2px solid white'
+                    }}
+                    onClick={startingPlayer === 0 ? () => setStartingPlayer(d) : () => { }}>
+                    <p style={{ marginLeft: 23, paddingTop: 10, fontSize: 24 }}>{d}</p>
+                </div>
+            )
+        }
     }
 
     const gameStart = () => {
