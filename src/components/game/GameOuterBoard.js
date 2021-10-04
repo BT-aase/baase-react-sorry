@@ -152,18 +152,15 @@ const GameOuterBoard = () => {
                     return wrapMove;
                 }
 
-                forwardWrap(a, movingPiece.move)
+                let forward = forwardWrap(a, movingPiece.move)
 
                 const moveAction = () => {
                     setTimeout(function () {
                         dispatch(movePiece(wrapBoard(a), wrapBoard(a + 1)))
                         a++;
-                        if (a < movingPiece.move || a === 56 && movingPiece.move !== 56) {
+                        if (a < forward || a === 56 && movingPiece.move !== 56) {
                             moveAction();
-                        } else if (a >= 57) {
-                            a = a - 56;
-                            moveAction();
-                        } else if (a === movingPiece.move) {
+                        } else if (a === forward) {
                             checkForKnockout(movingPiece.move);
                             checkForSlide(movingPiece.move);
                             endMove();
@@ -175,16 +172,24 @@ const GameOuterBoard = () => {
             } else {
                 let b = movingPiece.position;
 
+                let backwardWrap = (position, move) => {
+                    let pieceWrap = position < 12 && move <= 56 && move > 43;
+                    let wrapMove;
+                    wrapMove = pieceWrap ? move - 56 : move;
+                    console.log(wrapMove)
+                    return wrapMove;
+                }
+
+                let backward = backwardWrap(b, movingPiece.move)
+
                 const moveAction = () => {
                     setTimeout(function () {
+                        console.log(movePiece(wrapBoard(b), wrapBoard(b - 1)))
                         dispatch(movePiece(wrapBoard(b), wrapBoard(b - 1)))
                         b--;
-                        if (b > movingPiece.move || b === 1 && movingPiece.move !== 1) {
+                        if (b > backward || b === 1 && movingPiece.move !== 1) {
                             moveAction();
-                        } else if (b <= 0) {
-                            b = b + 56;
-                            moveAction();
-                        } else if (b === movingPiece.move) {
+                        } else if (b === backward) {
                             checkForKnockout(movingPiece.move);
                             checkForSlide(movingPiece.move);
                             endMove();
