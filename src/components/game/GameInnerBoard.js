@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { drawCard, startActions, displayMoves, endTurn } from "../../redux/actions/game";
+import { createDeck, drawCard, startActions, displayMoves, endTurn } from "../../redux/actions/game";
 
 import GameHome from './elements/GameHome';
 import Card from './elements/Card';
@@ -34,7 +34,7 @@ const GameInnerBoard = () => {
     }
 
     const endMove = () => {
-        setTimeout(function() {dispatch(endTurn())}, 1000);
+        setTimeout(function () { dispatch(endTurn()) }, 1000);
     };
 
     return (
@@ -51,7 +51,7 @@ const GameInnerBoard = () => {
                         side='horizontal'
                         startPieces={startPieces('red')}
                         moves={showMoves()}
-                        onStart={() => {dispatch(startActions('red', 'out'), endMove())}}
+                        onStart={() => { dispatch(startActions('red', 'out'), endMove()) }}
                     />
                 </div>
                 <div style={{
@@ -94,7 +94,10 @@ const GameInnerBoard = () => {
                     <div style={{
                         position: 'fixed', top: 170, left: 220, backgroundColor: "#cce3be"
                     }}>
-                        <Card number={currentCard} />
+                        <Card
+                            reshuffle={deckCount === 0 ? () => dispatch(createDeck()) : () => {}}
+                            number={currentCard}
+                        />
                     </div> :
                     <></>
                 }

@@ -47,7 +47,8 @@ const gameReducer = (state = initialState, action) => {
 
             return {
                 ...state,
-                cardDeck: cards
+                cardDeck: cards,
+                faceCard: 0
             }
         }
         case DRAW_CARD: {

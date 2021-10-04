@@ -1,11 +1,8 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 
 import colors from '../../colors';
 
 const Card = (props) => {
-
-    const dispatch = useDispatch();
 
     const cardDisplay = (number) => {
         let display;
@@ -102,7 +99,10 @@ const Card = (props) => {
 
         typeof (number) !== 'undefined' ?
             display = (
-                <div style={{ width: 220, height: 140, backgroundColor: 'white', borderRadius: 10 }}>
+                <div
+                    style={{ width: 220, height: 140, backgroundColor: 'white', borderRadius: 10 }}
+                    onClick={() => { props.reshuffle() }}
+                >
                     <div style={{
                         display: 'flex', position: 'fixed', transform: 'rotate(270deg)',
                         left: ends, top: typeof (sides) !== 'undefined' ? sides : 160
@@ -150,7 +150,7 @@ const Card = (props) => {
                     width: 220, height: 140, backgroundColor: colors.cardBack,
                     borderRadius: 10, textAlign: 'center',
                 }}
-                    onClick ={() => { props.onClick(); props.displayMoves();}}
+                    onClick={() => { props.onClick(); props.displayMoves(); }}
                 >
                     <p style={{ paddingTop: 35, color: 'white', fontSize: 50, fontFamily: 'Overlock', fontWeight: 900 }}>SORRY!</p>
                 </div>
