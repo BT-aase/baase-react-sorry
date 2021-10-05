@@ -176,7 +176,6 @@ const GameOuterBoard = () => {
                     let pieceWrap = position < 12 && move <= 56 && move > 43;
                     let wrapMove;
                     wrapMove = pieceWrap ? move - 56 : move;
-                    console.log(wrapMove)
                     return wrapMove;
                 }
 
@@ -184,7 +183,6 @@ const GameOuterBoard = () => {
 
                 const moveAction = () => {
                     setTimeout(function () {
-                        console.log(movePiece(wrapBoard(b), wrapBoard(b - 1)))
                         dispatch(movePiece(wrapBoard(b), wrapBoard(b - 1)))
                         b--;
                         if (b > backward || b === 1 && movingPiece.move !== 1) {

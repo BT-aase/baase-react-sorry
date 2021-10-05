@@ -15,7 +15,7 @@ const GameHome = (props) => {
         <div>
             <div
                 id={`${props.color}Start`}
-                onClick={props.moves.includes(`${boardSide}Home`) && boardSide ? props.onStart : () => { }}
+                onClick={props.moves.includes(`${boardSide}Start`) && boardSide ? props.onStart : () => { }}
                 style={{
                     width: 100,
                     height: 100,
@@ -23,7 +23,7 @@ const GameHome = (props) => {
                     marginTop: 610,
                     borderRadius: 70,
                     border: '3px solid black',
-                    backgroundColor: props.moves.includes(`${boardSide}Home`) && boardSide === props.color ? colors[boardSide] : 'transparent',
+                    backgroundColor: props.moves.includes(`${boardSide}Start`) && boardSide === props.color ? colors[boardSide] : 'transparent',
                     position: 'absolute'
                 }}>
                 <div
@@ -46,7 +46,7 @@ const GameHome = (props) => {
                     marginTop: 375,
                     borderRadius: 70,
                     border: '3px solid black',
-                    backgroundColor: 'transparent',
+                    backgroundColor: props.moves.includes(`${boardSide}Home`) && boardSide === props.color ? colors[boardSide] : 'transparent',
                     position: 'absolute'
                 }}>
                 <div style={{
@@ -57,23 +57,53 @@ const GameHome = (props) => {
             </div>
             <div style={{ position: 'absolute', marginTop: 455, marginLeft: zoneAdj(props.side), zIndex: 10 }}>
                 <div style={{ width: 46, height: 20, backgroundColor: 'transparent' }} />
-                <div style={{ width: 46, height: 47, backgroundColor: 'transparent', border: '3px solid black', borderBottom: 0 }}>
+                <div
+                    id={`${props.color}Safe5`}
+                    style={{
+                        width: 46, height: 47,
+                        backgroundColor: props.moves.includes(`${boardSide}Safe5`) && boardSide === props.color ? colors[boardSide] : 'transparent',
+                        border: '3px solid black', borderBottom: 0
+                    }}>
                     <div style={{ marginTop: 7, marginLeft: 6 }}>
                     </div>
                 </div>
-                <div style={{ width: 46, height: 47, backgroundColor: 'transparent', border: '3px solid black', borderBottom: 0 }} >
+                <div
+                    id={`${props.color}Safe4`}
+                    style={{
+                        width: 46, height: 47,
+                        backgroundColor: props.moves.includes(`${boardSide}Safe4`) && boardSide === props.color ? colors[boardSide] : 'transparent',
+                        border: '3px solid black', borderBottom: 0
+                    }}>
                     <div style={{ marginTop: 7, marginLeft: 6 }}>
                     </div>
                 </div>
-                <div style={{ width: 46, height: 47, backgroundColor: 'transparent', border: '3px solid black', borderBottom: 0 }} >
+                <div
+                    id={`${props.color}Safe3`}
+                    style={{
+                        width: 46, height: 47,
+                        backgroundColor: props.moves.includes(`${boardSide}Safe3`) && boardSide === props.color ? colors[boardSide] : 'transparent',
+                        border: '3px solid black', borderBottom: 0
+                    }}>
                     <div style={{ marginTop: 7, marginLeft: 6 }}>
                     </div>
                 </div>
-                <div style={{ width: 46, height: 47, backgroundColor: 'transparent', border: '3px solid black', borderBottom: 0 }} >
+                <div
+                    id={`${props.color}Safe2`}
+                    style={{
+                        width: 46, height: 47,
+                        backgroundColor: props.moves.includes(`${boardSide}Safe2`) && boardSide === props.color ? colors[boardSide] : 'transparent',
+                        border: '3px solid black', borderBottom: 0
+                    }}>
                     <div style={{ marginTop: 7, marginLeft: 6 }}>
                     </div>
                 </div>
-                <div style={{ width: 46, height: 46, backgroundColor: 'transparent', border: '3px solid black', borderBottom: 0 }}>
+                <div
+                    id={`${props.color}Safe1`}
+                    style={{
+                        width: 46, height: 47,
+                        backgroundColor: props.moves.includes(`${boardSide}Safe1`) && boardSide === props.color ? colors[boardSide] : 'transparent',
+                        border: '3px solid black', borderBottom: 0
+                    }}>
                     <div style={{ marginTop: 7, marginLeft: 6 }}>
                     </div>
                 </div>
