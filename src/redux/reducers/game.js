@@ -232,7 +232,7 @@ const gameReducer = (state = initialState, action) => {
                                     displayPieces[s].move = `${state.gameSide}Home`;
                                     break;
                                 default:
-                                    let index = array.indexOf(displayPieces[s]);
+                                    let index = displayPieces.indexOf(displayPieces[s]);
                                     console.log(s, index)
                                     break;
                             }

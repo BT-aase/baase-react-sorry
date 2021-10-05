@@ -29,10 +29,15 @@ const GameOuterBoard = () => {
         let occupiedSpaces = [];
 
         for (let count = 0; count < moves.length; count++) {
-            if (typeof moves[count].move === 'string') {
-                occupiedSpaces.push(moves[count].position)
+            let move = moves[count].move;
+            if (typeof move === 'string') {
+                let safeHome = move.includes(`${currColor}Safe`) && move.includes(`${currColor}Home`);
+                console.log(safeHome)
+                if (!safeHome) {
+                    occupiedSpaces.push(moves[count].position)
+                }
             } else {
-                occupiedSpaces.push(moves[count].move)
+                occupiedSpaces.push(move)
             }
         }
 
