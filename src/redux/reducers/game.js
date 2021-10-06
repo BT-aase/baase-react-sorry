@@ -209,9 +209,18 @@ const gameReducer = (state = initialState, action) => {
 
                     let block = diamonds[state.gameSide];
 
+                    const safePosition = (position, wrap) => {
+                        if (wrap) {
+                            let interval = 57 - position;
+                            return 1 - interval;
+                        } else {
+                            return position
+                        }
+                    }
+
                     for (let s = 0; s < displayPieces.length; s++) {
-                        if (displayPieces[s].position < block && displayPieces[s].move >= block) {
-                            console.log('move into safe')
+                        let safeWrap = displayPieces[s].position > 43 && displayPieces[s].move > 3;
+                        if (safePosition(displayPieces[s].position, safeWrap) < block && displayPieces[s].move >= block) {
                             switch (displayPieces[s].move - block) {
                                 case 0:
                                     displayPieces[s].move = `${state.gameSide}Safe1`;
@@ -247,9 +256,7 @@ const gameReducer = (state = initialState, action) => {
                     let currSpace = safeSpaces.findIndex(space => space === position);
                     let newSpace = safeSpaces[currSpace + card];
 
-                    console.log(newSpace)
-
-                    if (typeof newSpace !== 'undefined' && !occupied.includes(newSpace)){
+                    if (typeof newSpace !== 'undefined' && !occupied.includes(newSpace)) {
                         displayPieces.push({ move: newSpace, position });
                     }
                 }
