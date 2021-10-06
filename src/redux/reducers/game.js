@@ -232,8 +232,7 @@ const gameReducer = (state = initialState, action) => {
                                     displayPieces[s].move = `${state.gameSide}Home`;
                                     break;
                                 default:
-                                    let index = displayPieces.indexOf(displayPieces[s]);
-                                    console.log(s, index)
+                                    displayPieces.splice(s, 1);
                                     break;
                             }
                         }
@@ -256,10 +255,7 @@ const gameReducer = (state = initialState, action) => {
                     pieceMover(currPieces[i].space, currCard, occupied);
                 };
 
-                safeHome(displayPieces)
-
-                console.log(displayPieces)
-
+                safeHome(displayPieces);
             } else if (currCard === 11) {
                 let currPieces = [...state.piecesInPlay].filter(piece => piece.color === state.gameSide);
                 let oppPieces = [...state.piecesInPlay].filter(piece => piece.color !== state.gameSide);
