@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import GamePiece from "./elements/GamePiece";
 import colors from "../colors";
-import { PieceMove } from "../tools/PieceMovers";
+import PieceMove from "../tools/PieceMovers";
 
 const GameOuterBoard = () => {
 
@@ -41,7 +41,7 @@ const GameOuterBoard = () => {
     }
 
     const pieceMover = (space) => {
-        return PieceMove(space, movesPossible, currColor, swapSelected, dispatch);
+        return PieceMove(space, movesPossible, currColor, swapSelected, boardPieces, dispatch);
     }
 
     const spaceGenerator = (direction, width, outlier, orientation) => {

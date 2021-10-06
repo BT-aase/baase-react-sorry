@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { createDeck, drawCard, startActions, displayMoves, endTurn } from "../../redux/actions/game";
+import PieceMove from "../tools/PieceMovers";
 
 import GameHome from './elements/GameHome';
 import Card from './elements/Card';
@@ -31,6 +32,10 @@ const GameInnerBoard = () => {
         }
 
         return occupiedSpaces;
+    }
+
+    const pieceMover = (space) => {
+        return PieceMove(space, movesPossible, currColor, null, boardPieces, dispatch);
     }
 
     const endMove = () => {
