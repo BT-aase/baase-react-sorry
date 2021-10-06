@@ -77,10 +77,10 @@ export default function PieceMove(move, moves, currColor, swapSelected, boardPie
         movingPiece = moves.find(piece => piece.position === move);
     }
 
-    let pieceMove = movingPiece.move;
+    let moveAction = movingPiece.move;
 
-    if (typeof pieceMove === 'string' && !pieceMove.includes(currColor)) {
-        if (pieceMove === 'sorry') {
+    if (typeof moveAction === 'string' && !moveAction.includes(currColor)) {
+        if (moveAction === 'sorry') {
             let swapColor = boardPieces.find(piece => piece.space === movingPiece.position);
             dispatch(swapPiece(movingPiece.position, currColor))
             dispatch(startActions(swapColor.color, 'in'));
@@ -101,15 +101,15 @@ export default function PieceMove(move, moves, currColor, swapSelected, boardPie
     } else {
         let wrapBoard = (move) => {
             if (move > 56) {
-                return pieceMove - 56;
+                return move - 56;
             } else if (move < 1) {
-                return pieceMove + 56
+                return move + 56
             } else {
-                return pieceMove;
+                return move;
             }
         }
+        if (typeof moveAction === 'string') {
 
-        if (typeof pieceMove === 'string') {
             let diamonds = {
                 red: 32,
                 blue: 45,
@@ -119,54 +119,82 @@ export default function PieceMove(move, moves, currColor, swapSelected, boardPie
 
             let block = diamonds[currColor];
 
-            if (movingPiece.position < block - 1) {
-                let s = movingPiece.position;
-
-                console.log(s, block - 1)
+            const moveSafeZone = (start, end) => {
+                let safeSpaces = [`${currColor}Safe1`, `${currColor}Safe2`, `${currColor}Safe3`,
+                `${currColor}Safe4`, `${currColor}Safe5`, `${currColor}Home`]
+                let z = safeSpaces.findIndex(space => space === start);
 
                 const moveAction = () => {
                     setTimeout(function () {
-                        dispatch(movePiece(s, s + 1))
-                        s++;
-                        console.log(s)
-                        if (s < block - 1) {
+                        dispatch(movePiece(safeSpaces[z], safeSpaces[z + 1]))
+                        z++;
+                        if (safeSpaces[z] !== end) {
                             moveAction();
                         } else {
-                            console.log('safeStart')
-                            moveIntoSafe();
+                            endMove(dispatch)
                         }
                     }, 1000)
                 }
 
                 moveAction();
+            }
+
+            if (typeof movingPiece.position !== 'string') {
+
+                if (movingPiece.position < block - 1) {
+                    let s = movingPiece.position;
+
+                    const moveAction = () => {
+                        setTimeout(function () {
+                            dispatch(movePiece(wrapBoard(s), wrapBoard(s + 1)))
+                            s++;
+                            if (s < block - 1) {
+                                moveAction();
+                            } else {
+                                moveIntoSafe();
+                            }
+                        }, 1000)
+                    }
+
+                    moveAction();
+                } else {
+                    moveIntoSafe();
+                }
+
+
+
+                const moveIntoSafe = () => {
+                    let safeStart = `${currColor}Safe1`
+                    setTimeout(function () { dispatch(movePiece(block - 1, safeStart)) }, 1000);
+
+                    if (moveAction !== safeStart) {
+                        setTimeout(function () { moveSafeZone(safeStart, moveAction) }, 1000);
+                    } else {
+                        endMove(dispatch)
+                    }
+                }
+
             } else {
-                moveIntoSafe();
+                moveSafeZone(movingPiece.position, moveAction);
             }
-
-
-            const moveIntoSafe = () => {
-                let safeStart = `${currColor}Safe1`
-                setTimeout(function () { dispatch(movePiece(block - 1, safeStart)) }, 1000);
-            }
-            
         } else {
             if (typeof movingPiece.action === 'undefined') {
                 let a = movingPiece.position;
 
-                let forwardWrap = (position, pieceMove) => {
-                    let pieceWrap = position > 43 && pieceMove >= 1 && pieceMove < 12;
+                let forwardWrap = (position, moveAction) => {
+                    let pieceWrap = position > 43 && moveAction >= 1 && moveAction < 12;
                     let wrapMove;
-                    wrapMove = pieceWrap ? pieceMove + 56 : pieceMove;
+                    wrapMove = pieceWrap ? moveAction + 56 : moveAction;
                     return wrapMove;
                 }
 
-                let forward = forwardWrap(a, pieceMove)
+                let forward = forwardWrap(a, moveAction)
 
                 const moveAction = () => {
                     setTimeout(function () {
                         dispatch(movePiece(wrapBoard(a), wrapBoard(a + 1)))
                         a++;
-                        if (a < forward || a === 56 && pieceMove !== 56) {
+                        if (a < forward || a === 56 && moveAction !== 56) {
                             moveAction();
                         } else if (a === forward) {
                             checkForKnockout(move, boardPieces);
@@ -180,20 +208,20 @@ export default function PieceMove(move, moves, currColor, swapSelected, boardPie
             } else {
                 let b = movingPiece.position;
 
-                let backwardWrap = (position, pieceMove) => {
-                    let pieceWrap = position < 12 && pieceMove <= 56 && pieceMove > 43;
+                let backwardWrap = (position, moveAction) => {
+                    let pieceWrap = position < 12 && moveAction <= 56 && moveAction > 43;
                     let wrapMove;
-                    wrapMove = pieceWrap ? pieceMove - 56 : pieceMove;
+                    wrapMove = pieceWrap ? moveAction - 56 : moveAction;
                     return wrapMove;
                 }
 
-                let backward = backwardWrap(b, pieceMove)
+                let backward = backwardWrap(b, moveAction)
 
                 const moveAction = () => {
                     setTimeout(function () {
                         dispatch(movePiece(wrapBoard(b), wrapBoard(b - 1)))
                         b--;
-                        if (b > backward || b === 1 && pieceMove !== 1) {
+                        if (b > backward || b === 1 && moveAction !== 1) {
                             moveAction();
                         } else if (b === backward) {
                             checkForKnockout(move, boardPieces, dispatch);
@@ -206,5 +234,6 @@ export default function PieceMove(move, moves, currColor, swapSelected, boardPie
                 moveAction();
             }
         }
+
     }
 }

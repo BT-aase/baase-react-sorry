@@ -239,6 +239,21 @@ const gameReducer = (state = initialState, action) => {
                     }
                 }
 
+                const safeMover = (position, card, occupied) => {
+                    let currColor = state.gameSide;
+                    let safeSpaces = [`${currColor}Safe1`, `${currColor}Safe2`, `${currColor}Safe3`,
+                    `${currColor}Safe4`, `${currColor}Safe5`, `${currColor}Home`]
+
+                    let currSpace = safeSpaces.findIndex(space => space === position);
+                    let newSpace = safeSpaces[currSpace + card];
+
+                    console.log(newSpace)
+
+                    if (typeof newSpace !== 'undefined' && !occupied.includes(newSpace)){
+                        displayPieces.push({ move: newSpace, position });
+                    }
+                }
+
                 let startExits = [
                     { space: 33, color: 'red' }, { space: 46, color: 'blue' },
                     { space: 5, color: 'yellow' }, { space: 18, color: 'green' }
@@ -252,7 +267,11 @@ const gameReducer = (state = initialState, action) => {
                 };
 
                 for (let i = 0; i < currPieces.length; i++) {
-                    pieceMover(currPieces[i].space, currCard, occupied);
+                    if (typeof currPieces[i].space !== 'string') {
+                        pieceMover(currPieces[i].space, currCard, occupied);
+                    } else {
+                        safeMover(currPieces[i].space, currCard, occupied);
+                    }
                 };
 
                 safeHome(displayPieces);

@@ -81,7 +81,7 @@ const Start = () => {
     const gameStart = () => {
         let startingColor = playerColors.find(player => player.playerNum === startingPlayer);
         dispatch(startGame(playerColors, startingColor.color));
-        dispatch(createDeck());
+        // dispatch(createDeck());
     }
 
     return (
@@ -130,8 +130,6 @@ const Start = () => {
                     </div>
                 }
             </div>
-            <div></div>
-            <div></div>
         </div>
     );
 };
