@@ -1,8 +1,11 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 import colors from '../../colors';
 
 const Card = (props) => {
+
+    let cardDrawn = useSelector((state) => state.game.cardDrawn);
 
     const cardDisplay = (number) => {
         let display;
@@ -148,7 +151,7 @@ const Card = (props) => {
             display = (
                 <div style={{
                     width: 220, height: 140, backgroundColor: colors.cardBack,
-                    borderRadius: 10, textAlign: 'center',
+                    borderRadius: 10, textAlign: 'center', border: !cardDrawn ? '5px solid #ff6700' : ''
                 }}
                     onClick={() => { props.onClick(); props.displayMoves(); }}
                 >

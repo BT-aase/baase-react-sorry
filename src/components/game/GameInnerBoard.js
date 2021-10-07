@@ -10,6 +10,7 @@ const GameInnerBoard = () => {
     const dispatch = useDispatch();
     let currentCard = useSelector((state) => state.game.faceCard);
     let deckCount = useSelector((state) => state.game.cardDeck.length);
+    let cardDrawn = useSelector((state) => state.game.cardDrawn);
 
     const startPieces = (playerColor) => {
         const playerColors = useSelector((state) => state.game.playerColors);
@@ -122,7 +123,7 @@ const GameInnerBoard = () => {
                         position: 'fixed', top: 385, left: 220, backgroundColor: "#cce3be"
                     }}>
                         <Card
-                            onClick={() => dispatch(drawCard())}
+                            onClick={!cardDrawn ? () => dispatch(drawCard()) : () => {}}
                             displayMoves={() => dispatch(displayMoves())}
                         />
                     </div> :

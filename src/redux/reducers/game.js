@@ -15,6 +15,7 @@ const initialState = {
     cardDeck: [],
     piecesInPlay: [],
     possibleMoves: [],
+    drawAgain: false,
     moveInProgress: false,
     swapSelected: {}
 };
@@ -328,9 +329,12 @@ const gameReducer = (state = initialState, action) => {
                 }
             }
 
+            let goAgain = currCard === 2 ? true : false;
+
             return {
                 ...state,
-                possibleMoves: displayPieces
+                possibleMoves: displayPieces,
+                drawAgain: goAgain
             }
 
         }
@@ -347,6 +351,14 @@ const gameReducer = (state = initialState, action) => {
             let pieceIndex = pieces.findIndex(piece => piece.space === action.oldSpace && piece.color === state.gameSide);
             pieces.splice(pieceIndex, 1);
             pieces.push({ space: action.newSpace, color: movingPiece.color });
+
+            console.log(pieces)
+
+            if (action.newSpace.includes('Home')){
+                pieces.pop();
+            }
+
+            console.log(pieces)
 
             return {
                 ...state,
@@ -405,6 +417,7 @@ const gameReducer = (state = initialState, action) => {
             let playerColors = [...state.playerColors];
             let currColor = state.gameSide;
             let newColor;
+            let color;
 
             let currPlayer = playerColors.find(player => player.color === currColor);
             let nextPlayer = playerColors.find(player => player.playerNum === currPlayer.playerNum + 1);
@@ -415,9 +428,15 @@ const gameReducer = (state = initialState, action) => {
                 newColor = playerColors[0].color;
             }
 
+            if (state.drawAgain) {
+                color = currColor;
+            } else {
+                color = newColor;
+            }
+
             return {
                 ...state,
-                gameSide: newColor,
+                gameSide: color,
                 possibleMoves: [],
                 swapSelected: {},
                 moveInProgress: false,
