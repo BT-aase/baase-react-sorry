@@ -14,9 +14,10 @@ const Board = () => {
     let currColor = useSelector((state) => state.game.gameSide);
     let movesPossible = useSelector((state) => state.game.possibleMoves);
     let faceCard = useSelector((state) => state.game.faceCard);
+    let movingPiece = useSelector((state) => state.game.moveInProgress);
+    let cardDrawn = useSelector((state) => state.game.cardDrawn);
 
     const [angle, setAngle] = useState(0);
-    const [visible, setVisible] = useState(true);
 
     const rotateBoard = (color) => {
         let newAngle;
@@ -39,16 +40,18 @@ const Board = () => {
         }
 
         setAngle(newAngle);
-        setVisible(false);
     }
 
     useEffect(() => {
+        console.log(currColor)
         rotateBoard(currColor)
     }, [currColor]);
 
     useEffect(() => {
-        setVisible(true);
-    }, [faceCard]);
+        if (movesPossible.length === 0 && cardDrawn && !movingPiece) {
+            setTimeout(function () { dispatch(endTurn()) }, 1000);
+        }
+    }, [cardDrawn])
 
     return (
         <div>
@@ -66,7 +69,7 @@ const Board = () => {
                 <GameOuterBoard />
                 <GameInnerBoard />
             </div>
-            {movesPossible.length === 0 && faceCard !== 0 && visible &&
+            {/* {movesPossible.length === 0 && faceCard !== 0 && visible && !movingPiece &&
                 <div style={{
                     position: 'fixed', width: 100, height: 50, marginTop: 50, textAlign: 'center', color: 'white',
                     backgroundColor: '#ff8c00', top: 600, right: 50, border: '2px solid white', borderRadius: 25
@@ -75,7 +78,7 @@ const Board = () => {
                 >
                     <p style={{ paddingTop: 10 }}>SKIP TURN</p>
                 </div>
-            }
+            } */}
         </div>
     );
 };

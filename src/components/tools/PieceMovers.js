@@ -1,9 +1,10 @@
 import {
     movePiece, swapPiece, startActions,
-    showSwappable, slideRemove, endTurn, moveToHome
+    showSwappable, slideRemove, endTurn, 
+    moveToHome, clearMoves
 } from "../../redux/actions/game";
 
-const checkForKnockout = (move, boardPieces, dispatch) => {
+const checkForKnockout = (move, boardPieces, currColor, dispatch) => {
     let moveResult = boardPieces.find(piece => piece.space == move);
     if (moveResult) {
         setTimeout(function () {
@@ -69,6 +70,8 @@ const endMove = (dispatch) => {
 };
 
 export default function PieceMove(move, moves, currColor, swapSelected, boardPieces, dispatch) {
+
+    dispatch(clearMoves());
 
     let movingPiece;
     movingPiece = moves.find(piece => piece.move === move);
@@ -210,8 +213,8 @@ export default function PieceMove(move, moves, currColor, swapSelected, boardPie
                         if (a < forward || a === 56 && moveAction !== 56) {
                             moveAction();
                         } else if (a === forward) {
-                            checkForKnockout(move, boardPieces);
-                            checkForSlide(move, boardPieces, currColor);
+                            checkForKnockout(move, boardPieces, currColor, dispatch);
+                            checkForSlide(move, boardPieces, currColor, dispatch);
                             endMove(dispatch);
                         }
                     }, 1000)
@@ -237,7 +240,7 @@ export default function PieceMove(move, moves, currColor, swapSelected, boardPie
                         if (b > backward || b === 1 && moveResult !== 1) {
                             moveAction();
                         } else if (b === backward) {
-                            checkForKnockout(move, boardPieces, dispatch);
+                            checkForKnockout(move, boardPieces, currColor, dispatch);
                             checkForSlide(move, boardPieces, currColor, dispatch);
                             endMove(dispatch);
                         }

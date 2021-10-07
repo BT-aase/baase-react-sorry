@@ -3,6 +3,7 @@ export const CREATE_DECK = 'CREATE_DECK';
 export const DRAW_CARD = 'DRAW_CARD';
 export const START_ACTIONS = 'START_ACTIONS';
 export const DISPLAY_MOVES = 'DISPLAY_MOVES';
+export const CLEAR_MOVES = 'CLEAR_MOVES';
 export const MOVE_PIECE = 'MOVE_PIECE';
 export const SWAP_PIECE = 'SWAP_PIECE';
 export const SHOW_SWAPPABLE = 'SHOW_SWAPPABLE';
@@ -41,6 +42,12 @@ export const startActions = (color, action) => {
 export const displayMoves = () => {
   return {
     type: DISPLAY_MOVES
+  }
+}
+
+export const clearMoves = () => {
+  return {
+    type: CLEAR_MOVES
   }
 }
 

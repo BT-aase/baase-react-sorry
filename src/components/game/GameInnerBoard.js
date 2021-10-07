@@ -14,7 +14,7 @@ const GameInnerBoard = () => {
     const startPieces = (playerColor) => {
         const playerColors = useSelector((state) => state.game.playerColors);
         const playerStartPieces = useSelector((state) => state.game.playerStartPieces);
-        const player = playerColors.find((color) => color === playerColor);
+        const player = playerColors.find((player) => player.color === playerColor);
         if (typeof player !== 'undefined') {
             const piecesStart = playerStartPieces.find(selectPlayer => selectPlayer.playerNum === player.playerNum);
             return piecesStart.pieces;
@@ -27,7 +27,7 @@ const GameInnerBoard = () => {
         const playerColors = useSelector((state) => state.game.playerColors);
         const playerHomePieces = useSelector((state) => state.game.playerHomePieces);
         const player = playerColors.find((player) => player.color === playerColor);
-        if (typeof player !== 'undefined' && playerHomePieces.length !== 0) {
+        if (typeof player !== 'undefined') {
             const piecesHome = playerHomePieces.find(selectPlayer => selectPlayer.playerNum === player.playerNum);
             return piecesHome.pieces;
         } else {

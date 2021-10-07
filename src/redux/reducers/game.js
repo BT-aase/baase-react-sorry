@@ -1,7 +1,7 @@
 import {
     START_GAME, CREATE_DECK, DRAW_CARD, START_ACTIONS,
     DISPLAY_MOVES, MOVE_PIECE, SWAP_PIECE, SHOW_SWAPPABLE,
-    SLIDE_REMOVE, MOVE_TO_HOME, END_TURN
+    SLIDE_REMOVE, MOVE_TO_HOME, END_TURN, CLEAR_MOVES
 } from "../actions/game";
 
 const initialState = {
@@ -10,10 +10,12 @@ const initialState = {
     playerColors: [],
     playerStartPieces: [],
     playerHomePieces: [],
+    cardDrawn: false,
     faceCard: 0,
     cardDeck: [],
     piecesInPlay: [],
     possibleMoves: [],
+    moveInProgress: false,
     swapSelected: {}
 };
 
@@ -61,13 +63,14 @@ const gameReducer = (state = initialState, action) => {
             return {
                 ...state,
                 cardDeck: updatedCardDeck,
-                faceCard: newCard
+                faceCard: newCard,
+                cardDrawn: true
             }
         }
         case START_ACTIONS: {
-            const player = [...state.playerColors].find((color) => color === action.color);
+            const player = [...state.playerColors].find((player) => player.color === action.color);
             let currentStart = [...state.playerStartPieces];
-            const startPieces = currentStart.find(({ playerNum }) => playerNum === player.playerNum);
+            const startPieces = currentStart.find((start) => start.playerNum === player.playerNum);
             let currentPieces = startPieces.pieces;
 
             const index = currentStart.findIndex(pieces => pieces === startPieces);
@@ -142,6 +145,16 @@ const gameReducer = (state = initialState, action) => {
                     return move;
                 }
             }
+
+            let pieceChecker = (value) => {
+                let space = value.space;
+                if (typeof space === 'string') {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
 
             if (moveCards.includes(currCard)) {
                 let currPieces = [...state.piecesInPlay].filter(piece => piece.color === state.gameSide);
@@ -223,7 +236,7 @@ const gameReducer = (state = initialState, action) => {
                     }
 
                     for (let s = 0; s < displayPieces.length; s++) {
-                        let safeWrap = displayPieces[s].position > 43 && displayPieces[s].move > 3;
+                        let safeWrap = displayPieces[s].position > 43 && displayPieces[s].move > 3 && displayPieces[s].move < 12;
                         if (safePosition(displayPieces[s].position, safeWrap) < block && displayPieces[s].move >= block) {
                             switch (displayPieces[s].move - block) {
                                 case 0:
@@ -291,6 +304,7 @@ const gameReducer = (state = initialState, action) => {
                 let oppPieces = [...state.piecesInPlay].filter(piece => piece.color !== state.gameSide);
 
                 getOccupied(currPieces);
+                oppPieces = oppPieces.filter(pieceChecker);
 
                 for (let i = 0; i < currPieces.length; i++) {
                     if (!occupied.includes(wrapBoard(currPieces[i].space + 11))) {
@@ -307,6 +321,8 @@ const gameReducer = (state = initialState, action) => {
             } else {
                 let oppPieces = [...state.piecesInPlay].filter(piece => piece.color !== state.gameSide);
 
+                oppPieces = oppPieces.filter(pieceChecker);
+
                 for (let i = 0; i < oppPieces.length; i++) {
                     displayPieces.push({ move: 'sorry', position: oppPieces[i].space })
                 }
@@ -317,6 +333,13 @@ const gameReducer = (state = initialState, action) => {
                 possibleMoves: displayPieces
             }
 
+        }
+        case CLEAR_MOVES: {
+            return {
+                ...state,
+                possibleMoves: [],
+                moveInProgress: true
+            }
         }
         case MOVE_PIECE: {
             let pieces = [...state.piecesInPlay];
@@ -396,7 +419,9 @@ const gameReducer = (state = initialState, action) => {
                 ...state,
                 gameSide: newColor,
                 possibleMoves: [],
-                swapSelected: {}
+                swapSelected: {},
+                moveInProgress: false,
+                cardDrawn: false
             }
         }
         default:
