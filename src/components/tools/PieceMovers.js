@@ -1,6 +1,6 @@
 import {
     movePiece, swapPiece, startActions,
-    showSwappable, slideRemove, endTurn, 
+    showSwappable, slideRemove, endTurn,
     moveToHome, clearMoves
 } from "../../redux/actions/game";
 
@@ -126,18 +126,29 @@ export default function PieceMove(move, moves, currColor, swapSelected, boardPie
                 let safeSpaces = [`${currColor}Safe1`, `${currColor}Safe2`, `${currColor}Safe3`,
                 `${currColor}Safe4`, `${currColor}Safe5`, `${currColor}Home`]
                 let z = safeSpaces.findIndex(space => space === start);
+                let endIndex = safeSpaces.findIndex(space => space === end);
 
                 const moveAction = () => {
                     setTimeout(function () {
-                        dispatch(movePiece(safeSpaces[z], safeSpaces[z + 1]))
-                        z++;
-                        if (safeSpaces[z] !== end) {
-                            moveAction();
-                        } else {
-                            if (end === `${currColor}Home`){
-                                dispatch(moveToHome(currColor));
+                        if (z < endIndex) {
+                            dispatch(movePiece(safeSpaces[z], safeSpaces[z + 1]))
+                            z++;
+                            if (safeSpaces[z] !== end) {
+                                moveAction();
+                            } else {
+                                if (end === `${currColor}Home`) {
+                                    dispatch(moveToHome(currColor));
+                                }
+                                endMove(dispatch)
                             }
-                            endMove(dispatch)
+                        } else {
+                            dispatch(movePiece(safeSpaces[z], safeSpaces[z - 1]))
+                            z--;
+                            if (safeSpaces[z] !== end) {
+                                moveAction();
+                            } else {
+                                endMove(dispatch)
+                            }
                         }
                     }, 1000)
                 }

@@ -43,7 +43,6 @@ const Board = () => {
     }
 
     useEffect(() => {
-        console.log(currColor)
         rotateBoard(currColor)
     }, [currColor]);
 

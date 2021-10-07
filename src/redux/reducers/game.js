@@ -272,10 +272,29 @@ const gameReducer = (state = initialState, action) => {
                     `${currColor}Safe4`, `${currColor}Safe5`, `${currColor}Home`]
 
                     let currSpace = safeSpaces.findIndex(space => space === position);
-                    let newSpace = safeSpaces[currSpace + card];
+                    let newSpace;
+
+                    if (card === 4) {
+                        newSpace = safeSpaces[currSpace - 4];
+                    }
+                    else if (card === 10) {
+                        newSpace = safeSpaces[currSpace - 1];
+                    } else {
+                        newSpace = safeSpaces[currSpace - card];
+                    }
 
                     if (typeof newSpace !== 'undefined' && !occupied.includes(newSpace)) {
                         displayPieces.push({ move: newSpace, position });
+                    } else if (typeof newSpace === 'undefined'){
+
+                        let safeEnters = {
+                            red: 31,
+                            blue: 44,
+                            yellow: 3,
+                            green: 16
+                        }
+
+                        displayPieces.push({move: safeEnters[currColor], position})
                     }
                 }
 
@@ -352,13 +371,9 @@ const gameReducer = (state = initialState, action) => {
             pieces.splice(pieceIndex, 1);
             pieces.push({ space: action.newSpace, color: movingPiece.color });
 
-            console.log(pieces)
-
-            if (action.newSpace.includes('Home')){
+            if (String(action.newSpace).includes('Home')) {
                 pieces.pop();
             }
-
-            console.log(pieces)
 
             return {
                 ...state,
