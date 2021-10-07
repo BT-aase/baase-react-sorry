@@ -1,7 +1,7 @@
 import {
     START_GAME, CREATE_DECK, DRAW_CARD, START_ACTIONS,
     DISPLAY_MOVES, MOVE_PIECE, SWAP_PIECE, SHOW_SWAPPABLE,
-    SLIDE_REMOVE, END_TURN
+    SLIDE_REMOVE, MOVE_TO_HOME, END_TURN
 } from "../actions/game";
 
 const initialState = {
@@ -9,6 +9,7 @@ const initialState = {
     gameSide: '',
     playerColors: [],
     playerStartPieces: [],
+    playerHomePieces: [],
     faceCard: 0,
     cardDeck: [],
     piecesInPlay: [],
@@ -20,14 +21,17 @@ const gameReducer = (state = initialState, action) => {
     switch (action.type) {
         case START_GAME: {
             let startPieces = [...state.playerStartPieces];
+            let homePieces = [...state.playerHomePieces];
             for (let a = 1; a < action.colors.length + 1; a++) {
                 startPieces.push({ playerNum: a, pieces: 4 })
+                homePieces.push({ playerNum: a, pieces: 0 })
             }
 
             return {
                 ...state,
                 playerColors: action.colors,
                 playerStartPieces: startPieces,
+                playerHomePieces: homePieces,
                 gameSide: action.startingColor,
                 gameStarted: true
             }
@@ -61,7 +65,7 @@ const gameReducer = (state = initialState, action) => {
             }
         }
         case START_ACTIONS: {
-            const player = [...state.playerColors].find(({ color }) => color === action.color);
+            const player = [...state.playerColors].find((color) => color === action.color);
             let currentStart = [...state.playerStartPieces];
             const startPieces = currentStart.find(({ playerNum }) => playerNum === player.playerNum);
             let currentPieces = startPieces.pieces;
@@ -357,6 +361,21 @@ const gameReducer = (state = initialState, action) => {
             return {
                 ...state,
                 piecesInPlay: pieces
+            }
+        }
+        case MOVE_TO_HOME: {
+            const player = [...state.playerColors].find(player => player.color === action.color);
+            let currentHome = [...state.playerHomePieces];
+            const homePieces = currentHome.find((pieces) => pieces.playerNum === player.playerNum);
+            let currentHomePieces = homePieces.pieces;
+
+            const index = currentHome.findIndex(pieces => pieces === homePieces);
+            currentHome.splice(index, 1);
+            currentHome.push({ playerNum: player.playerNum, pieces: currentHomePieces + 1 });
+
+            return {
+                ...state,
+                playerHomePieces: currentHome
             }
         }
         case END_TURN: {

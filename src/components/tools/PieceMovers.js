@@ -1,6 +1,6 @@
 import {
     movePiece, swapPiece, startActions,
-    showSwappable, slideRemove, endTurn
+    showSwappable, slideRemove, endTurn, moveToHome
 } from "../../redux/actions/game";
 
 const checkForKnockout = (move, boardPieces, dispatch) => {
@@ -131,6 +131,9 @@ export default function PieceMove(move, moves, currColor, swapSelected, boardPie
                         if (safeSpaces[z] !== end) {
                             moveAction();
                         } else {
+                            if (end === `${currColor}Home`){
+                                dispatch(moveToHome(currColor));
+                            }
                             endMove(dispatch)
                         }
                     }, 1000)

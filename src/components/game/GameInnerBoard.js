@@ -14,10 +14,22 @@ const GameInnerBoard = () => {
     const startPieces = (playerColor) => {
         const playerColors = useSelector((state) => state.game.playerColors);
         const playerStartPieces = useSelector((state) => state.game.playerStartPieces);
-        const player = playerColors.find(({ color }) => color === playerColor);
+        const player = playerColors.find((color) => color === playerColor);
         if (typeof player !== 'undefined') {
-            const startPieces = playerStartPieces.find(selectPlayer => selectPlayer.playerNum === player.playerNum);
-            return startPieces.pieces;
+            const piecesStart = playerStartPieces.find(selectPlayer => selectPlayer.playerNum === player.playerNum);
+            return piecesStart.pieces;
+        } else {
+            return 0;
+        }
+    }
+
+    const homePieces = (playerColor) => {
+        const playerColors = useSelector((state) => state.game.playerColors);
+        const playerHomePieces = useSelector((state) => state.game.playerHomePieces);
+        const player = playerColors.find((player) => player.color === playerColor);
+        if (typeof player !== 'undefined' && playerHomePieces.length !== 0) {
+            const piecesHome = playerHomePieces.find(selectPlayer => selectPlayer.playerNum === player.playerNum);
+            return piecesHome.pieces;
         } else {
             return 0;
         }
@@ -50,6 +62,7 @@ const GameInnerBoard = () => {
                         color='red'
                         side='horizontal'
                         startPieces={startPieces('red')}
+                        homePieces={homePieces('red')}
                         moves={showMoves()}
                         onStart={() => { dispatch(startActions('red', 'out'), endMove()) }}
                     />
@@ -61,6 +74,7 @@ const GameInnerBoard = () => {
                     <GameHome
                         color='blue'
                         startPieces={startPieces('blue')}
+                        homePieces={homePieces('blue')}
                         moves={showMoves()}
                         onStart={() => dispatch(startActions('blue', 'out'), endMove())}
                     />
@@ -73,6 +87,7 @@ const GameInnerBoard = () => {
                         color='yellow'
                         side='horizontal'
                         startPieces={startPieces('yellow')}
+                        homePieces={homePieces('yellow')}
                         moves={showMoves()}
                         onStart={() => dispatch(startActions('yellow', 'out'), endMove())}
                     />
@@ -84,6 +99,7 @@ const GameInnerBoard = () => {
                     <GameHome
                         color='green'
                         startPieces={startPieces('green')}
+                        homePieces={homePieces('green')}
                         moves={showMoves()}
                         onStart={() => dispatch(startActions('green', 'out'), endMove())}
                     />
@@ -95,7 +111,7 @@ const GameInnerBoard = () => {
                         position: 'fixed', top: 170, left: 220, backgroundColor: "#cce3be"
                     }}>
                         <Card
-                            reshuffle={deckCount === 0 ? () => dispatch(createDeck()) : () => {}}
+                            reshuffle={deckCount === 0 ? () => dispatch(createDeck()) : () => { }}
                             number={currentCard}
                         />
                     </div> :

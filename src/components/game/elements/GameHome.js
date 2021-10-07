@@ -10,6 +10,7 @@ const homeAdj = (side) => side === 'horizontal' ? 484 : 478;
 
 const GameHome = (props) => {
     const piecesStart = [...Array(props.startPieces)].map((e, i) => <GamePiece color={props.color} key={i} />);
+    const piecesHome = [...Array(props.homePieces)].map((e, i) => <GamePiece color={props.color} key={i} />);
 
     const dispatch = useDispatch();
     let boardSide = useSelector((state) => state.game.gameSide);
@@ -71,6 +72,7 @@ const GameHome = (props) => {
                     display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between',
                     width: 65, height: 70, marginLeft: 15, marginTop: 15
                 }}>
+                    {piecesHome}
                 </div>
             </div>
             <div style={{ position: 'absolute', marginTop: 455, marginLeft: zoneAdj(props.side), zIndex: 10 }}>

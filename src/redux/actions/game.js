@@ -7,6 +7,7 @@ export const MOVE_PIECE = 'MOVE_PIECE';
 export const SWAP_PIECE = 'SWAP_PIECE';
 export const SHOW_SWAPPABLE = 'SHOW_SWAPPABLE';
 export const SLIDE_REMOVE = 'SLIDE_REMOVE';
+export const MOVE_TO_HOME = 'MOVE_TO_HOME';
 export const END_TURN = 'END_TURN';
 
 export const startGame = (colors, startingColor) => {
@@ -71,6 +72,13 @@ export const slideRemove = (space) => {
   return {
     type: SLIDE_REMOVE,
     space
+  }
+}
+
+export const moveToHome = (color) => {
+  return {
+    type: MOVE_TO_HOME,
+    color
   }
 }
 
