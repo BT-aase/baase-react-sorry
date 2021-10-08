@@ -47,7 +47,7 @@ const checkForSlide = (move, boardPieces, currColor, dispatch) => {
         let inSlidePieces = [];
         let slideStart = move;
 
-        for (let m = slideStart; m < slideStart + 3; m++) {
+        for (let m = slideStart; m < slideStart + 4; m++) {
             let slidePiece = boardPieces.find(piece => piece.space === m);
             if (slidePiece) {
                 inSlidePieces.push(slidePiece);
@@ -55,6 +55,8 @@ const checkForSlide = (move, boardPieces, currColor, dispatch) => {
         }
 
         setTimeout(function () { dispatch(movePiece(move, move + 3)) }, 500);
+
+        console.log(inSlidePieces)
 
         for (let n = 0; n < inSlidePieces.length; n++) {
             setTimeout(function () {

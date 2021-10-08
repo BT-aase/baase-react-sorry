@@ -97,6 +97,19 @@ const gameReducer = (state = initialState, action) => {
                         break;
                 }
 
+                let checkOpp = playPieces.find(piece => piece.space === newPiece.space);
+                let checkOppIndex = playPieces.findIndex(piece => piece.space === newPiece.space);
+                if (checkOppIndex !== -1) {
+                    const oppPlayer = [...state.playerColors].find((player) => player.color === checkOpp.color);
+                    const oppStartPieces = currentStart.find((start) => start.playerNum === oppPlayer.playerNum);
+                    let oppCurrentPieces = oppStartPieces.pieces;
+                    let oppIndex = currentStart.findIndex(pieces => pieces === oppStartPieces);
+
+                    currentStart.splice(oppIndex, 1);
+                    playPieces.splice(checkOppIndex, 1);
+                    currentStart.push({ playerNum: oppPlayer.playerNum, pieces: oppCurrentPieces + 1 })
+                }
+
                 playPieces.push(newPiece);
                 currentStart.push({ playerNum: player.playerNum, pieces: currentPieces - 1 })
 
