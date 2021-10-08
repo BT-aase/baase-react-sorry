@@ -13,7 +13,6 @@ const Board = () => {
 
     let currColor = useSelector((state) => state.game.gameSide);
     let movesPossible = useSelector((state) => state.game.possibleMoves);
-    let faceCard = useSelector((state) => state.game.faceCard);
     let movingPiece = useSelector((state) => state.game.moveInProgress);
     let cardDrawn = useSelector((state) => state.game.cardDrawn);
 

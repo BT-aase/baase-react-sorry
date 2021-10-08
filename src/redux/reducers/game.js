@@ -6,14 +6,15 @@ import {
 
 const initialState = {
     gameStarted: false,
+    gameWon: false,
     gameSide: '',
     playerColors: [],
     playerStartPieces: [],
-    playerHomePieces: [],
+    playerHomePieces: [{ playerNum: 1, pieces: 3 }, { playerNum: 2, pieces: 2 }],
     cardDrawn: false,
     faceCard: 0,
-    cardDeck: [],
-    piecesInPlay: [],
+    cardDeck: [3],
+    piecesInPlay: [{space: 'greenSafe3', color: 'green'}],
     possibleMoves: [],
     drawAgain: false,
     moveInProgress: false,
@@ -27,7 +28,7 @@ const gameReducer = (state = initialState, action) => {
             let homePieces = [...state.playerHomePieces];
             for (let a = 1; a < action.colors.length + 1; a++) {
                 startPieces.push({ playerNum: a, pieces: 4 })
-                homePieces.push({ playerNum: a, pieces: 0 })
+                // homePieces.push({ playerNum: a, pieces: 0 })
             }
 
             return {
@@ -280,13 +281,16 @@ const gameReducer = (state = initialState, action) => {
                 }
 
                 const safeMover = (position, card, occupied) => {
+                    console.log(position)
                     let currColor = state.gameSide;
                     let safeSpaces = [`${currColor}Safe1`, `${currColor}Safe2`, `${currColor}Safe3`,
-                    `${currColor}Safe4`, `${currColor}Safe5`]
+                    `${currColor}Safe4`, `${currColor}Safe5`, `${currColor}Home`]
 
                     let currSpace = safeSpaces.findIndex(space => space === position);
                     let newSpace;
                     let backwards;
+
+                    console.log(currSpace)
 
                     if (card === 4) {
                         newSpace = safeSpaces[currSpace - 4];
@@ -296,9 +300,11 @@ const gameReducer = (state = initialState, action) => {
                         newSpace = safeSpaces[currSpace - 1];
                         backwards = true;
                     } else {
-                        newSpace = safeSpaces[currSpace - card];
+                        newSpace = safeSpaces[currSpace + card];
                         backwards = false;
                     }
+
+                    console.log(currSpace, card, safeSpaces[currSpace + card]);
 
                     if (typeof newSpace !== 'undefined' && !occupied.includes(newSpace)) {
                         if (!backwards) {
@@ -467,8 +473,19 @@ const gameReducer = (state = initialState, action) => {
         case END_TURN: {
             let playerColors = [...state.playerColors];
             let currColor = state.gameSide;
+            let piecesInHome = state.playerHomePieces;
             let newColor;
             let color;
+
+            let isWin = piecesInHome.find(home => home.pieces === 4);
+
+            if (isWin){
+                return {
+                    ...state,
+                    gameWon: true
+                };
+            }
+            
 
             let currPlayer = playerColors.find(player => player.color === currColor);
             let nextPlayer = playerColors.find(player => player.playerNum === currPlayer.playerNum + 1);
