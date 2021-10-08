@@ -235,30 +235,85 @@ export default function PieceMove(move, moves, currColor, swapSelected, boardPie
             } else {
                 let b = movingPiece.position;
 
-                let backwardWrap = (position, moveResult) => {
-                    let pieceWrap = position < 12 && moveResult <= 56 && moveResult > 43;
-                    let wrapMove;
-                    wrapMove = pieceWrap ? moveResult - 56 : moveResult;
-                    return wrapMove;
+                if (typeof b === 'string') {
+                    let safeSpaces = [`${currColor}Safe1`, `${currColor}Safe2`, `${currColor}Safe3`,
+                    `${currColor}Safe4`, `${currColor}Safe5`];
+                    let z = safeSpaces.findIndex(space => space === b);
+
+                    let safeEnters = {
+                        red: 31,
+                        blue: 44,
+                        yellow: 3,
+                        green: 16
+                    }
+
+                    const furtherBackAction = (start) => {
+                        let f = start;
+                        let backResult = moveResult === 56 ? 0 : moveResult;
+
+                        setTimeout(function () {
+                            dispatch(movePiece(f, wrapBoard(f - 1)))
+                            f--;
+                            if (f > backResult || f === 1 && moveResult !== 1) {
+                                furtherBackAction(f);
+                            } else {
+                                checkForKnockout(move, boardPieces, currColor, dispatch);
+                                checkForSlide(move, boardPieces, currColor, dispatch);
+                                endMove(dispatch);
+                            }
+                        }, 1000)
+                    }
+
+                    const safeBackAction = () => {
+                        setTimeout(function () {
+                            if (safeSpaces[z] === `${currColor}Safe1`) {
+                                setTimeout(function () { dispatch(movePiece(`${currColor}Safe1`, safeEnters[currColor])) }, 1000);
+                                setTimeout(function () { furtherBackAction(safeEnters[currColor]) }, 1000);
+                            } else {
+                                dispatch(movePiece(safeSpaces[z], safeSpaces[z - 1]))
+                                z--;
+                                if (safeSpaces[z] !== `${currColor}Safe1`) {
+                                    safeBackAction();
+                                } else {
+                                    setTimeout(function () { dispatch(movePiece(`${currColor}Safe1`, safeEnters[currColor])) }, 1000);
+                                    if (movingPiece.move !== safeEnters[currColor]) {
+                                        setTimeout(function () { furtherBackAction(safeEnters[currColor]) }, 1000);
+                                    }
+                                }
+                            }
+                        }, 1000)
+                    }
+
+
+
+                    safeBackAction();
                 }
+                else {
+                    let backwardWrap = (position, moveResult) => {
+                        let pieceWrap = position < 12 && moveResult <= 56 && moveResult > 43;
+                        let wrapMove;
+                        wrapMove = pieceWrap ? moveResult - 56 : moveResult;
+                        return wrapMove;
+                    }
 
-                let backward = backwardWrap(b, moveResult)
+                    let backward = backwardWrap(b, moveResult)
 
-                const moveAction = () => {
-                    setTimeout(function () {
-                        dispatch(movePiece(wrapBoard(b), wrapBoard(b - 1)))
-                        b--;
-                        if (b > backward || b === 1 && moveResult !== 1) {
-                            moveAction();
-                        } else if (b === backward) {
-                            checkForKnockout(move, boardPieces, currColor, dispatch);
-                            checkForSlide(move, boardPieces, currColor, dispatch);
-                            endMove(dispatch);
-                        }
-                    }, 1000)
+                    const backwardsAction = () => {
+                        setTimeout(function () {
+                            dispatch(movePiece(wrapBoard(b), wrapBoard(b - 1)))
+                            b--;
+                            if (b > backward || b === 1 && moveResult !== 1) {
+                                backwardsAction();
+                            } else if (b === backward) {
+                                checkForKnockout(move, boardPieces, currColor, dispatch);
+                                checkForSlide(move, boardPieces, currColor, dispatch);
+                                endMove(dispatch);
+                            }
+                        }, 1000)
+                    }
+
+                    backwardsAction();
                 }
-
-                moveAction();
             }
         }
 

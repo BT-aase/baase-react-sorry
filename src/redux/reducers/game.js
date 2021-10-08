@@ -269,24 +269,31 @@ const gameReducer = (state = initialState, action) => {
                 const safeMover = (position, card, occupied) => {
                     let currColor = state.gameSide;
                     let safeSpaces = [`${currColor}Safe1`, `${currColor}Safe2`, `${currColor}Safe3`,
-                    `${currColor}Safe4`, `${currColor}Safe5`, `${currColor}Home`]
+                    `${currColor}Safe4`, `${currColor}Safe5`]
 
                     let currSpace = safeSpaces.findIndex(space => space === position);
                     let newSpace;
+                    let backwards;
 
                     if (card === 4) {
                         newSpace = safeSpaces[currSpace - 4];
+                        backwards = true;
                     }
                     else if (card === 10) {
                         newSpace = safeSpaces[currSpace - 1];
+                        backwards = true;
                     } else {
                         newSpace = safeSpaces[currSpace - card];
+                        backwards = false;
                     }
 
                     if (typeof newSpace !== 'undefined' && !occupied.includes(newSpace)) {
-                        displayPieces.push({ move: newSpace, position });
-                    } else if (typeof newSpace === 'undefined'){
-
+                        if (!backwards) {
+                            displayPieces.push({ move: newSpace, position });
+                        } else {
+                            displayPieces.push({ move: newSpace, position, action: 'backwards' });
+                        }
+                    } else if (typeof newSpace === 'undefined') {
                         let safeEnters = {
                             red: 31,
                             blue: 44,
@@ -294,7 +301,23 @@ const gameReducer = (state = initialState, action) => {
                             green: 16
                         }
 
-                        displayPieces.push({move: safeEnters[currColor], position})
+                        let safeNum = safeEnters[currColor] + parseInt(position.slice(-1));
+                        let safeOut;
+
+                        if (card === 4) {
+                            safeOut = safeNum - 4;
+                        }
+                        else if (card === 10) {
+                            safeOut = safeNum - 1;
+                        }
+
+                        if (safeOut === 0) {
+                            safeOut = 56;
+                        }
+
+                        if (!occupied.includes(safeOut)) {
+                            displayPieces.push({ move: safeOut, position, action: 'backwards' })
+                        }
                     }
                 }
 
