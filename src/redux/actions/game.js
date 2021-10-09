@@ -10,6 +10,7 @@ export const SHOW_SWAPPABLE = 'SHOW_SWAPPABLE';
 export const SLIDE_REMOVE = 'SLIDE_REMOVE';
 export const MOVE_TO_HOME = 'MOVE_TO_HOME';
 export const END_TURN = 'END_TURN';
+export const RESTART_GAME = 'RESTART_GAME';
 
 export const startGame = (colors, startingColor) => {
     return {
@@ -92,5 +93,11 @@ export const moveToHome = (color) => {
 export const endTurn = () => {
   return {
     type: END_TURN
+  }
+}
+
+export const restartGame = () => {
+  return {
+    type: RESTART_GAME
   }
 }

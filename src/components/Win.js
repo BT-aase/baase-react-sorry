@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from 'react-redux';
 const remote = require('electron').remote;
 
 import colors from "./colors";
+import { restartGame } from "../redux/actions/game";
 
 const Win = () => {
+
+    const dispatch = useDispatch();
 
     const homePieces = useSelector((state) => state.game.playerHomePieces);
     const playerColors = useSelector((state) => state.game.playerColors);
@@ -12,10 +15,12 @@ const Win = () => {
     let winningColor = playerColors.find(player => player.playerNum === winningPlayer.playerNum);
 
     const closeWindow = () => {
-        setTimeout(function () {
-            var window = remote.getCurrentWindow();
-            window.close();
-        }, 2000)
+        var window = remote.getCurrentWindow();
+        window.close();
+    }
+
+    const restart = () => {
+        dispatch(restartGame());
     }
 
     return (
@@ -57,11 +62,13 @@ const Win = () => {
                             }}>
                             <p style={{ color: '#fff', fontSize: 24, paddingTop: 5 }}>OK</p>
                         </div>
-                        <div style={{
-                            height: 50, width: 200, backgroundColor: '#ff6700',
-                            borderRadius: 25, textAlign: 'center', border: '2px solid #fff',
-                            marginTop: 20
-                        }}>
+                        <div
+                            onClick={() => restart()}
+                            style={{
+                                height: 50, width: 200, backgroundColor: '#ff6700',
+                                borderRadius: 25, textAlign: 'center', border: '2px solid #fff',
+                                marginTop: 20
+                            }}>
                             <p style={{ color: '#fff', fontSize: 24, paddingTop: 5 }}>Play Again</p>
                         </div>
                     </div>

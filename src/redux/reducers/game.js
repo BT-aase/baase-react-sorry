@@ -1,7 +1,7 @@
 import {
     START_GAME, CREATE_DECK, DRAW_CARD, START_ACTIONS,
     DISPLAY_MOVES, MOVE_PIECE, SWAP_PIECE, SHOW_SWAPPABLE,
-    SLIDE_REMOVE, MOVE_TO_HOME, END_TURN, CLEAR_MOVES
+    SLIDE_REMOVE, MOVE_TO_HOME, END_TURN, CLEAR_MOVES, RESTART_GAME
 } from "../actions/game";
 
 const initialState = {
@@ -477,7 +477,11 @@ const gameReducer = (state = initialState, action) => {
             if (isWin) {
                 return {
                     ...state,
-                    gameWon: true
+                    gameWon: true,
+                    possibleMoves: [],
+                    swapSelected: {},
+                    moveInProgress: false,
+                    cardDrawn: false
                 };
             }
 
@@ -503,6 +507,20 @@ const gameReducer = (state = initialState, action) => {
                 swapSelected: {},
                 moveInProgress: false,
                 cardDrawn: false
+            }
+        }
+        case RESTART_GAME: {
+            return {
+                ...state,
+                gameStarted: initialState.gameStarted,
+                gameWon: initialState.gameWon,
+                gameSide: initialState.gameSide,
+                playerColors: initialState.playerColors,
+                playerStartPieces: initialState.playerStartPieces,
+                playerHomePieces: initialState.playerHomePieces,
+                cardDrawn: initialState.cardDrawn,
+                faceCard: initialState.faceCard,
+                cardDeck: initialState.cardDeck,
             }
         }
         default:
