@@ -10,7 +10,7 @@ const initialState = {
     gameSide: '',
     playerColors: [],
     playerStartPieces: [],
-    playerHomePieces: [],
+    playerHomePieces: [{ playerNum: 1, pieces: 4 }, { playerNum: 2, pieces: 2 }],
     cardDrawn: false,
     faceCard: 0,
     cardDeck: [],
@@ -28,7 +28,7 @@ const gameReducer = (state = initialState, action) => {
             let homePieces = [...state.playerHomePieces];
             for (let a = 1; a < action.colors.length + 1; a++) {
                 startPieces.push({ playerNum: a, pieces: 4 })
-                homePieces.push({ playerNum: a, pieces: 0 })
+                // homePieces.push({ playerNum: a, pieces: 0 })
             }
 
             return {
@@ -480,7 +480,7 @@ const gameReducer = (state = initialState, action) => {
                     gameWon: true
                 };
             }
-            
+
             let currPlayer = playerColors.find(player => player.color === currColor);
             let nextPlayer = playerColors.find(player => player.playerNum === currPlayer.playerNum + 1);
 

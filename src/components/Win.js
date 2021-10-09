@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 const remote = require('electron').remote;
 
@@ -11,12 +11,12 @@ const Win = () => {
     let winningPlayer = homePieces.find(home => home.pieces === 4);
     let winningColor = playerColors.find(player => player.playerNum === winningPlayer.playerNum);
 
-    // setTimeout(function () {
-    //     var window = remote.getCurrentWindow();
-    //     window.close();
-    // }, 2000)
-
-
+    const closeWindow = () => {
+        setTimeout(function () {
+            var window = remote.getCurrentWindow();
+            window.close();
+        }, 2000)
+    }
 
     return (
         <div style={{
@@ -36,11 +36,34 @@ const Win = () => {
                 position: 'fixed',
                 backgroundColor: '#000058',
             }}>
-                <div>
+                <div style={{ marginLeft: 85, marginTop: 25 }}>
                     <div>
-                        <p style={{ color: '#fff' }}>Congratulations!</p>
-                        <p style={{ color: colors[winningColor.color] }}>Player {winningPlayer.playerNum}</p>
-                        <p style={{ color: '#fff' }}>has won the game!</p>
+                        <p style={{ color: '#fff', marginLeft: 11, fontSize: 24 }}>Congratulations!</p>
+                        <p style={{
+                            color: colors[winningColor.color], marginLeft: 45,
+                            fontSize: 28, fontWeight: 700
+                        }}>Player {winningPlayer.playerNum}</p>
+                        <p style={{ color: '#fff', fontSize: 24 }}>has won the game!</p>
+                    </div>
+                </div>
+                <div style={{ marginLeft: 85, marginTop: 25 }}>
+                    <div>
+                        <div
+                            onClick={() => closeWindow()}
+                            style={{
+                                height: 50, width: 100, backgroundColor: '#ff6700',
+                                borderRadius: 25, textAlign: 'center', border: '2px solid #fff',
+                                marginLeft: 50
+                            }}>
+                            <p style={{ color: '#fff', fontSize: 24, paddingTop: 5 }}>OK</p>
+                        </div>
+                        <div style={{
+                            height: 50, width: 200, backgroundColor: '#ff6700',
+                            borderRadius: 25, textAlign: 'center', border: '2px solid #fff',
+                            marginTop: 20
+                        }}>
+                            <p style={{ color: '#fff', fontSize: 24, paddingTop: 5 }}>Play Again</p>
+                        </div>
                     </div>
                 </div>
             </div>
