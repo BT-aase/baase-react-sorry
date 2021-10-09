@@ -56,8 +56,6 @@ const checkForSlide = (move, boardPieces, currColor, dispatch) => {
 
         setTimeout(function () { dispatch(movePiece(move, move + 3)) }, 500);
 
-        console.log(inSlidePieces)
-
         for (let n = 0; n < inSlidePieces.length; n++) {
             setTimeout(function () {
                 dispatch(slideRemove(inSlidePieces[n].space));
@@ -83,16 +81,19 @@ export default function PieceMove(move, moves, currColor, swapSelected, boardPie
     }
 
     let moveResult = movingPiece.move;
+    let movePosition = movingPiece.position;
 
-    if (typeof moveResult === 'string' && !moveResult.includes(currColor)) {
+    let specialMoves = ['sorry', 'swap'];
+
+    if (specialMoves.includes(moveResult) && !String(movePosition).includes(currColor)) {
         if (moveResult === 'sorry') {
             let swapColor = boardPieces.find(piece => piece.space === movingPiece.position);
             dispatch(swapPiece(movingPiece.position, currColor))
             dispatch(startActions(swapColor.color, 'in'));
             dispatch(startActions(currColor, 'sorry'));
             endMove(dispatch);
-        } else if (move === 'swap') {
-            if (Object.entries(swapSelected).length == 0) {
+        } else if (moveResult === 'swap') {
+            if (Object.entries(swapSelected).length === 0) {
                 let swapPiece = boardPieces.find(piece => piece.space === movingPiece.position);
                 let swapPieces = boardPieces.filter(piece => piece.color === currColor);
                 dispatch(showSwappable(swapPiece, swapPieces));
@@ -114,7 +115,6 @@ export default function PieceMove(move, moves, currColor, swapSelected, boardPie
             }
         }
         if (typeof moveResult === 'string') {
-
             let diamonds = {
                 red: 32,
                 blue: 45,
@@ -159,9 +159,8 @@ export default function PieceMove(move, moves, currColor, swapSelected, boardPie
             }
 
             if (typeof movingPiece.position !== 'string') {
-
                 const wrapStart = (block) => {
-                    let blockWrap = movingPiece.position < block - 1;
+                    let blockWrap = movingPiece.position <= block - 1;
                     if (!blockWrap) {
                         return block + 56
                     } else {
@@ -169,15 +168,17 @@ export default function PieceMove(move, moves, currColor, swapSelected, boardPie
                     }
                 }
 
+                let wrapBlock = wrapStart(block - 1);
 
-                if (movingPiece.position < wrapStart(block - 1)) {
+
+                if (movingPiece.position < wrapBlock) {
                     let s = movingPiece.position;
 
                     const moveAction = () => {
                         setTimeout(function () {
                             dispatch(movePiece(wrapBoard(s), wrapBoard(s + 1)))
                             s++;
-                            if (s < wrapStart(block - 1)) {
+                            if (s < wrapBlock) {
                                 moveAction();
                             } else {
                                 moveIntoSafe();
