@@ -129,7 +129,7 @@ const Card = (props) => {
                                     <p style={{ fontSize: 9, width: 125 }}>
                                         {number === 11 ?
                                             'Note: Forfeit move if you do not wish to change places and it is impossible to go forward 11 squares.' :
-                                            "If there is not man on your start or no opponent's man is on any square your move is forfeited."
+                                            "If there is no man on your start or no opponent's man is on any square your move is forfeited."
                                         }
                                     </p>
                                 </>

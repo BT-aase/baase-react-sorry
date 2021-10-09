@@ -10,7 +10,7 @@ const initialState = {
     gameSide: '',
     playerColors: [],
     playerStartPieces: [],
-    playerHomePieces: [{ playerNum: 1, pieces: 4 }, { playerNum: 2, pieces: 2 }],
+    playerHomePieces: [],
     cardDrawn: false,
     faceCard: 0,
     cardDeck: [],
@@ -28,7 +28,7 @@ const gameReducer = (state = initialState, action) => {
             let homePieces = [...state.playerHomePieces];
             for (let a = 1; a < action.colors.length + 1; a++) {
                 startPieces.push({ playerNum: a, pieces: 4 })
-                // homePieces.push({ playerNum: a, pieces: 0 })
+                homePieces.push({ playerNum: a, pieces: 0 })
             }
 
             return {
@@ -171,6 +171,55 @@ const gameReducer = (state = initialState, action) => {
             }
 
 
+            let safeHome = (displayPieces) => {
+                let diamonds = {
+                    red: 32,
+                    blue: 45,
+                    yellow: 4,
+                    green: 17
+                }
+
+                let block = diamonds[state.gameSide];
+
+                const safePosition = (position, wrap) => {
+                    if (wrap) {
+                        let interval = 57 - position;
+                        return 1 - interval;
+                    } else {
+                        return position
+                    }
+                }
+
+                for (let s = 0; s < displayPieces.length; s++) {
+                    let safeWrap = displayPieces[s].position > 43 && displayPieces[s].move > 3 && displayPieces[s].move < 12;
+                    if (safePosition(displayPieces[s].position, safeWrap) < block && displayPieces[s].move >= block) {
+                        switch (displayPieces[s].move - block) {
+                            case 0:
+                                displayPieces[s].move = `${state.gameSide}Safe1`;
+                                break;
+                            case 1:
+                                displayPieces[s].move = `${state.gameSide}Safe2`;
+                                break;
+                            case 2:
+                                displayPieces[s].move = `${state.gameSide}Safe3`;
+                                break;
+                            case 3:
+                                displayPieces[s].move = `${state.gameSide}Safe4`;
+                                break;
+                            case 4:
+                                displayPieces[s].move = `${state.gameSide}Safe5`;
+                                break;
+                            case 5:
+                                displayPieces[s].move = `${state.gameSide}Home`;
+                                break;
+                            default:
+                                displayPieces.splice(s, 1);
+                                break;
+                        }
+                    }
+                }
+            }
+
             if (moveCards.includes(currCard)) {
                 let currPieces = [...state.piecesInPlay].filter(piece => piece.color === state.gameSide);
                 getOccupied(currPieces);
@@ -228,55 +277,6 @@ const gameReducer = (state = initialState, action) => {
                             break;
                         default:
                             break;
-                    }
-                }
-
-                let safeHome = (displayPieces) => {
-                    let diamonds = {
-                        red: 32,
-                        blue: 45,
-                        yellow: 4,
-                        green: 17
-                    }
-
-                    let block = diamonds[state.gameSide];
-
-                    const safePosition = (position, wrap) => {
-                        if (wrap) {
-                            let interval = 57 - position;
-                            return 1 - interval;
-                        } else {
-                            return position
-                        }
-                    }
-
-                    for (let s = 0; s < displayPieces.length; s++) {
-                        let safeWrap = displayPieces[s].position > 43 && displayPieces[s].move > 3 && displayPieces[s].move < 12;
-                        if (safePosition(displayPieces[s].position, safeWrap) < block && displayPieces[s].move >= block) {
-                            switch (displayPieces[s].move - block) {
-                                case 0:
-                                    displayPieces[s].move = `${state.gameSide}Safe1`;
-                                    break;
-                                case 1:
-                                    displayPieces[s].move = `${state.gameSide}Safe2`;
-                                    break;
-                                case 2:
-                                    displayPieces[s].move = `${state.gameSide}Safe3`;
-                                    break;
-                                case 3:
-                                    displayPieces[s].move = `${state.gameSide}Safe4`;
-                                    break;
-                                case 4:
-                                    displayPieces[s].move = `${state.gameSide}Safe5`;
-                                    break;
-                                case 5:
-                                    displayPieces[s].move = `${state.gameSide}Home`;
-                                    break;
-                                default:
-                                    displayPieces.splice(s, 1);
-                                    break;
-                            }
-                        }
                     }
                 }
 
@@ -375,13 +375,18 @@ const gameReducer = (state = initialState, action) => {
                     }
                 }
 
+                safeHome(displayPieces);
             } else {
                 let oppPieces = [...state.piecesInPlay].filter(piece => piece.color !== state.gameSide);
+                let sorryPlayer = [...state.playerColors].find(player => player.color === state.gameSide);
+                let sorryHome = [...state.playerHomePieces].find(player => player.playerNum === sorryPlayer.playerNum);
 
                 oppPieces = oppPieces.filter(pieceChecker);
 
-                for (let i = 0; i < oppPieces.length; i++) {
-                    displayPieces.push({ move: 'sorry', position: oppPieces[i].space })
+                if (sorryHome.pieces !== 0) {
+                    for (let i = 0; i < oppPieces.length; i++) {
+                        displayPieces.push({ move: 'sorry', position: oppPieces[i].space })
+                    }
                 }
             }
 

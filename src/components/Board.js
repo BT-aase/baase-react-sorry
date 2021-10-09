@@ -51,6 +51,8 @@ const Board = () => {
         }
     }, [cardDrawn])
 
+    let onlySwap = typeof (movesPossible.find(move => move.move !== 'swap')) === 'undefined';
+
     return (
         <div>
             <div style={{
@@ -67,16 +69,16 @@ const Board = () => {
                 <GameOuterBoard />
                 <GameInnerBoard />
             </div>
-            {/* {movesPossible.length === 0 && faceCard !== 0 && visible && !movingPiece &&
+            {cardDrawn && onlySwap &&
                 <div style={{
-                    position: 'fixed', width: 100, height: 50, marginTop: 50, textAlign: 'center', color: 'white',
-                    backgroundColor: '#ff8c00', top: 600, right: 50, border: '2px solid white', borderRadius: 25
+                    position: 'fixed', width: 150, height: 40, textAlign: 'center', color: 'white',
+                    backgroundColor: '#000058', top: 5, left: 450, border: '2px solid white', borderRadius: 25
                 }}
                     onClick={() => dispatch(endTurn())}
                 >
-                    <p style={{ paddingTop: 10 }}>SKIP TURN</p>
+                    <p style={{marginTop: 5}}>FORFEIT TURN</p>
                 </div>
-            } */}
+            }
         </div>
     );
 };
