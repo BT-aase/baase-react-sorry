@@ -365,7 +365,9 @@ const gameReducer = (state = initialState, action) => {
 
                 if (currCard === 1 || currCard === 2) {
                     let colorExit = startExits.find((space) => space.color === state.gameSide);
-                    if (!occupied.includes(colorExit.space)) {
+                    let startPlayer = state.playerColors.find((piece) => piece.color === state.gameSide);
+                    let inStart = state.playerStartPieces.find((start) => start.playerNum === startPlayer.playerNum)
+                    if (!occupied.includes(colorExit.space) && inStart.pieces !== 0) {
                         displayPieces.push({ move: `${state.gameSide}Start`, position: `${state.gameSide}Start` })
                     }
                 };

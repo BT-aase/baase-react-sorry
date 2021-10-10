@@ -54,7 +54,7 @@ const Board = () => {
 
     let checkForSwap = typeof (movesPossible.find(move => move.move !== 'swap')) === 'undefined';
     let onlySwap = checkForSwap && movesPossible.length !== 0;
-    let swapInProgress = swapSelected !== {} ? true : false;
+    let swapInProgress = Object.entries(swapSelected).length !== 0 ? true : false;
 
     return (
         <div>
