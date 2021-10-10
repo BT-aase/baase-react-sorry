@@ -15,6 +15,7 @@ const Board = () => {
     let movesPossible = useSelector((state) => state.game.possibleMoves);
     let movingPiece = useSelector((state) => state.game.moveInProgress);
     let cardDrawn = useSelector((state) => state.game.cardDrawn);
+    let swapSelected = useSelector((state) => state.game.swapSelected);
 
     const [angle, setAngle] = useState(0);
 
@@ -53,6 +54,7 @@ const Board = () => {
 
     let checkForSwap = typeof (movesPossible.find(move => move.move !== 'swap')) === 'undefined';
     let onlySwap = checkForSwap && movesPossible.length !== 0;
+    let swapInProgress = swapSelected !== {} ? true : false;
 
     return (
         <div>
@@ -70,7 +72,7 @@ const Board = () => {
                 <GameOuterBoard />
                 <GameInnerBoard />
             </div>
-            {cardDrawn && onlySwap &&
+            {cardDrawn && onlySwap && !swapInProgress &&
                 <div style={{
                     position: 'fixed', width: 150, height: 40, textAlign: 'center', color: 'white',
                     backgroundColor: '#000058', top: 5, left: 450, border: '2px solid white', borderRadius: 25
