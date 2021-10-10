@@ -170,8 +170,8 @@ const gameReducer = (state = initialState, action) => {
                 }
             }
 
-
             let safeHome = (displayPieces) => {
+                console.log('text', displayPieces)
                 let diamonds = {
                     red: 32,
                     blue: 45,
@@ -193,29 +193,51 @@ const gameReducer = (state = initialState, action) => {
                 for (let s = 0; s < displayPieces.length; s++) {
                     let safeWrap = displayPieces[s].position > 43 && displayPieces[s].move > 3 && displayPieces[s].move < 12;
                     if (safePosition(displayPieces[s].position, safeWrap) < block && displayPieces[s].move >= block) {
+                        let removePiece = displayPieces.splice(s, 1);
                         switch (displayPieces[s].move - block) {
                             case 0:
-                                displayPieces[s].move = `${state.gameSide}Safe1`;
+                                if (occupied.includes(`${state.gameSide}Safe1`)) {
+                                    removePiece()
+                                } else {
+                                    displayPieces[s].move = `${state.gameSide}Safe1`;
+                                }
                                 break;
                             case 1:
-                                displayPieces[s].move = `${state.gameSide}Safe2`;
+                                if (occupied.includes(`${state.gameSide}Safe2`)) {
+                                    removePiece()
+                                } else {
+                                    displayPieces[s].move = `${state.gameSide}Safe2`;
+                                }
                                 break;
                             case 2:
-                                displayPieces[s].move = `${state.gameSide}Safe3`;
+                                if (occupied.includes(`${state.gameSide}Safe3`)) {
+                                    removePiece()
+                                } else {
+                                    displayPieces[s].move = `${state.gameSide}Safe3`;
+                                }
                                 break;
                             case 3:
-                                displayPieces[s].move = `${state.gameSide}Safe4`;
+                                if (occupied.includes(`${state.gameSide}Safe4`)) {
+                                    removePiece()
+                                } else {
+                                    displayPieces[s].move = `${state.gameSide}Safe4`;
+                                }
                                 break;
                             case 4:
-                                displayPieces[s].move = `${state.gameSide}Safe5`;
+                                if (occupied.includes(`${state.gameSide}Safe5`)) {
+                                    removePiece()
+                                } else {
+                                    displayPieces[s].move = `${state.gameSide}Safe5`;
+                                }
                                 break;
                             case 5:
                                 displayPieces[s].move = `${state.gameSide}Home`;
                                 break;
                             default:
-                                displayPieces.splice(s, 1);
+                                removePiece();
                                 break;
                         }
+
                     }
                 }
             }
@@ -278,6 +300,8 @@ const gameReducer = (state = initialState, action) => {
                         default:
                             break;
                     }
+
+                    console.log(displayPieces)
                 }
 
                 const safeMover = (position, card, occupied) => {
@@ -341,13 +365,17 @@ const gameReducer = (state = initialState, action) => {
                 ]
 
                 if (currCard === 1 || currCard === 2) {
-                    let colorExit = startExits.find(({ color }) => color === state.gameSide);
+                    let colorExit = startExits.find(( space ) => space.color === state.gameSide);
+                    console.log(colorExit)
                     if (!occupied.includes(colorExit.space)) {
+                        console.log('enter')
                         displayPieces.push({ move: `${state.gameSide}Start`, position: `${state.gameSide}Start` })
+                        console.log(displayPieces)
                     }
                 };
 
                 for (let i = 0; i < currPieces.length; i++) {
+                    console.log(currPieces[i])
                     if (typeof currPieces[i].space !== 'string') {
                         pieceMover(currPieces[i].space, currCard, occupied);
                     } else {
@@ -375,7 +403,7 @@ const gameReducer = (state = initialState, action) => {
                     }
                 }
 
-                safeHome(displayPieces);
+                // safeHome(displayPieces);
             } else {
                 let oppPieces = [...state.piecesInPlay].filter(piece => piece.color !== state.gameSide);
                 let sorryPlayer = [...state.playerColors].find(player => player.color === state.gameSide);

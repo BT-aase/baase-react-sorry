@@ -160,7 +160,7 @@ export default function PieceMove(move, moves, currColor, swapSelected, boardPie
 
             if (typeof movingPiece.position !== 'string') {
                 const wrapStart = (block) => {
-                    let blockWrap = movingPiece.position <= block - 1;
+                    let blockWrap = movingPiece.position <= block;
                     if (!blockWrap) {
                         return block + 56
                     } else {
@@ -169,7 +169,6 @@ export default function PieceMove(move, moves, currColor, swapSelected, boardPie
                 }
 
                 let wrapBlock = wrapStart(block - 1);
-
 
                 if (movingPiece.position < wrapBlock) {
                     let s = movingPiece.position;
@@ -188,7 +187,9 @@ export default function PieceMove(move, moves, currColor, swapSelected, boardPie
 
                     moveAction();
                 } else {
-                    moveIntoSafe();
+                    setTimeout(function () {
+                        moveIntoSafe();
+                    }, 1000)
                 }
 
 

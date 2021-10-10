@@ -51,7 +51,8 @@ const Board = () => {
         }
     }, [cardDrawn])
 
-    let onlySwap = typeof (movesPossible.find(move => move.move !== 'swap')) === 'undefined';
+    let checkForSwap = typeof (movesPossible.find(move => move.move !== 'swap')) === 'undefined';
+    let onlySwap = checkForSwap && movesPossible.length !== 0;
 
     return (
         <div>

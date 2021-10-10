@@ -67,12 +67,12 @@ const Start = () => {
                     key={d}
                     style={{
                         height: 60, width: 60, borderRadius: 65,
-                        backgroundColor: startingPlayer !== 0 && startingPlayer !== d ? 'gray' : colors[playerColors[d - 1].color],
+                        backgroundColor: startingPlayer !== 0 && startingPlayer !== d ? 'gray' : 'white',
                         color: startingPlayer !== 0 && startingPlayer !== d ? 'white' : '#000058',
-                        border: '2px solid white'
+                        border: startingPlayer !== 0 && startingPlayer !== d ? '5px solid gray' : `5px solid ${colors[playerColors[d - 1].color]}`
                     }}
                     onClick={startingPlayer === 0 ? () => setStartingPlayer(d) : () => { }}>
-                    <p style={{ marginLeft: 23, paddingTop: 10, fontSize: 24 }}>{d}</p>
+                    <p style={{ marginLeft: 20, paddingTop: 8, fontSize: 24 }}>{d}</p>
                 </div>
             )
         }
