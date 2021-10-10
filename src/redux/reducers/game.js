@@ -1,6 +1,6 @@
 import {
     START_GAME, CREATE_DECK, DRAW_CARD, START_ACTIONS,
-    DISPLAY_MOVES, MOVE_PIECE, SWAP_PIECE, SHOW_SWAPPABLE,
+    DISPLAY_MOVES, MOVE_PIECE, KNOCKOUT, SWAP_PIECE, SHOW_SWAPPABLE,
     SLIDE_REMOVE, MOVE_TO_HOME, END_TURN, CLEAR_MOVES, RESTART_GAME
 } from "../actions/game";
 
@@ -196,35 +196,35 @@ const gameReducer = (state = initialState, action) => {
                         switch (displayPieces[s].move - block) {
                             case 0:
                                 if (occupied.includes(`${state.gameSide}Safe1`)) {
-                                    removePiece()
+                                    removePiece();
                                 } else {
                                     displayPieces[s].move = `${state.gameSide}Safe1`;
                                 }
                                 break;
                             case 1:
                                 if (occupied.includes(`${state.gameSide}Safe2`)) {
-                                    removePiece()
+                                    removePiece();
                                 } else {
                                     displayPieces[s].move = `${state.gameSide}Safe2`;
                                 }
                                 break;
                             case 2:
                                 if (occupied.includes(`${state.gameSide}Safe3`)) {
-                                    removePiece()
+                                    removePiece();
                                 } else {
                                     displayPieces[s].move = `${state.gameSide}Safe3`;
                                 }
                                 break;
                             case 3:
                                 if (occupied.includes(`${state.gameSide}Safe4`)) {
-                                    removePiece()
+                                    removePiece();
                                 } else {
                                     displayPieces[s].move = `${state.gameSide}Safe4`;
                                 }
                                 break;
                             case 4:
                                 if (occupied.includes(`${state.gameSide}Safe5`)) {
-                                    removePiece()
+                                    removePiece();
                                 } else {
                                     displayPieces[s].move = `${state.gameSide}Safe5`;
                                 }
@@ -400,7 +400,9 @@ const gameReducer = (state = initialState, action) => {
                     }
                 }
 
-                if (currPieces.length > 0) {
+                const swapCurrPieces = currPieces.filter(pieceChecker);
+
+                if (swapCurrPieces.length > 0) {
                     for (let i = 0; i < oppPieces.length; i++) {
                         displayPieces.push({ move: 'swap', position: oppPieces[i].space })
                     }
@@ -447,6 +449,16 @@ const gameReducer = (state = initialState, action) => {
             if (String(action.newSpace).includes('Home')) {
                 pieces.pop();
             }
+
+            return {
+                ...state,
+                piecesInPlay: pieces
+            }
+        }
+        case KNOCKOUT: {
+            let pieces = [...state.piecesInPlay];
+            let pieceIndex = pieces.findIndex(piece => piece.space === action.space);
+            pieces.splice(pieceIndex, 1);
 
             return {
                 ...state,

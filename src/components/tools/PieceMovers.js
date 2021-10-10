@@ -1,14 +1,14 @@
 import {
-    movePiece, swapPiece, startActions,
-    showSwappable, slideRemove, endTurn,
-    moveToHome, clearMoves
+    movePiece, knockout, swapPiece, 
+    startActions, showSwappable, slideRemove, 
+    endTurn, moveToHome, clearMoves
 } from "../../redux/actions/game";
 
 const checkForKnockout = (move, boardPieces, currColor, dispatch) => {
     let moveResult = boardPieces.find(piece => piece.space == move);
     if (moveResult) {
         setTimeout(function () {
-            dispatch(swapPiece(move, currColor));
+            dispatch(knockout(move));
             dispatch(startActions(moveResult.color, 'in'));
         }, 500);
     }
@@ -130,13 +130,13 @@ export default function PieceMove(move, moves, currColor, swapSelected, boardPie
                 let z = safeSpaces.findIndex(space => space === start);
                 let endIndex = safeSpaces.findIndex(space => space === end);
 
-                const moveAction = () => {
+                const moveSafeAction = () => {
                     setTimeout(function () {
                         if (z < endIndex) {
                             dispatch(movePiece(safeSpaces[z], safeSpaces[z + 1]))
                             z++;
                             if (safeSpaces[z] !== end) {
-                                moveAction();
+                                moveSafeAction();
                             } else {
                                 if (end === `${currColor}Home`) {
                                     dispatch(moveToHome(currColor));
@@ -147,7 +147,7 @@ export default function PieceMove(move, moves, currColor, swapSelected, boardPie
                             dispatch(movePiece(safeSpaces[z], safeSpaces[z - 1]))
                             z--;
                             if (safeSpaces[z] !== end) {
-                                moveAction();
+                                moveSafeAction();
                             } else {
                                 endMove(dispatch)
                             }
@@ -155,7 +155,7 @@ export default function PieceMove(move, moves, currColor, swapSelected, boardPie
                     }, 1000)
                 }
 
-                moveAction();
+                moveSafeAction();
             }
 
             if (typeof movingPiece.position !== 'string') {
@@ -221,12 +221,12 @@ export default function PieceMove(move, moves, currColor, swapSelected, boardPie
 
                 let forward = forwardWrap(a, moveResult)
 
-                const moveAction = () => {
+                const forwardAction = () => {
                     setTimeout(function () {
                         dispatch(movePiece(wrapBoard(a), wrapBoard(a + 1)))
                         a++;
-                        if (a < forward || a === 56 && moveAction !== 56) {
-                            moveAction();
+                        if (a < forward || a === 56 && forwardAction !== 56) {
+                            forwardAction();
                         } else if (a === forward) {
                             checkForKnockout(move, boardPieces, currColor, dispatch);
                             checkForSlide(move, boardPieces, currColor, dispatch);
@@ -235,7 +235,7 @@ export default function PieceMove(move, moves, currColor, swapSelected, boardPie
                     }, 1000)
                 }
 
-                moveAction();
+                forwardAction();
             } else {
                 let b = movingPiece.position;
 
@@ -273,6 +273,7 @@ export default function PieceMove(move, moves, currColor, swapSelected, boardPie
                             if (safeSpaces[z] === `${currColor}Safe1`) {
                                 setTimeout(function () { dispatch(movePiece(`${currColor}Safe1`, safeEnters[currColor])) }, 1000);
                                 setTimeout(function () { furtherBackAction(safeEnters[currColor]) }, 1000);
+                                endMove(dispatch);
                             } else {
                                 dispatch(movePiece(safeSpaces[z], safeSpaces[z - 1]))
                                 z--;
@@ -283,6 +284,7 @@ export default function PieceMove(move, moves, currColor, swapSelected, boardPie
                                     if (movingPiece.move !== safeEnters[currColor]) {
                                         setTimeout(function () { furtherBackAction(safeEnters[currColor]) }, 1000);
                                     }
+                                    endMove(dispatch);
                                 }
                             }
                         }, 1000)

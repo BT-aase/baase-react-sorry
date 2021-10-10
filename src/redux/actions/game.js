@@ -5,6 +5,7 @@ export const START_ACTIONS = 'START_ACTIONS';
 export const DISPLAY_MOVES = 'DISPLAY_MOVES';
 export const CLEAR_MOVES = 'CLEAR_MOVES';
 export const MOVE_PIECE = 'MOVE_PIECE';
+export const KNOCKOUT = 'KNOCKOUT';
 export const SWAP_PIECE = 'SWAP_PIECE';
 export const SHOW_SWAPPABLE = 'SHOW_SWAPPABLE';
 export const SLIDE_REMOVE = 'SLIDE_REMOVE';
@@ -57,6 +58,13 @@ export const movePiece = (oldSpace, newSpace) => {
     type: MOVE_PIECE,
     oldSpace,
     newSpace
+  }
+}
+
+export const knockout = (space) => {
+  return {
+    type: KNOCKOUT,
+    space
   }
 }
 
