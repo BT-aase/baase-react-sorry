@@ -171,7 +171,6 @@ const gameReducer = (state = initialState, action) => {
             }
 
             let safeHome = (displayPieces) => {
-                console.log('text', displayPieces)
                 let diamonds = {
                     red: 32,
                     blue: 45,
@@ -193,7 +192,7 @@ const gameReducer = (state = initialState, action) => {
                 for (let s = 0; s < displayPieces.length; s++) {
                     let safeWrap = displayPieces[s].position > 43 && displayPieces[s].move > 3 && displayPieces[s].move < 12;
                     if (safePosition(displayPieces[s].position, safeWrap) < block && displayPieces[s].move >= block) {
-                        let removePiece = displayPieces.splice(s, 1);
+                        const removePiece = () => displayPieces.splice(s, 1);
                         switch (displayPieces[s].move - block) {
                             case 0:
                                 if (occupied.includes(`${state.gameSide}Safe1`)) {
@@ -246,20 +245,30 @@ const gameReducer = (state = initialState, action) => {
                 let currPieces = [...state.piecesInPlay].filter(piece => piece.color === state.gameSide);
                 getOccupied(currPieces);
 
+                let diamonds = {
+                    red: 32,
+                    blue: 45,
+                    yellow: 4,
+                    green: 17
+                }
+
+                let block = diamonds[state.gameSide];
+
                 const pieceMover = (position, card, occupied) => {
+                    const safeCheck = (position, move) => { return wrapBoard(position + move) > block && position < block };
                     switch (card) {
                         case 1:
-                            if (!occupied.includes(wrapBoard(position + 1))) {
+                            if (!occupied.includes(wrapBoard(position + 1)) || safeCheck(position, 1)) {
                                 displayPieces.push({ move: wrapBoard(position + 1), position });
                             }
                             break;
                         case 2:
-                            if (!occupied.includes(wrapBoard(position + 2))) {
+                            if (!occupied.includes(wrapBoard(position + 2)) || safeCheck(position, 2)) {
                                 displayPieces.push({ move: wrapBoard(position + 2), position });
                             }
                             break;
                         case 3:
-                            if (!occupied.includes(wrapBoard(position + 3))) {
+                            if (!occupied.includes(wrapBoard(position + 3)) || safeCheck(position, 3)) {
                                 displayPieces.push({ move: wrapBoard(position + 3), position });
                             }
                             break;
@@ -269,22 +278,22 @@ const gameReducer = (state = initialState, action) => {
                             }
                             break;
                         case 5:
-                            if (!occupied.includes(wrapBoard(position + 5))) {
+                            if (!occupied.includes(wrapBoard(position + 5)) || safeCheck(position, 5)) {
                                 displayPieces.push({ move: wrapBoard(position + 5), position });
                             }
                             break;
                         case 7:
-                            if (!occupied.includes(wrapBoard(position + 7))) {
+                            if (!occupied.includes(wrapBoard(position + 7)) || safeCheck(position, 7)) {
                                 displayPieces.push({ move: wrapBoard(position + 7), position });
                             }
                             break;
                         case 8:
-                            if (!occupied.includes(wrapBoard(position + 8))) {
+                            if (!occupied.includes(wrapBoard(position + 8)) || safeCheck(position, 8)) {
                                 displayPieces.push({ move: wrapBoard(position + 8), position });
                             }
                             break;
                         case 10:
-                            if (!occupied.includes(wrapBoard(position + 10))) {
+                            if (!occupied.includes(wrapBoard(position + 10)) || safeCheck(position, 10)) {
                                 displayPieces.push({ move: wrapBoard(position + 10), position });
                             }
 
@@ -293,15 +302,13 @@ const gameReducer = (state = initialState, action) => {
                             }
                             break;
                         case 12:
-                            if (!occupied.includes(wrapBoard(position + 12))) {
+                            if (!occupied.includes(wrapBoard(position + 12)) || safeCheck(position, 12)) {
                                 displayPieces.push({ move: wrapBoard(position + 12), position });
                             }
                             break;
                         default:
                             break;
                     }
-
-                    console.log(displayPieces)
                 }
 
                 const safeMover = (position, card, occupied) => {
@@ -365,17 +372,13 @@ const gameReducer = (state = initialState, action) => {
                 ]
 
                 if (currCard === 1 || currCard === 2) {
-                    let colorExit = startExits.find(( space ) => space.color === state.gameSide);
-                    console.log(colorExit)
+                    let colorExit = startExits.find((space) => space.color === state.gameSide);
                     if (!occupied.includes(colorExit.space)) {
-                        console.log('enter')
                         displayPieces.push({ move: `${state.gameSide}Start`, position: `${state.gameSide}Start` })
-                        console.log(displayPieces)
                     }
                 };
 
                 for (let i = 0; i < currPieces.length; i++) {
-                    console.log(currPieces[i])
                     if (typeof currPieces[i].space !== 'string') {
                         pieceMover(currPieces[i].space, currCard, occupied);
                     } else {
@@ -392,7 +395,7 @@ const gameReducer = (state = initialState, action) => {
                 oppPieces = oppPieces.filter(pieceChecker);
 
                 for (let i = 0; i < currPieces.length; i++) {
-                    if (!occupied.includes(wrapBoard(currPieces[i].space + 11))) {
+                    if (!occupied.includes(wrapBoard(currPieces[i].space + 11)) || safeCheck(position, 11)) {
                         displayPieces.push({ move: wrapBoard(currPieces[i].space + 11), position: currPieces[i].space })
                     }
                 }
@@ -403,15 +406,15 @@ const gameReducer = (state = initialState, action) => {
                     }
                 }
 
-                // safeHome(displayPieces);
+                safeHome(displayPieces);
             } else {
                 let oppPieces = [...state.piecesInPlay].filter(piece => piece.color !== state.gameSide);
                 let sorryPlayer = [...state.playerColors].find(player => player.color === state.gameSide);
-                let sorryHome = [...state.playerHomePieces].find(player => player.playerNum === sorryPlayer.playerNum);
+                let sorryStart = [...state.playerStartPieces].find(player => player.playerNum === sorryPlayer.playerNum);
 
                 oppPieces = oppPieces.filter(pieceChecker);
 
-                if (sorryHome.pieces !== 0) {
+                if (sorryStart.pieces !== 0) {
                     for (let i = 0; i < oppPieces.length; i++) {
                         displayPieces.push({ move: 'sorry', position: oppPieces[i].space })
                     }
