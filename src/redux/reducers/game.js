@@ -402,8 +402,6 @@ const gameReducer = (state = initialState, action) => {
                     }
                 }
 
-                console.log(displayPieces);
-
                 safeHome(displayPieces);
             } else {
                 let oppPieces = [...state.piecesInPlay].filter(piece => piece.color !== state.gameSide);
