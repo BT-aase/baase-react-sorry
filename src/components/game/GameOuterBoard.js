@@ -6,9 +6,6 @@ import colors from "../colors";
 import PieceMove from "../tools/PieceMovers";
 
 const GameOuterBoard = () => {
-
-    const dispatch = useDispatch();
-
     let currColor = useSelector((state) => state.game.gameSide);
     let movesPossible = useSelector((state) => state.game.possibleMoves);
     let boardPieces = useSelector((state) => state.game.piecesInPlay);
@@ -41,7 +38,7 @@ const GameOuterBoard = () => {
     }
 
     const pieceMover = (space) => {
-        return PieceMove(space, movesPossible, currColor, swapSelected, boardPieces, dispatch);
+        return PieceMove(space, movesPossible, currColor, swapSelected, boardPieces, useDispatch());
     }
 
     const spaceGenerator = (direction, width, outlier, orientation) => {
@@ -106,7 +103,7 @@ const GameOuterBoard = () => {
                 )
             } else {
                 let id = orientation === 'flipped' ? 57 - i : i + 14
-                let action = displayMoves(moves).includes(id) ? () => pieceMover(id, dispatch) : () => { };
+                let action = displayMoves(moves).includes(id) ? () => pieceMover(id) : () => { };
 
                 row.push(
                     <div

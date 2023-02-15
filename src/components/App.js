@@ -1,6 +1,6 @@
 import React from "react";
 import { createStore, combineReducers } from "redux";
-import { Provider, useSelector } from "react-redux";
+import { Provider } from "react-redux";
 
 import gameReducer from '../redux/reducers/game';
 import View from './View';
