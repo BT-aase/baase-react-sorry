@@ -22,15 +22,15 @@ const GameOuterBoard = () => {
         }
     };
 
-    const displayMoves = (moves) => {
+    const displayMoves = (movesPossible) => {
         let occupiedSpaces = [];
 
-        for (let count = 0; count < moves.length; count++) {
-            let move = moves[count].move;
+        for (let count = 0; count < movesPossible.length; count++) {
+            let move = movesPossible[count].move;
             if (typeof move === 'string') {
                 let safeHome = move.includes(`${currColor}Safe`) || move.includes(`${currColor}Home`);
                 if (!safeHome) {
-                    occupiedSpaces.push(moves[count].position)
+                    occupiedSpaces.push(movesPossible[count].position)
                 }
             } else {
                 occupiedSpaces.push(move)
@@ -48,7 +48,6 @@ const GameOuterBoard = () => {
         let row = [];
         let size = typeof (width) === 'undefined' ? 47 : width;
         let singlePoint;
-        const moves = movesPossible;
 
         if (outlier === 'start' && orientation === 'normal') {
             singlePoint = 1;
@@ -64,7 +63,7 @@ const GameOuterBoard = () => {
         }
 
         if (direction === 'horizontal') {
-            let action = displayMoves(moves).includes(singlePoint) ? () => pieceMover(singlePoint) : () => { };
+            let action = displayMoves(movesPossible).includes(singlePoint) ? () => pieceMover(singlePoint) : () => { };
 
             row.push(
                 <div
@@ -74,8 +73,8 @@ const GameOuterBoard = () => {
                     style={{
                         width: size,
                         height: 43,
-                        backgroundColor: displayMoves(moves).includes(singlePoint) ? colors[currColor] : 'transparent',
-                        border: displayMoves(moves).includes(singlePoint) ? '2px solid black' : 'transparent'
+                        backgroundColor: displayMoves(movesPossible).includes(singlePoint) ? colors[currColor] : 'transparent',
+                        border: displayMoves(movesPossible).includes(singlePoint) ? '2px solid black' : 'transparent'
                     }}>
                     <div style={{ marginTop: 7, marginLeft: 7 }}>
                         {displayPiece(singlePoint)}
@@ -86,7 +85,7 @@ const GameOuterBoard = () => {
 
         for (let i = 1; i < 14; i++) {
             let id = orientation === 'flipped' ? 42 - i : i + 1;
-            let action = displayMoves(moves).includes(id) ? () => pieceMover(id) : () => { };
+            let action = displayMoves(movesPossible).includes(id) ? () => pieceMover(id) : () => { };
 
             if (direction === 'horizontal') {
                 row.push(
@@ -96,8 +95,8 @@ const GameOuterBoard = () => {
                         onClick={action}
                         style={{
                             width: size, height: 43,
-                            backgroundColor: displayMoves(moves).includes(id) ? colors[currColor] : 'transparent',
-                            border: displayMoves(moves).includes(id) ? '2px solid black' : 'transparent'
+                            backgroundColor: displayMoves(movesPossible).includes(id) ? colors[currColor] : 'transparent',
+                            border: displayMoves(movesPossible).includes(id) ? '2px solid black' : 'transparent'
                         }}>
                         <div style={{ marginTop: 7, marginLeft: 7 }}>
                             {displayPiece(id)}
@@ -106,7 +105,7 @@ const GameOuterBoard = () => {
                 )
             } else {
                 let id = orientation === 'flipped' ? 57 - i : i + 14
-                let action = displayMoves(moves).includes(id) ? () => pieceMover(id, dispatch) : () => { };
+                let action = displayMoves(movesPossible).includes(id) ? () => pieceMover(id, dispatch) : () => { };
 
                 row.push(
                     <div
@@ -115,8 +114,8 @@ const GameOuterBoard = () => {
                         onClick={action}
                         style={{
                             width: size, height: 43,
-                            backgroundColor: displayMoves(moves).includes(id) ? colors[currColor] : 'transparent',
-                            border: displayMoves(moves).includes(id) ? '2px solid black' : 'transparent'
+                            backgroundColor: displayMoves(movesPossible).includes(id) ? colors[currColor] : 'transparent',
+                            border: displayMoves(movesPossible).includes(id) ? '2px solid black' : 'transparent'
                         }}>
                         <div style={{ marginTop: 7, marginLeft: size !== 47 ? 10 : 7 }}>
                             {displayPiece(id)}
@@ -128,7 +127,7 @@ const GameOuterBoard = () => {
 
 
         if (direction === 'vertical') {
-            let action = displayMoves(moves).includes(singlePoint) ? () => pieceMover(singlePoint) : () => { };
+            let action = displayMoves(movesPossible).includes(singlePoint) ? () => pieceMover(singlePoint) : () => { };
 
             row.push(
                 <div
@@ -137,8 +136,8 @@ const GameOuterBoard = () => {
                     onClick={action}
                     style={{
                         width: size, height: 43,
-                        backgroundColor: displayMoves(moves).includes(singlePoint) ? colors[currColor] : 'transparent',
-                        border: displayMoves(moves).includes(singlePoint) ? '2px solid black' : 'transparent'
+                        backgroundColor: displayMoves(movesPossible).includes(singlePoint) ? colors[currColor] : 'transparent',
+                        border: displayMoves(movesPossible).includes(singlePoint) ? '2px solid black' : 'transparent'
                     }}>
                     <div style={{ marginTop: 7, marginLeft: size !== 47 ? 10 : 7 }}>
                         {displayPiece(singlePoint)}
