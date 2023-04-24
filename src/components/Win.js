@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from 'react-redux';
-const remote = require('electron').remote;
+const { ipcRenderer } = require('electron');
 
 import colors from "./colors";
 import { restartGame } from "../redux/actions/game";
@@ -15,8 +15,7 @@ const Win = () => {
     let winningColor = playerColors.find(player => player.playerNum === winningPlayer.playerNum);
 
     const closeWindow = () => {
-        var window = remote.getCurrentWindow();
-        window.close();
+        ipcRenderer.send('quit');
     }
 
     const restart = () => {

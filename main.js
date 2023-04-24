@@ -1,6 +1,6 @@
 const path = require('path')
 const url = require('url')
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 
 
 let mainWindow
@@ -43,6 +43,8 @@ function createMainWindow() {
 			slashes: true,
 		})
 	}
+
+	ipcMain.on('quit', () => { mainWindow.close() });
 
 	mainWindow.loadURL(indexPath)
 
