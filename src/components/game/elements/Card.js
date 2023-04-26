@@ -103,7 +103,10 @@ const Card = (props) => {
         typeof (number) !== 'undefined' ?
             display = (
                 <div
-                    style={{ width: 220, height: 140, backgroundColor: 'white', borderRadius: 10 }}
+                    style={{
+                        width: 220, height: 140, backgroundColor: 'white', borderRadius: 10,
+                        border: props.needReshuffle ? '5px solid #ff6700' : ''
+                    }}
                     onClick={() => { props.reshuffle() }}
                 >
                     <div style={{

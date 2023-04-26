@@ -113,6 +113,7 @@ const GameInnerBoard = () => {
                     }}>
                         <Card
                             reshuffle={deckCount === 0 ? () => dispatch(createDeck()) : () => { }}
+                            needReshuffle={deckCount === 0}
                             number={currentCard}
                         />
                     </div> :
