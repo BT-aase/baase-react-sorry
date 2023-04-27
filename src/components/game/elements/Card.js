@@ -105,7 +105,7 @@ const Card = (props) => {
                 <div
                     style={{
                         width: 220, height: 140, backgroundColor: 'white', borderRadius: 10,
-                        border: props.needReshuffle ? '5px solid #ff6700' : ''
+                        border: props.needReshuffle && !cardDrawn ? '5px solid #ff6700' : ''
                     }}
                     onClick={() => { props.reshuffle() }}
                 >
